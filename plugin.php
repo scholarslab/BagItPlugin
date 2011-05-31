@@ -39,7 +39,6 @@ define('BAGIT_PLUGIN_VERSION', get_plugin_ini('BagIt', 'version'));
 add_plugin_hook('install', 'bagitInstall');
 add_plugin_hook('uninstall', 'bagitUninstall');
 add_plugin_hook('define_acl', 'bagitDefineAcl');
-add_plugin_hook('define_routes', 'bagitDefineRoutes');
 // }}}
 
 // {{{ filters
@@ -79,35 +78,20 @@ function bagitUninstall()
 function bagitDefineAcl($acl)
 {
 
-    if (version_compare(OMEKA_VERSION, '2.0', '<')) {
+    if (version_compare(OMEKA_VERSION, '2.0-dev', '<')) {
 
-        $resource = new Omeka_Acl_Resource('Bagit_Index');
-        $resource->add(array()); // Add all controller actions here (?)
-        $resource->add($resource);
+        $resource = new Omeka_Acl_Resource('BagIt_Index');
+        $resource->add(array('index')); // Add all controller actions here (?)
 
     } else {
 
-        $resource = new Zend_Acl_Resource('Bagit_Index');
-        $acl->add($resource);
-        // Anything else here? Are permissions even necessary for this?
+        $resource = new Zend_Acl_Resource('BagIt_Index');
 
     }
 
-}
-
-/**
- * Register routes in routes.ini
- *
- * @param object $router Object containing application routes passed in
- * by the 'define_routes' hook callback.
- *
- * @return void
- */
-function bagitDefineRoutes($router)
-{
-
-    $router->addConfig(new Zend_Config_Ini(BAGIT_PLUGIN_DIRECTORY . 
-      DIRECTORY_SEPARATOR . 'routes.ini', 'routes'));
+    $acl->add($resource);
+    $acl->allow('super', 'BagIt_Index');
+    $acl->allow('admin', 'BagIt_Index');
 
 }
 
@@ -123,7 +107,7 @@ function bagitDefineRoutes($router)
 function bagitAdminNavigationMain($nav)
 {
 
-    if (has_permission('Bagit_Index', 'export')) {
+    if (has_permission('BagIt_Index', 'index')) {
         $nav['BagIt'] = uri('bagit');
     }
 
