@@ -30,6 +30,7 @@
 
 
 // {{{ constants
+define('BAGIT_PLUGIN_DIRECTORY', dirname(__FILE__));
 define('BAGIT_PLUGIN_VERSION', get_plugin_ini('BagIt', 'version'));
 // }}}
 
@@ -38,6 +39,7 @@ define('BAGIT_PLUGIN_VERSION', get_plugin_ini('BagIt', 'version'));
 add_plugin_hook('install', 'bagitInstall');
 add_plugin_hook('uninstall', 'bagitUninstall');
 add_plugin_hook('define_acl', 'bagitDefineAcl');
+add_plugin_hook('define_routes', 'bagitDefineRoutes');
 // }}}
 
 // {{{ filters
@@ -90,6 +92,21 @@ function bagitDefineAcl($acl)
         // Anything else here? Are permissions even necessary for this?
 
     }
+
+}
+
+/**
+ * Register routes in routes.ini
+ *
+ * @param object $router Object containing application routes passed in
+ * by the 'define_routes' hook callback.
+ *
+ * @return void
+ */
+function bagitDefineRoutes($router)
+{
+
+    $router->addConfig();
 
 }
 
