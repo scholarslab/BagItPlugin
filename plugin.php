@@ -37,6 +37,10 @@ add_plugin_hook('install', 'bagitInstall');
 add_plugin_hook('uninstall', 'bagitUninstall');
 // }}}
 
+// {{{ filters
+add_filter('admin_navigation_main', 'bagitAdminNavigationMain');
+// }}}
+
 function bagitInstall()
 {
     set_option('bagit_version', BAGIT_PLUGIN_VERSION);
@@ -46,3 +50,19 @@ function bagitUninstall()
 {
     delete_option('bagit_version');
 }
+
+function bagitAdminNavigationMain($nav)
+{
+    $nav['BagIt'] = uri('bagit');
+
+    return $nav;
+
+}
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
