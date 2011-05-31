@@ -28,9 +28,11 @@
 
 <?php
 
+
 // {{{ constants
 define('BAGIT_PLUGIN_VERSION', get_plugin_ini('BagIt', 'version'));
 // }}}
+
 
 // {{{ hooks
 add_plugin_hook('install', 'bagitInstall');
@@ -41,23 +43,44 @@ add_plugin_hook('uninstall', 'bagitUninstall');
 add_filter('admin_navigation_main', 'bagitAdminNavigationMain');
 // }}}
 
+
+/**
+ * Install the plugin. Set option 'bagit_version" in the _options table
+ *
+ * @return void
+ */
 function bagitInstall()
 {
     set_option('bagit_version', BAGIT_PLUGIN_VERSION);
 }
 
+/**
+ * Uninstall the plugin. delete option 'bagit_version" in the _options
+ * table.
+ *
+ * @return void
+ */
 function bagitUninstall()
 {
     delete_option('bagit_version');
 }
 
+/**
+ * Add a link to the administrative interface for the plugin.
+ *
+ * @param array $nav An array of main administrative links passed in
+ * by the 'admin_navigation_main' filter callback.
+ *
+ * @return array $nav The array of links, modified to include the
+ * link to the BagIt administrative interface.
+ */
 function bagitAdminNavigationMain($nav)
 {
     $nav['BagIt'] = uri('bagit');
-
     return $nav;
 
 }
+
 
 /*
  * Local variables:
