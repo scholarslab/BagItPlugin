@@ -106,8 +106,7 @@ function bagitDefineAcl($acl)
 function bagitDefineRoutes($router)
 {
 
-    $router->addConfig(new Zend_Config_Ini(BAGIT_PLUGIN_DIRECTORY . 
-      DIRECTORY_SEPARATOR . 'routes.ini', 'routes'));
+    $router->addConfig();
 
 }
 
