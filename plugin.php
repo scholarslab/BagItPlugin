@@ -16,10 +16,10 @@
  *
  * @package omeka
  * @subpackage BagIt
+ * @author Scholars' Lab
  * @author David McClure (david.mcclure@virginia.edu)
  * @copyright 2011
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
- * @version 
  *
  * PHP version 5
  *
