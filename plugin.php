@@ -37,6 +37,7 @@ define('BAGIT_PLUGIN_VERSION', get_plugin_ini('BagIt', 'version'));
 // {{{ hooks
 add_plugin_hook('install', 'bagitInstall');
 add_plugin_hook('uninstall', 'bagitUninstall');
+add_plugin_hook('define_acl', 'bagitDefineAcl');
 // }}}
 
 // {{{ filters
@@ -66,6 +67,33 @@ function bagitUninstall()
 }
 
 /**
+ * Define the access control list, instantiate controller resources.
+ *
+ * @param object $acl Access control list passed in by the 'define_acl'
+ * hook callback.
+ *
+ * @return void
+ */
+function bagitDefineAcl($acl)
+{
+
+    if (version_compare(OMEKA_VERSION, '2.0', '<')) {
+
+        $resource = new Omeka_Acl_Resource('Bagit_Index');
+        $resource->add(array()); // Add all controller actions here (?)
+        $resource->add($resource);
+
+    } else {
+
+        $resource = new Zend_Acl_Resource('Bagit_Index');
+        $acl->add($resource);
+        // Anything else here? Are permissions even necessary for this?
+
+    }
+
+}
+
+/**
  * Add a link to the administrative interface for the plugin.
  *
  * @param array $nav An array of main administrative links passed in
@@ -76,7 +104,11 @@ function bagitUninstall()
  */
 function bagitAdminNavigationMain($nav)
 {
-    $nav['BagIt'] = uri('bagit');
+
+    if (has_permission('Bagit_Index', 'export')) {
+        $nav['BagIt'] = uri('bagit');
+    }
+
     return $nav;
 
 }
