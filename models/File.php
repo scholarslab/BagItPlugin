@@ -2,7 +2,7 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * Controller class for the BagIt administrative interface.
+ * Table class to access files.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,35 +26,9 @@
 
 <?php
 
-class BagIt_IndexController extends Omeka_Controller_Action
+class File extends Omeka_Record
 {
 
-    /**
-     * By default, redirect index requests to the browse action.
-     *
-     * @return void
-     */
-    public function indexAction()
-    {
-
-        $this->_redirect('/bag-it/index/browse?view=list');
-
-    }
-
-    /**
-     * Push file data into the browse view.
-     *
-     * @return void
-     */
-    public function browseAction()
-    {
-
-        $files = $this->getTable('File')->getSelect()->order('modified'); // Where should this go? In the model?
-        $this->view->files = $files;
-
-        $listStyle = $this->_request->getParam('view');
-        $this->view->listStyle = $listStyle;
-
-    }
+    
 
 }

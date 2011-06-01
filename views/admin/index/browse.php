@@ -13,6 +13,21 @@
 
     <?php echo flash(); ?>
 
-    <?php foot(); ?>
+    <?php if (!bagithelpersFilesExist()): ?>
+        <p>There are no files on the site that can be added to a Bag.</p>
+
+    <?php else: ?>
+
+        <?php if ($listStyle == 'list'): ?>
+            <?php echo $this->partial('index/browse-list.php'); ?>
+
+        <?php else: ?>
+            <?php echo $this->partial('index/browse-hierarchy.php'); ?>
+
+        <?php endif; ?>
+
+    <?php endif; ?>
 
 </div>
+
+<?php foot(); ?>
