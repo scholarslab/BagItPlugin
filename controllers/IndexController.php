@@ -49,8 +49,8 @@ class BagIt_IndexController extends Omeka_Controller_Action
     public function browseAction()
     {
 
-
-
+        $listStyle = $this->_request->getParam('view');
+        $this->view->listStyle = $listStyle;
     }
 
 }
