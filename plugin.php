@@ -46,6 +46,10 @@ add_plugin_hook('admin_theme_header', 'bagitAdminThemeHeader');
 add_filter('admin_navigation_main', 'bagitAdminNavigationMain');
 // }}}
 
+// {{{ requires
+require_once BAGIT_PLUGIN_DIRECTORY . DIRECTORY_SEPARATOR . 'helpers' .
+    DIRECTORY_SEPARATOR . 'BagItFunctions.php'; // Include the helper functions.
+// }}}
 
 /**
  * Install the plugin. Set option 'bagit_version" in the _options table

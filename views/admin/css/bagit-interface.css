@@ -52,4 +52,9 @@
 
 .horizontal-nav ul#section-nav a {
     padding-bottom: 13px;
+    background-color: #e3e1d3;
+}
+
+.horizontal-nav ul#section-nav li {
+    margin-right: 1em;
 }

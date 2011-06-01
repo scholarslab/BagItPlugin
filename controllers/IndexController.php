@@ -49,7 +49,7 @@ class BagIt_IndexController extends Omeka_Controller_Action
     public function browseAction()
     {
 
-        $files = $this->getTable('File')->getSelect()->order('modified'); // Where should this go? In the model?
+        $files = $this->getTable('File')->getSelect()->order('modified'); // Where should this go? Somewhere in the model, presumably?
         $this->view->files = $files;
 
         $listStyle = $this->_request->getParam('view');
