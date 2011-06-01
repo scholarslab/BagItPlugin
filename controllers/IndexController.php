@@ -37,7 +37,7 @@ class BagIt_IndexController extends Omeka_Controller_Action
     public function indexAction()
     {
 
-        $this->redirect->goto('browse');
+        $this->_redirect('/bag-it/index/browse?view=list');
 
     }
 
