@@ -107,7 +107,11 @@ function bagitDefineAcl($acl)
 function bagitAdminThemeHeader($request)
 {
 
+    if ($request->getModuleName() == 'bag-it') {
 
+        queue_css('bagit-interface');
+
+    }
 
 }
 

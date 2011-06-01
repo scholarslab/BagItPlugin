@@ -6,6 +6,15 @@
 ?>
 
 
+<div id="create-bag" class="bagit-topnav-button">
+    <a href="<?php echo html_escape(uri('bag-it/index/browse?view=list')); ?>">Create a Bag</a>
+</div>
+
+<div id="unpack-bag" class="bagit-topnav-button">
+    <a href="<?php echo html_escape(uri('bag-it/index/unpack')); ?>">Unpack a Bag</a>
+</div>
+
+
 <h1><?php echo $header['title']; ?></h1>
 
 <ul id="section-nav" class="navigation">
@@ -16,12 +25,3 @@
         <a href="<?php echo html_escape(uri('bag-it/index/browse?view=hierarchy')); ?>">Item Hierarchy View</a>
     </li>
 </ul>
-
-
-<div id="create-bag" class="add-button">
-    <a class="add" href="<?php echo html_escape(uri('bag-it/index/browse?view=list')); ?>">Create a Bag</a>
-</div>
-
-<div id="unpack-bag" class="add-button">
-    <a class="add" href="<?php echo html_escape(uri('bag-it/index/unpack')); ?>">Unpack a Bag</a>
-</div>
