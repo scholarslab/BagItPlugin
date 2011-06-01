@@ -29,13 +29,6 @@
 class BagIt_IndexController extends Omeka_Controller_Action
 {
 
-    public function init()
-    {
-
-        $this->_modelClass = 'File';
-
-    }
-
     /**
      * By default, redirect index requests to the browse action.
      *
@@ -56,10 +49,9 @@ class BagIt_IndexController extends Omeka_Controller_Action
     public function browseAction()
     {
 
-        // $select = $this->getTable('File')->getSelect()->order('size');
-        // $files = $this->getTable('File')->fetchObjects($select);
-        // print_r($files);
-        // $this->view->files = $files;
+        $select = $this->getTable('File')->getSelect()->order('size');
+        $files = $this->getTable('File')->fetchObjects($select);
+        $this->view->files = $files;
 
         $listStyle = $this->_request->getParam('view');
         $this->view->listStyle = $listStyle;

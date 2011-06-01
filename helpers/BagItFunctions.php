@@ -40,14 +40,31 @@ function bagithelpers_testForFiles() {
 }
 
 /**
- * Test to see if there are any files on the site that could be put into a Bag.
+ * Returns the size of the file in kilobytes.
  *
- * @return boolean True if files exist, false if there are no files.
+ * @return float The size of the file, rounded to two decimal places.
  */
-function bagithelpers_loopFiles() {
+function bagithelpers_getFileKb($id) {
 
-    $file_count = get_db()->getTable('File')->count();
+    $db = get_db();
+    $select = $db->getTable('File')->getSelect()->where('f.id = ' . $id);
+    $file = $db->getTable('File')->fetchObject($select);
 
-    return ($file_count > 0) ? true : false;
+    return round($file->size * 0.0009765625, 2);
+
+}
+
+/**
+ * Returns the title of the file's parent item.
+ *
+ * @return string The title of the file's parent item.
+ */
+function bagithelpers_getItemName($id) {
+
+    $db = get_db();
+    $select = $db->getTable('ElementText')->getSelect()->where('record_id = ' . $id . ' AND element_id = 50');
+    $element_text = $db->getTable('ElementText')->fetchObject($select);
+
+    return $element_text->text;
 
 }
