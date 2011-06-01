@@ -39,6 +39,7 @@ define('BAGIT_PLUGIN_VERSION', get_plugin_ini('BagIt', 'version'));
 add_plugin_hook('install', 'bagitInstall');
 add_plugin_hook('uninstall', 'bagitUninstall');
 add_plugin_hook('define_acl', 'bagitDefineAcl');
+add_plugin_hook('admin_theme_header', 'bagitAdminThemeHeader');
 // }}}
 
 // {{{ filters
@@ -92,6 +93,21 @@ function bagitDefineAcl($acl)
     $acl->add($resource);
     $acl->allow('super', 'BagIt_Index');
     $acl->allow('admin', 'BagIt_Index');
+
+}
+
+/**
+ * Add custom css to the administrative interface.
+ *
+ * @param object $request Page request passed in by the 'admin_theme_header'
+ * hook callback.
+ *
+ * @return void
+ */
+function bagitAdminThemeHeader($request)
+{
+
+
 
 }
 
