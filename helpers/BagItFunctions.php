@@ -26,7 +26,25 @@
 
 <?php
 
+/**
+ * Test to see if there are any files on the site that could be put into a Bag.
+ *
+ * @return boolean True if files exist, false if there are no files.
+ */
 function bagithelpers_testForFiles() {
+
+    $file_count = get_db()->getTable('File')->count();
+
+    return ($file_count > 0) ? true : false;
+
+}
+
+/**
+ * Test to see if there are any files on the site that could be put into a Bag.
+ *
+ * @return boolean True if files exist, false if there are no files.
+ */
+function bagithelpers_loopFiles() {
 
     $file_count = get_db()->getTable('File')->count();
 

@@ -39,6 +39,7 @@
     color: #c50;
     padding: 10px;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .bagit-topnav-button a:hover, .bagit-topnav-button .active {

@@ -13,7 +13,11 @@
 
     <tbody>
 
+        <?php while (bagithelpers_loopFiles()): ?>
 
+            // Show rows.
+
+        <?php endwhile; ?>
 
     </tbody>
 
