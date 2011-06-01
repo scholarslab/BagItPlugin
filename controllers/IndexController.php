@@ -29,8 +29,27 @@
 class BagIt_IndexController extends Omeka_Controller_Action
 {
 
+    /**
+     * By default, redirect index requests to the browse action.
+     *
+     * @return void
+     */
     public function indexAction()
     {
+
+        $this->redirect->goto('browse');
+
+    }
+
+    /**
+     * Push file data into the browse view.
+     *
+     * @return void
+     */
+    public function browseAction()
+    {
+
+
 
     }
 
