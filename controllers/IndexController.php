@@ -38,7 +38,6 @@ class BagIt_IndexController extends Omeka_Controller_Action
     {
 
         $this->_model = $this->getTable('File');
-        $this->_baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 
     }
 
@@ -134,7 +133,11 @@ class BagIt_IndexController extends Omeka_Controller_Action
                 return $this->_forward('preview', 'index', 'bag-it');
             }
 
-            $this->_doBagIt($files, $bag_name);
+            // Create, tar, and validate the bag.
+            $success = $this->_doBagIt($files, $bag_name);
+
+            $this->view->success = $success;
+            $this->view->bag_name = $bag_name;
 
         } else {
 
@@ -150,7 +153,7 @@ class BagIt_IndexController extends Omeka_Controller_Action
      * @param array $file_ids Array of ids, posted from the form.
      * @param string $name The name of the bag.
      *
-     * @return void
+     * @return boolean $success True if the new bag validates.
      */
     protected function _doBagIt($file_ids, $name)
     {
@@ -167,15 +170,16 @@ class BagIt_IndexController extends Omeka_Controller_Action
             );
 
             $bag->addFile('..' . DIRECTORY_SEPARATOR . OMEKA_FILES_RELATIVE_DIRECTORY .
-                DIRECTORY_SEPARATOR .
-                $file->archive_filename,
-                $file->original_filename
+                DIRECTORY_SEPARATOR .  $file->archive_filename, $file->original_filename
             );
 
         }
 
-        // // Tar it up.
+        // Tar it up.
         $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $name);
+
+        $success = $bag->isValid() ? true : false;
+        return $success;
 
     }
 

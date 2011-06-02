@@ -4,12 +4,13 @@
 
     <?php echo flash(); ?>
 
-    <?php if (count($files) == 0): ?>
-        <p>No files are marked to be added to the bag. <a href="<?php uri(array('controller' => 'browse')); ?>">Go back to the file browser</a> to pick files.</p>
+    <?php if ($success): ?>
+
+        <h3 class="bagit-success">Success! <a href="<?php echo public_uri('/plugins/BagIt/bags/') . $bag_name . '.tgz'; ?>">Click here to download the Bag</a>.</h3>
 
     <?php else: ?>
 
-          <?php echo $this->partial('index/preview-list.php', array('files' => $files)); ?>
+        <h2>There was an error. The Bag was not created.</h2>
 
     <?php endif; ?>
 
