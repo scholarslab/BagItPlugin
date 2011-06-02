@@ -7,11 +7,11 @@
 
 
 <div id="unpack-bag" class="bagit-topnav-button">
-    <a class="<?php if ($topnav == 'unpack') { echo 'active'; } ?>" href="<?php echo html_escape(uri('bag-it/index/unpack')); ?>">Unpack a Bag</a>
+    <a class="<?php if ($topnav == 'unpack') { echo 'active'; } ?>" href="<?php echo html_escape(uri('bag-it/index/read')); ?>">Read a Bag</a>
 </div>
 
 <div id="create-bag" class="bagit-topnav-button">
-    <a class="<?php if ($topnav == 'create') { echo 'active'; } ?>" href="<?php echo html_escape(uri('bag-it/index/browse?view=list')); ?>">Create a Bag</a>
+    <a class="<?php if ($topnav == 'create') { echo 'active'; } ?>" href="<?php echo html_escape(uri('bag-it/index/browse')); ?>">Create a Bag</a>
 </div>
 
 

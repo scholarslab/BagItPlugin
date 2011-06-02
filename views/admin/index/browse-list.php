@@ -12,7 +12,7 @@
 
     <tbody>
 
-    <form method="post" action="<?php echo uri(array('action' => 'manifest')); ?>">
+        <form method="post" action="<?php echo uri(array('action' => 'manifest')); ?>">
 
             <?php foreach ($files as $file): ?>
 
@@ -26,7 +26,7 @@
 
             <?php endforeach; ?>
 
-            <!-- <?php echo submit(array('name'=>'bagit_submit', 'class'=>'submit submit-medium'), 'Next'); ?> -->
+            <?php echo submit(array('name'=>'bagit_submit', 'class'=>'submit submit-medium'), 'Next'); ?>
 
         </form>
 

@@ -37,7 +37,7 @@ class BagIt_IndexController extends Omeka_Controller_Action
     public function indexAction()
     {
 
-        $this->_redirect('/bag-it/index/browse?sort_order=name');
+        $this->_redirect('/bag-it/index/browse');
 
     }
 
@@ -49,8 +49,12 @@ class BagIt_IndexController extends Omeka_Controller_Action
     public function browseAction()
     {
 
-        $select = $this->getTable('File')->getSelect()->order('original_filename');
-        $files = $this->getTable('File')->fetchObjects($select);
+        $file_table = $this->getTable('File');
+
+        $files = $file_table->fetchObjects(
+            $file_table->getSelect()->order('original_filename')
+        );
+
         $this->view->files = $files;
 
     }
