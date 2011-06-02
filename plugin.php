@@ -33,7 +33,7 @@
 define('BAGIT_PLUGIN_DIRECTORY', dirname(__FILE__));
 define('BAGIT_BAG_DIRECTORY', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'bags');
 define('BAGIT_PLUGIN_VERSION', get_plugin_ini('BagIt', 'version'));
-define('OMEKA_FILES_RELATIVE_DIRECTORY', 'archive/files/');
+define('OMEKA_FILES_RELATIVE_DIRECTORY', 'archive' . DIRECTORY_SEPARATOR . 'files');
 // }}}
 
 // {{{ hooks

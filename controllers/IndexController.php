@@ -133,7 +133,7 @@ class BagIt_IndexController extends Omeka_Controller_Action
                 return $this->_forward('preview', 'index', 'bag-it');
             }
 
-            $this->_doBagIt($files);
+            $this->_doBagIt($files, $bag_name);
 
         } else {
 
@@ -146,15 +146,16 @@ class BagIt_IndexController extends Omeka_Controller_Action
     /**
      * Create the bag, generate tar.
      *
-     * @param array $file_ids Array of ids, posted from the form
+     * @param array $file_ids Array of ids, posted from the form.
+     * @param string $name The name of the bag.
      *
      * @return void
      */
-    protected function _doBagIt($file_ids)
+    protected function _doBagIt($file_ids, $name)
     {
 
         // Instantiate the bag.
-        $bag = new BagIt(BAGIT_BAG_DIRECTORY);
+        $bag = new BagIt(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $name);
 
         // Retrieve the files and add them to the new bag.
         foreach ($files as $id) {
@@ -163,10 +164,9 @@ class BagIt_IndexController extends Omeka_Controller_Action
                 $this->_model->getSelect()->
                 where('f.id = ' . $id)
             );
-            $bag->addFile($this->getRequest()->getBaseUrl() .
-                DIRECTORY_SEPARATOR .
-                OMEKA_FILES_RELATIVE_DIRECTORY .
-                $file->archive_filename,
+
+            $bag->addFile('../../../' . OMEKA_FILES_RELATIVE_DIRECTORY .
+                DIRECTORY_SEPARATOR . $file->archive_filename,
                 $file->original_filename
             );
 
