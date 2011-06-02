@@ -86,7 +86,7 @@ function bagitDefineAcl($acl)
     if (version_compare(OMEKA_VERSION, '2.0-dev', '<')) {
 
         $resource = new Omeka_Acl_Resource('BagIt_Index');
-        $resource->add(array('index')); // Add all controller actions here (?)
+        $resource->add(array('index', 'browse', 'preview')); // Add all controller actions here (?)
 
     } else {
 

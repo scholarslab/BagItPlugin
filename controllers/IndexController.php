@@ -30,6 +30,19 @@ class BagIt_IndexController extends Omeka_Controller_Action
 {
 
     /**
+     * Set shortcut for the model.
+     *
+     * @return void
+     */
+    public function init()
+    {
+
+        $this->_model = $this->getTable('File');
+
+    }
+
+
+    /**
      * By default, redirect index requests to the browse action.
      *
      * @return void
@@ -37,7 +50,7 @@ class BagIt_IndexController extends Omeka_Controller_Action
     public function indexAction()
     {
 
-        $this->_redirect('/bag-it/index/browse');
+        $this->redirect->goto('browse');
 
     }
 
@@ -49,13 +62,55 @@ class BagIt_IndexController extends Omeka_Controller_Action
     public function browseAction()
     {
 
-        $file_table = $this->getTable('File');
-
-        $files = $file_table->fetchObjects(
-            $file_table->getSelect()->order('original_filename')
+        // Get files, ordered by the original name of the file,
+        // (not the serialized name that Omeka assigns).
+        $files = $this->_model->fetchObjects(
+            $this->_model->getSelect()->order('original_filename')
         );
 
         $this->view->files = $files;
+
+    }
+
+    /**
+     * Display preview of files added from the browse interface.
+     *
+     * @return void
+     */
+    public function previewAction()
+    {
+
+        if ($this->getRequest()->isPost()) {
+
+            $files = $this->getRequest()->getParam('file');
+
+            // Step through the posted form and figure out which files
+            // should be added.
+            foreach ($files as $id => $value) {
+                if ($value == 'add') {
+                    $files_to_add[] = $id;
+                }
+            }
+
+            if (count($files_to_add) > 0) {
+
+                // Construct the where clause of the SQL.
+                $where = implode($files_to_add, ',');
+
+                // Get the files and push them into the view.
+                $preview_files = $this->_model->fetchObjects(
+                    $this->_model->getSelect()->where('f.id IN (' . $where . ')')
+                );
+
+            }
+
+                $this->view->files = $preview_files;
+
+        } else {
+
+            $this->redirect->goto('browse');
+
+        }
 
     }
 

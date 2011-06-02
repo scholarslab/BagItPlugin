@@ -1,4 +1,6 @@
-<form method="post" action="<?php echo uri(array('action' => 'preview')); ?>" accept-charset="utf-8">
+<h2><?php echo count($files); ?> file<?php if (count($files) > 1) { echo 's'; } ?> selected</h2>
+
+<form method="post" action="<?php echo uri(array('action' => 'create')); ?>" accept-charset="utf-8">
     <fieldset>
     <table>
         <thead>
@@ -7,7 +9,6 @@
                 <th>Parent Item</th>
                 <th>Type</th>
                 <th>Size</th>
-                <th>Add to Bag?</th>
             </tr>
         </thead>
         <tbody>
@@ -17,11 +18,11 @@
                     <td><a href="<?php echo public_uri('/items/show/' . $file->item_id); ?>"><?php echo bagithelpers_getItemName($file->item_id); ?></a></td>
                     <td><?php echo $file->type_os; ?></td>
                     <td><?php echo bagithelpers_getFileKb($file->id); ?> KB</td>
-                    <td class="bagit-checkbox-td"><?php echo $this->formCheckBox('file[' . $file->id . ']', 'add') ?></td>
+                    <?php echo $this->formHidden('file[' . $file->id . ']', $file->id); ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
     </fieldset>
-    <?php echo submit(array('name'=>'bagit_submit', 'class'=>'submit submit-medium'), 'Preview Bag'); ?>
+    <?php echo submit(array('name' => 'bagit_submit', 'class' => 'submit submit-medium'), 'Create Bag'); ?>
 </form>
