@@ -72,3 +72,9 @@ function bagithelpers_getItemName($id) {
     return $element_text->text;
 
 }
+
+function bagithelpers_getBaseUrl() {
+
+    return Zend_Controller_Front::getInstance()->getBaseUrl();
+
+}

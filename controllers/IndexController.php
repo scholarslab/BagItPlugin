@@ -38,6 +38,7 @@ class BagIt_IndexController extends Omeka_Controller_Action
     {
 
         $this->_model = $this->getTable('File');
+        $this->_baseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 
     }
 
@@ -158,22 +159,23 @@ class BagIt_IndexController extends Omeka_Controller_Action
         $bag = new BagIt(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $name);
 
         // Retrieve the files and add them to the new bag.
-        foreach ($files as $id) {
+        foreach ($file_ids as $id => $value) {
 
             $file = $this->_model->fetchObject(
                 $this->_model->getSelect()->
                 where('f.id = ' . $id)
             );
 
-            $bag->addFile('../../../' . OMEKA_FILES_RELATIVE_DIRECTORY .
-                DIRECTORY_SEPARATOR . $file->archive_filename,
+            $bag->addFile('..' . DIRECTORY_SEPARATOR . OMEKA_FILES_RELATIVE_DIRECTORY .
+                DIRECTORY_SEPARATOR .
+                $file->archive_filename,
                 $file->original_filename
             );
 
         }
 
-        // Tar it up.
-        $bag->package($bag_name);
+        // // Tar it up.
+        $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $name);
 
     }
 
