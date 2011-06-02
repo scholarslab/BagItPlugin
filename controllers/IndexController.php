@@ -148,6 +148,31 @@ class BagIt_IndexController extends Omeka_Controller_Action
     }
 
     /**
+     * Deliver the upload form.
+     *
+     * @return void
+     */
+    public function readAction() {
+
+
+
+    }
+
+    /**
+     * Build the upload form.
+     *
+     * @param string $tmp The location of the temporary directory
+     * where the tar files should be stored.
+     *
+     * @return object $form The upload form.
+     */
+    protected function _doForm($tmp = BAGIT_TMP_DIRECTORY) {
+
+
+
+    }
+
+    /**
      * Create the bag, generate tar.
      *
      * @param array $file_ids Array of ids, posted from the form.
