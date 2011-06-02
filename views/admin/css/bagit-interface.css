@@ -63,3 +63,15 @@
 .bagit-checkbox-td {
     padding-left: 38px;
 }
+
+#bag_name {
+    font-size: 1.5em;
+}
+
+.bagit-label {
+    float: none;
+}
+
+#bagit-bag-name {
+    margin: 3em 0 1em 0;
+}

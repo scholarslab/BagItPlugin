@@ -18,11 +18,17 @@
                     <td><a href="<?php echo public_uri('/items/show/' . $file->item_id); ?>"><?php echo bagithelpers_getItemName($file->item_id); ?></a></td>
                     <td><?php echo $file->type_os; ?></td>
                     <td><?php echo bagithelpers_getFileKb($file->id); ?> KB</td>
-                    <?php echo $this->formHidden('file[' . $file->id . ']', $file->id); ?>
+                    <?php echo $this->formHidden('file[' . $file->id . ']', 'add'); ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
     </fieldset>
+
+    <div id="bagit-bag-name">
+        <?php echo $this->formLabel('bag_name', 'Enter a name for the new bag:', array('class' => 'bagit-label')); ?>
+        <?php echo $this->formText('bag_name', '', array('size' => 30)); ?>
+    </div>
+
     <?php echo submit(array('name' => 'bagit_submit', 'class' => 'submit submit-medium'), 'Create Bag'); ?>
 </form>

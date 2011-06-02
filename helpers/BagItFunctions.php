@@ -42,6 +42,8 @@ function bagithelpers_testForFiles() {
 /**
  * Returns the size of the file in kilobytes.
  *
+ * @param int $id The 'id' field of the file.
+ *
  * @return float The size of the file, rounded to two decimal places.
  */
 function bagithelpers_getFileKb($id) {
@@ -56,6 +58,8 @@ function bagithelpers_getFileKb($id) {
 
 /**
  * Returns the title of the file's parent item.
+ *
+ * @param int $id The 'id' field of the file.
  *
  * @return string The title of the file's parent item.
  */

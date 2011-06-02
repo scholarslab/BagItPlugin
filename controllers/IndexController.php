@@ -84,8 +84,8 @@ class BagIt_IndexController extends Omeka_Controller_Action
 
             $files = $this->getRequest()->getParam('file');
 
-            // Step through the posted form and figure out which files
-            // should be added.
+            // Step through the posted form and figure out which
+            // files should be added.
             foreach ($files as $id => $value) {
                 if ($value == 'add') {
                     $files_to_add[] = $id;
@@ -99,18 +99,81 @@ class BagIt_IndexController extends Omeka_Controller_Action
 
                 // Get the files and push them into the view.
                 $preview_files = $this->_model->fetchObjects(
-                    $this->_model->getSelect()->where('f.id IN (' . $where . ')')
+                    $this->_model->getSelect()->
+                    where('f.id IN (' . $where . ')')
                 );
 
             }
 
-                $this->view->files = $preview_files;
+            $this->view->files = $preview_files;
 
         } else {
 
             $this->redirect->goto('browse');
 
         }
+
+    }
+
+    /**
+     * Process the final submission.
+     *
+     * @return void
+     */
+    public function createAction()
+    {
+
+        if ($this->getRequest()->isPost()) {
+
+            $files = $this->getRequest()->getParam('file');
+            $bag_name = $this->getRequest()->getParam('bag_name');
+
+            if ($bag_name == '') {
+                $this->flashError('Enter a name for the bag.');
+                return $this->_forward('preview', 'index', 'bag-it');
+            }
+
+            $this->_doBagIt($files);
+
+        } else {
+
+            $this->redirect->goto('browse');
+
+        }
+
+    }
+
+    /**
+     * Create the bag, generate tar.
+     *
+     * @param array $file_ids Array of ids, posted from the form
+     *
+     * @return void
+     */
+    protected function _doBagIt($file_ids)
+    {
+
+        // Instantiate the bag.
+        $bag = new BagIt(BAGIT_BAG_DIRECTORY);
+
+        // Retrieve the files and add them to the new bag.
+        foreach ($files as $id) {
+
+            $file = $this->_model->fetchObject(
+                $this->_model->getSelect()->
+                where('f.id = ' . $id)
+            );
+            $bag->addFile($this->getRequest()->getBaseUrl() .
+                DIRECTORY_SEPARATOR .
+                OMEKA_FILES_RELATIVE_DIRECTORY .
+                $file->archive_filename,
+                $file->original_filename
+            );
+
+        }
+
+        // Tar it up.
+        $bag->package($bag_name);
 
     }
 

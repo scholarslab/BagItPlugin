@@ -31,9 +31,10 @@
 
 // {{{ constants
 define('BAGIT_PLUGIN_DIRECTORY', dirname(__FILE__));
+define('BAGIT_BAG_DIRECTORY', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'bags');
 define('BAGIT_PLUGIN_VERSION', get_plugin_ini('BagIt', 'version'));
+define('OMEKA_FILES_RELATIVE_DIRECTORY', 'archive/files/');
 // }}}
-
 
 // {{{ hooks
 add_plugin_hook('install', 'bagitInstall');
@@ -49,7 +50,11 @@ add_filter('admin_navigation_main', 'bagitAdminNavigationMain');
 // {{{ requires
 require_once BAGIT_PLUGIN_DIRECTORY . DIRECTORY_SEPARATOR . 'helpers' .
     DIRECTORY_SEPARATOR . 'BagItFunctions.php'; // Include the helper functions.
+
+require_once BAGIT_PLUGIN_DIRECTORY . DIRECTORY_SEPARATOR . 'lib' .
+    DIRECTORY_SEPARATOR . 'bagit.php'; // Include the BagIt library.
 // }}}
+
 
 /**
  * Install the plugin. Set option 'bagit_version" in the _options table
@@ -86,7 +91,7 @@ function bagitDefineAcl($acl)
     if (version_compare(OMEKA_VERSION, '2.0-dev', '<')) {
 
         $resource = new Omeka_Acl_Resource('BagIt_Index');
-        $resource->add(array('index', 'browse', 'preview')); // Add all controller actions here (?)
+        $resource->add(array('index', 'browse', 'preview', 'create')); // Add all controller actions here (?)
 
     } else {
 
