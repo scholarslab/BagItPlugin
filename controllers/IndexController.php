@@ -178,8 +178,7 @@ class BagIt_IndexController extends Omeka_Controller_Action
         // Tar it up.
         $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $name);
 
-        $success = $bag->isValid() ? true : false;
-        return $success;
+        return $bag->isValid() ? true : false;
 
     }
 
