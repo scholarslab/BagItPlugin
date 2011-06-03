@@ -30,7 +30,6 @@ class BagitFileCollection extends Omeka_record
 {
 
     public $name;
-    public $created;
     public $updated;
 
 }
