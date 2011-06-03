@@ -188,8 +188,8 @@ class BagIt_IndexController extends Omeka_Controller_Action
                         ->setMimeType($form->bag->getMimeType())
                         ->save();
 
-                    if ($this->_doReadBagIt()) {
-                        
+                    if ($this->_doReadBagIt($new_filename)) {
+                        $this->_forward('add', 'index', 'dropbox');
                     }
 
                 } catch (Exception $e) {
@@ -278,6 +278,39 @@ class BagIt_IndexController extends Omeka_Controller_Action
         $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $name);
 
         return $bag->isValid() ? true : false;
+
+    }
+
+    /**
+     * Read the Bag, unpack it, drop files into the Dropbox files directory
+     *
+     * @param string $filename The name of the uploaded bag.
+     *
+     * @return boolean $success True if the read succeeds.
+     */
+    protected function _doReadBagIt($filename)
+    {
+
+        $bag = new BagIt(BAGIT_TMP_DIRECTORY . DIRECTORY_SEPARATOR . $filename);
+        $bag->validate();
+
+        if (count($bag->getErrors()) == 0) {
+
+            $bag->fetch->download();
+
+            // Copy each of the files.
+            foreach ($bag->getBagContents() as $file) {
+                copy($file, '..' . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR .
+                    'Dropbox' . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . basename($file));
+            }
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
 
     }
 

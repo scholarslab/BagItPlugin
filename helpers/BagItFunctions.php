@@ -26,6 +26,8 @@
 
 <?php
 
+define('KB_PER_BYTE', 0.0009765625);
+
 /**
  * Test to see if there are any files on the site that could be put into a Bag.
  *
@@ -52,7 +54,7 @@ function bagithelpers_getFileKb($id) {
     $select = $db->getTable('File')->getSelect()->where('f.id = ' . $id);
     $file = $db->getTable('File')->fetchObject($select);
 
-    return round($file->size * 0.0009765625, 2);
+    return round($file->size * KB_PER_BYTE, 2);
 
 }
 
