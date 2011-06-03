@@ -148,13 +148,14 @@ class BagIt_IndexController extends Omeka_Controller_Action
     }
 
     /**
-     * Deliver the upload form.
+     * Show the upload form.
      *
      * @return void
      */
     public function readAction() {
 
-
+        $form = $this->_doForm();
+        $this->view->form = $form;
 
     }
 
@@ -168,9 +169,21 @@ class BagIt_IndexController extends Omeka_Controller_Action
      */
     protected function _doForm($tmp = BAGIT_TMP_DIRECTORY) {
 
+        $form = new Zend_Form();
+        $form->setAction('upload');
+        $form->setMethod('post');
 
+        $uploader = new Zend_Form_Element_File('bag');
+        $uploader->setLabel('Select the Bag file:');
+        $uploader->setDestination($tmp);
+        $uploader->addValidator('count', false, 1);
+        $uploader->addValidator('extension', false, 'tgz');
 
-    }
+        $form->addElement($uploader);
+
+        return $form;
+
+      }
 
     /**
      * Create the bag, generate tar.
