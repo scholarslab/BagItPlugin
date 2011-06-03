@@ -295,6 +295,7 @@ class BagIt_IndexController extends Omeka_Controller_Action
         $bag = new BagIt(BAGIT_TMP_DIRECTORY . DIRECTORY_SEPARATOR . $filename);
         $bag->validate();
 
+
         if (count($bag->getBagErrors()) == 0) {
 
             $bag->fetch->download();
