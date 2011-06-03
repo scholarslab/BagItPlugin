@@ -63,12 +63,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function browseAction()
     {
 
-        // Homebrew column sorting processing, so as to keep more control
-        // over how the record loop is done in the view.
-        $sort_field = $this->getRequest()->getParam('sort_field');
-        $sort_dir = $this->getRequest()->getParam('sort_dir');
-        if (isset($sort_dir)) { $sort_dir = ($sort_dir == 'a') ? 'ASC' : 'DESC'; }
-        $order = (isset($sort_field)) ? trim(implode(' ', array($sort_field, $sort_dir))) : '';
+        $order = $this->_doColumnSortProcessing($this->getRequest());
 
         $collections = $this->_modelBagitFileCollection->fetchObjects(
             $this->_modelBagitFileCollection->getSelect()->order($order)
@@ -314,6 +309,29 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             return false;
 
         }
+
+    }
+
+    /**
+     * A homebrew colum sorter, implemented so as to keep more control 
+     * over how the record loop is handled in the view.
+     *
+     * @param object $request The incoming request dispatched by the 
+     * front controller.
+     *
+     * @return string $order The sorting parameter for the query.
+     */
+    protected function _doColumnSortProcessing($request)
+    {
+
+        $sort_field = $request->getParam('sort_field');
+        $sort_dir = $request->getParam('sort_dir');
+
+        if (isset($sort_dir)) {
+            $sort_dir = ($sort_dir == 'a') ? 'ASC' : 'DESC';
+        }
+
+        return (isset($sort_field)) ? trim(implode(' ', array($sort_field, $sort_dir))) : '';
 
     }
 
