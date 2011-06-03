@@ -50,7 +50,19 @@ class BagIt_IndexController extends Omeka_Controller_Action
     public function indexAction()
     {
 
-        $this->redirect->goto('browse');
+        $this->redirect->goto('collections');
+
+    }
+
+    /**
+     * Show collections and form to add new collection.
+     *
+     * @return void
+     */
+    public function collectionsAction()
+    {
+
+
 
     }
 
