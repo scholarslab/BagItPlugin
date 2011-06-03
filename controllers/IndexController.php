@@ -183,14 +183,10 @@ class BagIt_IndexController extends Omeka_Controller_Action
                     $form->bag->receive();
 
                     if ($this->_doReadBagIt($new_filename)) {
-
                         $this->_forward('index', 'index', 'dropbox');
-
                     } else {
-
                         $this->flashError('Error unpacking the files.');
                         return $this->_forward('read', 'index', 'bag-it');
-
                     }
 
                 } catch (Exception $e) {
@@ -294,7 +290,6 @@ class BagIt_IndexController extends Omeka_Controller_Action
 
         $bag = new BagIt(BAGIT_TMP_DIRECTORY . DIRECTORY_SEPARATOR . $filename);
         $bag->validate();
-
 
         if (count($bag->getBagErrors()) == 0) {
 
