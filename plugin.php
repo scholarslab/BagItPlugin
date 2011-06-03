@@ -58,17 +58,38 @@ require_once BAGIT_PLUGIN_DIRECTORY . DIRECTORY_SEPARATOR . 'lib' .
 
 
 /**
- * Install the plugin. Set option 'bagit_version" in the _options table
+ * Set option 'bagit_version" in the _options table, create tables.
  *
  * @return void
  */
 function bagitInstall()
 {
     set_option('bagit_version', BAGIT_PLUGIN_VERSION);
+
+    // Create the tables.
+    $db = get_db();
+
+    $db->query("
+        CREATE TABLE IF NOT EXISTS `{$db->BagitFileCollection}` (
+            `id` int(10) unsigned NOT NULL AUTO_INCREMENT primary key,
+            `name` tinytext COLLATE utf8_unicode_ci NOT NULL,
+            `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) ENGINE = MyISAM DEFAULT CHARSET=utf8 COLLAGE=utf8_unicode_ci
+    ");
+
+    $db->query("
+        CREATE TABLE IF NOT EXISTS `{$db->BagitFileCollectionAssociation}` (
+            `id` int(10) unsigned NOT NULL AUTO_INCREMENT primary key,
+            `file_id` int(10) unsigned NOT NULL,
+            `collection_id` int(10) unsigned NOT NULL
+        ) ENGINE = MyISAM DEFAULT CHARSET=utf8 COLLAGE=utf8_unicode_ci
+    ");
+
 }
 
 /**
- * Uninstall the plugin. delete option 'bagit_version" in the _options
+ * Delete option 'bagit_version" in the _options, drop tables.
  * table.
  *
  * @return void
