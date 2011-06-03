@@ -34,6 +34,7 @@ define('BAGIT_PLUGIN_DIRECTORY', dirname(__FILE__));
 define('BAGIT_BAG_DIRECTORY', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'bags');
 define('BAGIT_PLUGIN_VERSION', get_plugin_ini('BagIt', 'version'));
 define('OMEKA_FILES_RELATIVE_DIRECTORY', 'archive' . DIRECTORY_SEPARATOR . 'files');
+define('BAGIT_TMP_DIRECTORY', BAGIT_PLUGIN_DIRECTORY . DIRECTORY_SEPARATOR . 'bagtmp');
 // }}}
 
 // {{{ hooks

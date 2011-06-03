@@ -160,6 +160,39 @@ class BagIt_IndexController extends Omeka_Controller_Action
     }
 
     /**
+     * Process upload form, read bag, unpack to Dropbox.
+     *
+     * @return void
+     */
+    public function uploadAction() {
+
+        if ($this->getRequest()->isPost()) {
+
+            $form = $this->_doForm();
+            $posted_form = $this->_request->getPost();
+
+            // Validate the file.
+            if ($form->isValid($posted_form)) {
+
+                $data = $form->getValues();
+                $filename = $data['bag'];
+
+                if (!isset($filename)) {
+                    $this->flashError('Select a file.');
+                    return $this->_forward('read', 'index', 'bag-it');
+                }
+
+            }
+
+        } else {
+
+            $this->redirect->goto('browse');
+
+        }
+
+    }
+
+    /**
      * Build the upload form.
      *
      * @param string $tmp The location of the temporary directory
@@ -179,7 +212,11 @@ class BagIt_IndexController extends Omeka_Controller_Action
         $uploader->addValidator('count', false, 1);
         $uploader->addValidator('extension', false, 'tgz');
 
+        $submit = new Zend_Form_Element_Submit('bag_submit');
+        $submit->setLabel('Upload');
+
         $form->addElement($uploader);
+        $form->addElement($submit);
 
         return $form;
 
