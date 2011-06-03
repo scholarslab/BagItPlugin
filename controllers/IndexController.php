@@ -174,13 +174,35 @@ class BagIt_IndexController extends Omeka_Controller_Action
             // Validate the file.
             if ($form->isValid($posted_form)) {
 
-                $data = $form->getValues();
-                $filename = $data['bag'];
+                $original_filename = pathinfo($form->bag->getFileName());
+                $new_filename = 'bagit-' . uniqid() . '.' . $original_filename['extension'];
+                $form->bag->addFilter('Rename', $new_filename);
 
-                if (!isset($filename)) {
-                    $this->flashError('Select a file.');
+                try {
+
+                    $form->bag->receive();
+
+                    $thebag = new Default_Model_File();
+                    $thebag->setDisplayFilename($original_filename['basename'])
+                        ->setActualFilename($new_filename)
+                        ->setMimeType($form->bag->getMimeType())
+                        ->save();
+
+                    if ($this->_doReadBagIt()) {
+                        
+                    }
+
+                } catch (Exception $e) {
+
+                    $this->flashError('Error saving the file or no file selected.');
                     return $this->_forward('read', 'index', 'bag-it');
+
                 }
+
+            } else {
+
+                $this->flashError('Validation failed. Make sure the file is a .tgz.');
+                return $this->_forward('read', 'index', 'bag-it');
 
             }
 
@@ -203,14 +225,16 @@ class BagIt_IndexController extends Omeka_Controller_Action
     protected function _doForm($tmp = BAGIT_TMP_DIRECTORY) {
 
         $form = new Zend_Form();
-        $form->setAction('upload');
-        $form->setMethod('post');
+        $form->setAction('upload')
+            ->setMethod('post');
 
         $uploader = new Zend_Form_Element_File('bag');
-        $uploader->setLabel('Select the Bag file:');
-        $uploader->setDestination($tmp);
-        $uploader->addValidator('count', false, 1);
-        $uploader->addValidator('extension', false, 'tgz');
+        $uploader->setLabel('Select the Bag file:')
+            ->setDestination($tmp)
+            ->addValidator('count', false, 1)
+            ->addValidator('extension', false, 'tgz')
+            ->addValidator('NotEmpty')
+            ->setRequired(true);
 
         $submit = new Zend_Form_Element_Submit('bag_submit');
         $submit->setLabel('Upload');
