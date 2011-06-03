@@ -166,7 +166,7 @@ function bagitAdminNavigationMain($nav)
 {
 
     if (has_permission('BagIt_Index', 'index')) {
-        $nav['BagIt'] = uri('bag-it');
+        $nav['BagIt'] = uri('bag-it/collections');
     }
 
     return $nav;

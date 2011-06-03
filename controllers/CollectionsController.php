@@ -26,7 +26,7 @@
 
 <?php
 
-class BagIt_IndexController extends Omeka_Controller_Action
+class BagIt_CollectionsController extends Omeka_Controller_Action
 {
 
     /**
@@ -51,7 +51,7 @@ class BagIt_IndexController extends Omeka_Controller_Action
     public function indexAction()
     {
 
-        $this->redirect->goto('collections');
+        $this->_forward('browse', 'collections', 'bag-it');
 
     }
 
@@ -60,9 +60,11 @@ class BagIt_IndexController extends Omeka_Controller_Action
      *
      * @return void
      */
-    public function collectionsAction()
+    public function browseAction()
     {
 
+        // Homebrew column sorting processing, so as to keep more control
+        // over how the record loop is done in the view.
         $sort_field = $this->getRequest()->getParam('sort_field');
         $sort_dir = $this->getRequest()->getParam('sort_dir');
         if (isset($sort_dir)) { $sort_dir = ($sort_dir == 'a') ? 'ASC' : 'DESC'; }
@@ -73,22 +75,6 @@ class BagIt_IndexController extends Omeka_Controller_Action
         );
 
         $this->view->collections = $collections;
-
-    }
-
-    /**
-     * Push file data into the browse view.
-     *
-     * @return void
-     */
-    public function browseAction()
-    {
-
-        $files = $this->_modelFile->fetchObjects(
-            $this->_modelFile->getSelect()->order('original_filename')
-        );
-
-        $this->view->files = $files;
 
     }
 

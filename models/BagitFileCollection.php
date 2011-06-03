@@ -32,4 +32,18 @@ class BagitFileCollection extends Omeka_record
     public $name;
     public $updated;
 
+    /**
+     * Returns timestamp in month-day-year format.
+     *
+     * @return string $date The formatted date.
+     */
+    public function getFormattedDate()
+    {
+
+        $date = new Zend_Date($this->updated);
+        return '<strong>' . $date->toString('MMMM d, YYYY') . '</strong> at ' .
+           $date->toString('h:mm a');
+
+    }
+
 }
