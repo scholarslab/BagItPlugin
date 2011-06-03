@@ -182,26 +182,27 @@ class BagIt_IndexController extends Omeka_Controller_Action
 
                     $form->bag->receive();
 
-                    $thebag = new Default_Model_File();
-                    $thebag->setDisplayFilename($original_filename['basename'])
-                        ->setActualFilename($new_filename)
-                        ->setMimeType($form->bag->getMimeType())
-                        ->save();
-
                     if ($this->_doReadBagIt($new_filename)) {
-                        $this->_forward('add', 'index', 'dropbox');
+
+                        $this->_forward('index', 'index', 'dropbox');
+
+                    } else {
+
+                        $this->flashError('Error unpacking the files.');
+                        return $this->_forward('read', 'index', 'bag-it');
+
                     }
 
                 } catch (Exception $e) {
 
-                    $this->flashError('Error saving the file or no file selected.');
+                    $this->flashError('Error saving the file.');
                     return $this->_forward('read', 'index', 'bag-it');
 
                 }
 
             } else {
 
-                $this->flashError('Validation failed. Make sure the file is a .tgz.');
+                $this->flashError('Validation failed or no file selected. Make sure the file is a .tgz.');
                 return $this->_forward('read', 'index', 'bag-it');
 
             }
@@ -294,7 +295,7 @@ class BagIt_IndexController extends Omeka_Controller_Action
         $bag = new BagIt(BAGIT_TMP_DIRECTORY . DIRECTORY_SEPARATOR . $filename);
         $bag->validate();
 
-        if (count($bag->getErrors()) == 0) {
+        if (count($bag->getBagErrors()) == 0) {
 
             $bag->fetch->download();
 
