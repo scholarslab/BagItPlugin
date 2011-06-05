@@ -50,9 +50,11 @@ function bagithelpers_testForFiles() {
  */
 function bagithelpers_getFileKb($id) {
 
-    $db = get_db();
-    $select = $db->getTable('File')->getSelect()->where('f.id = ' . $id);
-    $file = $db->getTable('File')->fetchObject($select);
+    $_model = get_db()->getTable('File');
+
+    $file = $_model->fetchObject(
+        $_model->getSelect()->where('f.id = ' . $id)
+    );
 
     return round($file->size * KB_PER_BYTE, 2);
 
@@ -67,16 +69,12 @@ function bagithelpers_getFileKb($id) {
  */
 function bagithelpers_getItemName($id) {
 
-    $db = get_db();
-    $select = $db->getTable('ElementText')->getSelect()->where('record_id = ' . $id . ' AND element_id = 50');
-    $element_text = $db->getTable('ElementText')->fetchObject($select);
+    $_model = get_db()->getTable('ElementText');
+
+    $element_text = $_model->fetchObject(
+        $_model->getSelect()->where('record_id = ' . $id . ' AND element_id = 50')
+    );
 
     return $element_text->text;
-
-}
-
-function bagithelpers_getBaseUrl() {
-
-    return Zend_Controller_Front::getInstance()->getBaseUrl();
 
 }
