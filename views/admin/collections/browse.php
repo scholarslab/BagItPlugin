@@ -1,11 +1,12 @@
-<?php echo $this->partial('index/admin-header.php', array('topnav' => 'create', 'subtitle' => 'File Collections')); ?>
+<?php echo $this->partial('collections/admin-header.php', array('topnav' => 'create', 'subtitle' => 'File Collections')); ?>
 
 <div id="primary">
 
     <?php echo flash(); ?>
 
-    <?php if (!bagithelpers_testForFiles()): ?>
-        <p>There are no files on the site that can be added to a Bag.</p>
+    <?php if (count($collections) == 0): ?>
+
+        <p>There are no collections. Create one!</p>
 
     <?php else: ?>
 
@@ -14,6 +15,7 @@
                     <tr>
                         <?php browse_headings(array(
                             'Name' => 'name',
+                            'Number of Files' => 'number_of_files',
                             'Last Updated' => 'updated',
                             'Actions' => null
                         )); ?>
@@ -22,9 +24,10 @@
                 <tbody>
                     <?php foreach ($collections as $collection): ?>
                         <tr>
-                            <td><?php echo $collection->name; ?></td>
-                            <td><?php echo $collection->getFormattedDate(); ?></td>
+                            <td><a href="<?php echo uri('bag-it/collections/' . $collection->id); ?>"><?php echo $collection->name; ?></a></td>
                             <td></td>
+                            <td><?php echo $collection->getFormattedDate(); ?></td>
+                            <td width="30%"><?php echo $this->partial('collections/collection-actions.php', array('id' => $collection->id)); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -32,6 +35,19 @@
 
     <?php endif; ?>
 
+    <h2 class="bagit-create-new-collection-header">Create a new collection:</h2>
+
+    <form method="post" action="<?php echo uri(array('action' => 'browse', 'controller' => 'collections')) ?>" accept-charset="utf-8">
+
+        <div id="bagit-create-collection">
+            <?php echo $this->formText('collection_name', '', array('size' => 30)); ?>
+        </div>
+
+        <?php echo submit(array('name' => 'bagit_submit', 'class' => 'submit submit-medium bagit-left'), 'Create Collection'); ?>
+
+    </form>
+
 </div>
 
 <?php foot(); ?>
+

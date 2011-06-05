@@ -63,13 +63,45 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function browseAction()
     {
 
+        // If form is posted, add new collection.
+        if ($this->getRequest()->isPost()) {
+
+            $collection_name = $this->getRequest()->getParam('collection_name');
+
+            if (!$this->_modelBagitFileCollection->confirmUniqueName($collection_name)) {
+
+                $collection = new BagitFileCollection;
+                $collection->name = $collection_name;
+                $collection->save();
+
+            } else {
+
+                $this->flashError('A collection already exists with that name.');
+
+            }
+
+        }
+
         $order = $this->_doColumnSortProcessing($this->getRequest());
 
         $collections = $this->_modelBagitFileCollection->fetchObjects(
             $this->_modelBagitFileCollection->getSelect()->order($order)
         );
 
+        $this->view->form = $form;
         $this->view->collections = $collections;
+
+    }
+
+    /**
+     * Show collections and form to add new collection.
+     *
+     * @return void
+     */
+    public function browsecollectionAction()
+    {
+
+        
 
     }
 
@@ -155,7 +187,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      */
     public function readAction() {
 
-        $form = $this->_doForm();
+        $form = $this->_doUploadForm();
         $this->view->form = $form;
 
     }
@@ -169,7 +201,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         if ($this->getRequest()->isPost()) {
 
-            $form = $this->_doForm();
+            $form = $this->_doUploadForm();
             $posted_form = $this->_request->getPost();
 
             // Validate the file.
@@ -220,7 +252,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return object $form The upload form.
      */
-    protected function _doForm($tmp = BAGIT_TMP_DIRECTORY) {
+    protected function _doUploadForm($tmp = BAGIT_TMP_DIRECTORY) {
 
         $form = new Zend_Form();
         $form->setAction('upload')

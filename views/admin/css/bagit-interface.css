@@ -64,7 +64,7 @@
     padding-left: 38px;
 }
 
-#bag_name {
+#bag_name, #collection_name {
     font-size: 1.5em;
 }
 
@@ -74,4 +74,38 @@
 
 #bagit-bag-name {
     margin: 3em 0 1em 0;
+}
+
+.bagit-create-new-collection-header {
+    margin: 2em 0 0.5em 2px;
+}
+
+.bagit-left {
+    float: left !important;
+    margin-left: 2px;
+}
+
+.bagit-inline-button {
+    font-size: 0.9em;
+    margin: 0 !important;
+    border: none !important;
+}
+
+.bagit-delete {
+    background-color: #800 !important;
+    border-color: #800 !important;
+}
+
+.bagit-create-bag {
+    background-color: #C50 !important;
+    border-color: #C50 !important;
+}
+
+.bagit-inline-form input {
+    display: inline !important;
+}
+
+form.bagit-inline-form {
+    margin: 0;
+    padding: 0;
 }

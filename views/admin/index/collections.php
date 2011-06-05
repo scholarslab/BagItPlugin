@@ -22,7 +22,7 @@
                 <tbody>
                     <?php foreach ($collections as $collection): ?>
                         <tr>
-                            <td><?php echo $collection->name; ?></td>
+                            <td><a href="<?php echo uri('bagit/collections/' . $collection->id); ?>"><?php echo $collection->name; ?></a></td>
                             <td><?php echo $collection->getFormattedDate(); ?></td>
                             <td></td>
                         </tr>
