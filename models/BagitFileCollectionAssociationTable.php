@@ -2,7 +2,7 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * Record class for the BagIt file collections.
+ * Table class for the BagIt file collection associations.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,30 +26,22 @@
 
 <?php
 
-class BagitFileCollection extends Omeka_record
+class BagitFileCollectionAssociationTable extends Omeka_Db_Table
 {
 
-    public $name;
-    public $updated;
-
     /**
-     * Returns timestamp in month-day-year format.
+     * Returns the number of files associated with a given collection.
      *
-     * @return string $date The formatted date.
+     * @param int $id The id of the collection.
+     *
+     * @return int The number of files.
      */
-    public function getFormattedDate()
+    public function getFilesPerId($id)
     {
 
-        $date = new Zend_Date($this->updated);
-        return '<strong>' . $date->toString('MMMM d, YYYY') . '</strong> at ' .
-           $date->toString('h:mm a');
-
-    }
-
-    public function getNumberOfAssociatedFiles()
-    {
-
-        return $this->getTable('BagitFileCollectionAssociation')->getFilesPerId($this->id);
+        return count($this->fetchObjects(
+            $this->getSelect()->where('collection_id = ' . $id)
+        ));
 
     }
 

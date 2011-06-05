@@ -25,7 +25,7 @@
                     <?php foreach ($collections as $collection): ?>
                         <tr>
                             <td><a href="<?php echo uri('bag-it/collections/' . $collection->id); ?>"><?php echo $collection->name; ?></a></td>
-                            <td></td>
+                            <td><?php echo $collection->getNumberOfAssociatedFiles(); ?></td>
                             <td><?php echo $collection->getFormattedDate(); ?></td>
                             <td width="30%"><?php echo $this->partial('collections/collection-actions.php', array('id' => $collection->id)); ?></td>
                         </tr>
