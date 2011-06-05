@@ -84,8 +84,13 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         $order = $this->_doColumnSortProcessing($this->getRequest());
 
+        $db = get_db();
         $collections = $this->_modelBagitFileCollection->fetchObjects(
-            $this->_modelBagitFileCollection->getSelect()->order($order)
+            $this->_modelBagitFileCollection->select()
+            ->from(array('fc' => $db->prefix . 'bagit_file_collections'))
+            ->columns(array('id', 'name', 'updated', 'number_of_files' =>
+                "(SELECT COUNT(collection_id) from `$db->BagitFileCollectionAssociation` WHERE collection_id = fc.id)"))
+            ->order($order)
         );
 
         $this->view->form = $form;
