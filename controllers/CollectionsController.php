@@ -39,6 +39,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         $this->_modelFile = $this->getTable('File');
         $this->_modelBagitFileCollection = $this->getTable('BagitFileCollection');
+        $this->_modelBagitFileCollectionAssociation = $this->getTable('BagitFileCollectionAssociation');
 
     }
 
@@ -107,6 +108,41 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     {
 
         
+
+    }
+
+    /**
+     * Show collections and form to add new collection.
+     *
+     * @return void
+     */
+    public function deletecollectionAction()
+    {
+
+        $collection_id = $this->getRequest()->getParam('id');
+        $collection = $this->_modelBagitFileCollection->fetchObject(
+            $this->_modelBagitFileCollection->getSelect()->where('id = ?', $collection_id)
+        );
+
+        if ($this->getRequest()->getParam('confirm') == 'true') {
+
+            $file_associations = $this->_modelBagitFileCollectionAssociation->fetchObjects(
+                $this->_modelBagitFileCollectionAssociation->getSelect()->where('collection_id = ?', $collection_id)
+            );
+
+            $collection->delete();
+            foreach ($file_associations as $assoc) {
+                $assoc->delete();
+            }
+
+            $this->flashError('"' . $collection->name . '" deleted.');
+            return $this->redirect->goto('browse');
+
+        } else {
+
+            $this->view->collection = $collection;
+
+        }
 
     }
 
