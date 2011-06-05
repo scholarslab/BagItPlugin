@@ -39,6 +39,9 @@ class BagitFileCollectionTable extends Omeka_Db_Table
     public function confirmUniqueName($name)
     {
 
+        // To be Zend kosher, this would use 
+        // Zend_Validate_Db_RecordExists. But how to make it work? 
+        // Instead, query-and-count.
         $matches = $this->fetchObjects(
             $this->getSelect()->where('b.name = "' . $name . '"')
         );
