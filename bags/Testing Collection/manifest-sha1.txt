@@ -1,0 +1,5 @@
+4d0596d9ca27a95969dd298a5f2a40984e038b1b data/05MOTH_CIRQUE-moth.jpg
+116af9e58b57241596d9d927dc062b45f89a183e data/05moth_cover-moth.jpg
+c2234719cbbae01b8ef626b8464c41658133e8a6 data/06mideast-chameleon-custom1.jpg
+9bf252ac29df94933a4c3bd3383921e7b98ee46a data/06yemen-span-hpSmall.jpg
+f91ddf537b519e6760ad6b85fc1ec50f2b5882cf data/testimage2.jpg
