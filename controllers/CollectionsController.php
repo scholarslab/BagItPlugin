@@ -114,7 +114,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         );
 
         if ($this->_request->getPost('browsecollection_submit') == 'Create Bag') {
-            $this->_redirect('bag-it/collections/' . $collection_id . '/export');
+            $this->_redirect('bag-it/collections/' . $collection_id . '/exportprep');
             exit();
         }
 
@@ -286,15 +286,16 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function exportprepAction()
     {
 
-        $form = $this->_doExportForm();
-
         // Getters.
         $collection_id = $this->getRequest()->getParam('id');
         $collection = $this->_modelBagitFileCollection->fetchObject(
             $this->_modelBagitFileCollection->getSelect()->where('id = ?', $collection_id)
         );
 
-        
+        $form = $this->_doExportForm($collection);
+
+        $this->view->form = $form;
+        $this->view->collection = $collection;
 
     }
 
@@ -306,15 +307,21 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function exportAction()
     {
 
-        // Getters.
-        $collection_id = $this->getRequest()->getParam('id');
-        $collection = $this->_modelBagitFileCollection->fetchObject(
-            $this->_modelBagitFileCollection->getSelect()->where('id = ?', $collection_id)
-        );
+        if ($this->getRequest()->isPost()) {
 
-        // Run the bagit function.
-        $this->view->success = $this->_doBagIt($collection_id, $collection->name);
-        $this->view->bag_name = $collection->name;
+            $form = $this->_doExportForm();
+            $posted_form = $this->_request->getPost();
+
+            if ($form->isValid($posted_form)) {
+
+                $values = $form->getValues();
+
+                $this->view->success = $this->_doBagIt($values['collection_id'], $values['name_override'], $values['format']);
+                $this->view->bag_name = $values['name_override'] . '.' . $values['format'];
+
+            }
+
+        }
 
     }
 
@@ -393,27 +400,37 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     /**
      * Build the export form.
      *
-     * @param string $tmp The location of the temporary directory
-     * where the tar files should be stored.
+     * @param string $collection The collection to be exported.
      *
      * @return object $form The upload form.
      */
-    protected function _doExportForm() {
+    protected function _doExportForm($collection) {
 
         $form = new Zend_Form();
         $form->setAction('export')
             ->setMethod('post');
 
         $format = new Zend_Form_Element_Radio('format');
+        $format->setLabel('Format:')
+            ->addMultiOptions(array('tgz' => '.tgz', 'zip' => '.zip'))
+            ->setRequired(true)
+            ->setValue('tgz');
 
         $name_override = new Zend_Form_Element_Text('name_override');
-        $name_override->setLabel('Name:');
+        $name_override->setLabel('Name:')
+            ->setValue(str_replace(' ', '', $collection->name))
+            ->setRequired(true);
 
         $submit = new Zend_Form_Element_Submit('export_submit');
-        $submit->setLabel('Upload');
+        $submit->setLabel('Create');
 
+        $id = new Zend_Form_Element_Hidden('collection_id');
+        $id->setValue($collection->id);
+
+        $form->addElement($format);
         $form->addElement($name_override);
         $form->addElement($submit);
+        $form->addElement($id);
 
         return $form;
 
@@ -427,7 +444,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return boolean $success True if the new bag validates.
      */
-    protected function _doBagIt($collection_id, $collection_name)
+    protected function _doBagIt($collection_id, $collection_name, $format)
     {
 
         // Instantiate the bag.
@@ -457,7 +474,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $bag->update();
 
         // Tar it up.
-        $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name, 'zip');
+        $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name, $format);
 
         // Why are the bags not validating?
         return true;

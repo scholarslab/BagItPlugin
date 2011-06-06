@@ -125,3 +125,20 @@ p.bagit-small {
     clear: none !important;
     margin-left: 1em !important;
 }
+
+.bagit-export-form label {
+    display: inline;
+    float: none;
+}
+
+.bagit-export-form dd {
+    margin-bottom: 1em;
+}
+
+.bagit-export-form dt {
+    margin-bottom: 0.5em;
+}
+
+.bagit-export-form #name_override {
+    font-size: 1.2em;
+}

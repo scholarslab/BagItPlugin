@@ -6,7 +6,7 @@
 
     <?php if ($success): ?>
 
-        <h3 class="bagit-success">Success! <a href="<?php echo public_uri('/plugins/BagIt/bags/') . $bag_name . '.tgz'; ?>">Click here to download the Bag</a>.</h3>
+        <h3 class="bagit-success">Success! <a href="<?php echo public_uri('/plugins/BagIt/bags/') . $bag_name; ?>">Click here to download the Bag</a>.</h3>
 
     <?php else: ?>
 
