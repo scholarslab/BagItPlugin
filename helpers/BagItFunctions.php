@@ -53,22 +53,3 @@ function bagithelpers_getFileKb($size) {
     return round($size * KB_PER_BYTE, 2);
 
 }
-
-/**
- * Returns the title of the file's parent item.
- *
- * @param int $id The 'id' field of the file.
- *
- * @return string The title of the file's parent item.
- */
-function bagithelpers_getItemName($id) {
-
-    $_model = get_db()->getTable('ElementText');
-
-    $element_text = $_model->fetchObject(
-        $_model->getSelect()->where('record_id = ' . $id . ' AND element_id = 50')
-    );
-
-    return $element_text->text;
-
-}
