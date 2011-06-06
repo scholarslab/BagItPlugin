@@ -31,6 +31,11 @@ class BagIt_IndexController extends Omeka_Controller_Action
 
     /**
      * Redirect index requests to the collections controller.
+     * While not strictly necessary, this makes it possible to point
+     * the main link for the plugin to just the module slug ('bag-it'
+     * instead of 'bag-it/collections'), which means that the main
+     * "BagIt" link will always stay highlighted when the user hits
+     * uris without "collections" in the parameters.
      *
      * @return void
      */
