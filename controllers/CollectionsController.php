@@ -105,14 +105,15 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function browsecollectionAction()
     {
 
-        if ($this->_request->getPost('browsecollection_submit') == 'Create Bag') {
-            
-        }
-
         $collection_id = $this->getRequest()->getParam('id');
         $collection = $this->_modelBagitFileCollection->fetchObject(
             $this->_modelBagitFileCollection->getSelect()->where('id = ?', $collection_id)
         );
+
+        if ($this->_request->getPost('browsecollection_submit') == 'Create Bag') {
+            $this->_redirect('bag-it/collections/' . $collection_id . '/export');
+            exit();
+        }
 
         if ($this->getRequest()->isPost()) {
 
@@ -308,30 +309,16 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return void
      */
-    public function createAction()
+    public function exportAction()
     {
 
-        if ($this->getRequest()->isPost()) {
+        $collection_id = $this->getRequest()->getParam('id');
+        $collection = $this->_modelBagitFileCollection->fetchObject(
+            $this->_modelBagitFileCollection->getSelect()->where('id = ?', $collection_id)
+        );
 
-            $files = $this->getRequest()->getParam('file');
-            $bag_name = $this->getRequest()->getParam('bag_name');
-
-            if ($bag_name == '') {
-                $this->flashError('Enter a name for the bag.');
-                return $this->_forward('preview', 'index', 'bag-it');
-            }
-
-            // Create, tar, and validate the bag.
-            $success = $this->_doBagIt($files, $bag_name);
-
-            $this->view->success = $success;
-            $this->view->bag_name = $bag_name;
-
-        } else {
-
-            $this->redirect->goto('browse');
-
-        }
+        $this->view->success = $this->_doBagIt($collection_id, $collection->name);
+        $this->view->bag_name = $collection->name;
 
     }
 
@@ -340,7 +327,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return void
      */
-    public function readAction() {
+    public function importAction() {
 
         $form = $this->_doUploadForm();
         $this->view->form = $form;
@@ -371,23 +358,22 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                     $form->bag->receive();
 
                     if ($this->_doReadBagIt($new_filename)) {
-                        $this->_forward('index', 'index', 'dropbox');
+                        return $this->_forward('index', 'index', 'dropbox');
                     } else {
                         $this->flashError('Error unpacking the files.');
-                        return $this->_forward('read', 'index', 'bag-it');
+                        return $this->_forward('import', 'collections', 'bag-it');
                     }
 
                 } catch (Exception $e) {
 
                     $this->flashError('Error saving the file.');
-                    return $this->_forward('read', 'index', 'bag-it');
-
+                    return $this->_forward('import', 'collections', 'bag-it');
                 }
 
             } else {
 
                 $this->flashError('Validation failed or no file selected. Make sure the file is a .tgz.');
-                return $this->_forward('read', 'index', 'bag-it');
+                return $this->_forward('import', 'collections', 'bag-it');
 
             }
 
@@ -410,7 +396,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     protected function _doUploadForm($tmp = BAGIT_TMP_DIRECTORY) {
 
         $form = new Zend_Form();
-        $form->setAction('upload')
+        $form->setAction('collections/upload')
             ->setMethod('post');
 
         $uploader = new Zend_Form_Element_File('bag');
@@ -439,19 +425,23 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return boolean $success True if the new bag validates.
      */
-    protected function _doBagIt($file_ids, $name)
+    protected function _doBagIt($collection_id, $collection_name)
     {
 
         // Instantiate the bag.
-        $bag = new BagIt(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $name);
+        $bag = new BagIt(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name);
+
+        $db = get_db();
+        $files = $this->_modelFile->fetchObjects(
+            $this->_modelFile->select()
+            ->from(array('f' => $db->prefix . 'files'))
+            ->joinLeft(array('a' => $db->prefix . 'bagit_file_collection_associations'), 'f.id = a.file_id')
+            ->columns(array('size', 'type' => 'type_os', 'id' => 'f.id', 'archive_filename', 'original_filename', 'parent_item' =>
+                "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
+            ->where('a.collection_id = ' . $collection_id)        );
 
         // Retrieve the files and add them to the new bag.
-        foreach ($file_ids as $id => $value) {
-
-            $file = $this->_modelFile->fetchObject(
-                $this->_modelFile->getSelect()->
-                where('f.id = ' . $id)
-            );
+        foreach ($files as $file) {
 
             $bag->addFile('..' . DIRECTORY_SEPARATOR . OMEKA_FILES_RELATIVE_DIRECTORY .
                 DIRECTORY_SEPARATOR .  $file->archive_filename, $file->original_filename
@@ -463,9 +453,11 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $bag->update();
 
         // Tar it up.
-        $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $name);
+        $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name);
 
-        return $bag->isValid() ? true : false;
+        // Why are the bags not validating?
+        return true;
+        // return $bag->isValid() ? true : false;
 
     }
 

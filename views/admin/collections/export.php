@@ -1,0 +1,19 @@
+<?php echo $this->partial('collections/admin-header.php', array('topnav' => 'create', 'subtitle' => 'Export')); ?>
+
+<div id="primary">
+
+    <?php echo flash(); ?>
+
+    <?php if ($success): ?>
+
+        <h3 class="bagit-success">Success! <a href="<?php echo public_uri('/plugins/BagIt/bags/') . $bag_name . '.tgz'; ?>">Click here to download the Bag</a>.</h3>
+
+    <?php else: ?>
+
+        <h2>There was an error. The Bag was not created.</h2>
+
+    <?php endif; ?>
+
+</div>
+
+<?php foot(); ?>

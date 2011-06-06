@@ -7,7 +7,7 @@
 
 
 <div id="unpack-bag" class="bagit-topnav-button">
-    <a class="<?php if ($topnav == 'unpack') { echo 'active'; } ?>" href="<?php echo html_escape(uri('bag-it/index/read')); ?>">Import a Bag</a>
+    <a class="<?php if ($topnav == 'unpack') { echo 'active'; } ?>" href="<?php echo html_escape(uri('bag-it/import')); ?>">Import a Bag</a>
 </div>
 
 <div id="create-bag" class="bagit-topnav-button">
