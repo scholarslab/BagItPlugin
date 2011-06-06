@@ -90,7 +90,7 @@ function bagitInstall()
 }
 
 /**
- * Delete option 'bagit_version" in the _options, drop tables.
+ * Delete option 'bagit_version' in the _options, drop tables.
  * table.
  *
  * @return void
