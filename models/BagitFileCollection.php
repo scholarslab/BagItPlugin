@@ -40,16 +40,34 @@ class BagitFileCollection extends Omeka_record
     public function getFormattedDate()
     {
 
-        $date = new Zend_Date($this->updated);
-        return '<strong>' . $date->toString('MMMM d, YYYY') . '</strong> at ' .
-           $date->toString('h:mm a');
+        $date = new DateTime($this->updated);
+
+        return '<strong>' . $date->format('F j, Y') . '</strong> at ' .
+           $date->format('g:i a');
 
     }
 
+    /**
+     * Returns the number of files in the collection.
+     *
+     * @return int The number of files.
+     */
     public function getNumberOfAssociatedFiles()
     {
 
         return $this->getTable('BagitFileCollectionAssociation')->getFilesPerId($this->id);
+
+    }
+
+    /**
+     * Returns the number of files in the collection.
+     *
+     * @return int The number of files.
+     */
+    public function checkForFileMembership($file_id)
+    {
+
+        return $this->getTable('BagitFileCollectionAssociation')->checkForFileInCollection($file_id, $this->id);
 
     }
 

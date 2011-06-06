@@ -29,6 +29,7 @@
 class BagitFileCollectionAssociation extends Omeka_record
 {
 
-
+    public $file_id;
+    public $collection_id;
 
 }

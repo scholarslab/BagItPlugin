@@ -44,19 +44,13 @@ function bagithelpers_testForFiles() {
 /**
  * Returns the size of the file in kilobytes.
  *
- * @param int $id The 'id' field of the file.
+ * @param int $size The size of the file in bytes.
  *
  * @return float The size of the file, rounded to two decimal places.
  */
-function bagithelpers_getFileKb($id) {
+function bagithelpers_getFileKb($size) {
 
-    $_model = get_db()->getTable('File');
-
-    $file = $_model->fetchObject(
-        $_model->getSelect()->where('f.id = ' . $id)
-    );
-
-    return round($file->size * KB_PER_BYTE, 2);
+    return round($size * KB_PER_BYTE, 2);
 
 }
 

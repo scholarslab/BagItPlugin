@@ -45,4 +45,21 @@ class BagitFileCollectionAssociationTable extends Omeka_Db_Table
 
     }
 
+    /**
+     * Test to see if a file is in a collection.
+     *
+     * @param int $file_id The id of the file.
+     * @param int $collection_id The id of the collection.
+     *
+     * @return boolean True if the file is present.
+     */
+    public function checkForFileInCollection($file_id, $collection_id)
+    {
+
+        return (count($this->fetchObjects(
+            $this->getSelect()->where('file_id = ' . $file_id . ' AND collection_id = ' . $collection_id)
+        )) == 1) ? true : false;
+
+    }
+
 }

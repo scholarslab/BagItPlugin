@@ -43,7 +43,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
     }
 
-
     /**
      * By default, redirect index requests to the browse action.
      *
@@ -93,7 +92,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                 "(SELECT COUNT(collection_id) from `$db->BagitFileCollectionAssociation` WHERE collection_id = fc.id)"))
             ->order($order)
         );
-
         $this->view->form = $form;
         $this->view->collections = $collections;
 
@@ -107,9 +105,125 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function browsecollectionAction()
     {
 
-        
+        if ($this->_request->getPost('browsecollection_submit') == 'Create Bag') {
+            
+        }
+
+        $collection_id = $this->getRequest()->getParam('id');
+        $collection = $this->_modelBagitFileCollection->fetchObject(
+            $this->_modelBagitFileCollection->getSelect()->where('id = ?', $collection_id)
+        );
+
+        if ($this->getRequest()->isPost()) {
+
+            $files = $this->getRequest()->getParam('file');
+
+            foreach ($files as $id => $value) {
+
+                if ($value == 'remove') {
+
+                    $assoc = $this->_modelBagitFileCollectionAssociation->fetchObject(
+                        $this->_modelBagitFileCollectionAssociation->getSelect()->where('file_id = ' . $id . ' AND collection_id = ' . $collection_id)
+                    );
+
+                    $assoc->delete();
+
+                }
+
+            }
+
+        }
+
+        $page = $this->getRequest()->getParam('page');
+        $order = $this->_doColumnSortProcessing($this->getRequest());
+
+        $db = get_db();
+        $files = $this->_modelFile->fetchObjects(
+            $this->_modelFile->select()
+            ->from(array('f' => $db->prefix . 'files'))
+            ->joinLeft(array('a' => $db->prefix . 'bagit_file_collection_associations'), 'f.id = a.file_id')
+            ->columns(array('size', 'type' => 'type_os', 'id' => 'f.id', 'name' => 'original_filename', 'parent_item' =>
+                "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
+            ->where('a.collection_id = ' . $collection_id)
+            ->limitPage($page, 10)
+            ->order($order)
+        );
+        $total_files = count($files);
+
+        $this->view->collection = $collection;
+        $this->view->files = $files;
+        $this->view->current_page = $page;
+        $this->view->total_results = $total_files;
+        $this->view->results_per_page = 10;
 
     }
+
+    /**
+     * Show list of files and controls for adding files to the selected collection.
+     *
+     * @return void
+     */
+    public function addfilesAction()
+    {
+
+        $collection_id = $this->getRequest()->getParam('id');
+        $collection = $this->_modelBagitFileCollection->fetchObject(
+            $this->_modelBagitFileCollection->getSelect()->where('id = ?', $collection_id)
+        );
+
+        if ($this->getRequest()->isPost()) {
+
+            $files = $this->getRequest()->getParam('file');
+
+            foreach ($files as $id => $value) {
+
+                if ($value == 'add' && !$collection->checkForFileMembership($id)) {
+
+                    $assoc = new BagitFileCollectionAssociation;
+                    $assoc->collection_id = $collection_id;
+                    $assoc->file_id = $id;
+                    $assoc->save();
+
+                }
+
+                if ($value == 'remove') {
+
+                    $assoc = $this->_modelBagitFileCollectionAssociation->fetchObject(
+                        $this->_modelBagitFileCollectionAssociation->getSelect()->where('file_id = ' . $id . ' AND collection_id = ' . $collection_id)
+                    );
+
+                    $assoc->delete();
+
+                }
+
+            }
+
+        }
+
+        $page = $this->getRequest()->getParam('page');
+        $order = $this->_doColumnSortProcessing($this->getRequest());
+
+        $db = get_db();
+        $files = $this->_modelFile->fetchObjects(
+            $this->_modelFile->select()
+            ->from(array('f' => $db->prefix . 'files'))
+            ->columns(array('size', 'type' => 'type_os', 'name' => 'original_filename', 'parent_item' =>
+                "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
+            ->limitPage($page, 10)
+            ->order($order)
+        );
+        $total_files = count($this->_modelFile->fetchObjects(
+            $this->_modelFile->getSelect()
+        ));
+
+        $this->view->collection = $collection;
+        $this->view->files = $files;
+        $this->view->current_page = $page;
+        $this->view->total_results = $total_files;
+        $this->view->results_per_page = 10;
+
+    }
+
 
     /**
      * Show collections and form to add new collection.
@@ -135,7 +249,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                 $assoc->delete();
             }
 
-            $this->flashError('"' . $collection->name . '" deleted.');
+            $this->flashError('Collection "' . $collection->name . '" deleted.');
             return $this->redirect->goto('browse');
 
         } else {
@@ -344,6 +458,9 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             );
 
         }
+
+        // Update the hashes.
+        $bag->update();
 
         // Tar it up.
         $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $name);

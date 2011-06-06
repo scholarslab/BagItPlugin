@@ -60,10 +60,6 @@
     margin-right: 1em;
 }
 
-.bagit-checkbox-td {
-    padding-left: 38px;
-}
-
 #bag_name, #collection_name {
     font-size: 1.5em;
 }
@@ -109,4 +105,23 @@ form.bagit-inline-form {
     margin: 0 1em 0 0;
     padding: 0;
     float: left;
+}
+
+.bagit-file-already-added {
+    opacity: 0.5;
+}
+
+.pagination {
+    margin: 1em;
+    float: left;
+}
+
+p.bagit-small {
+    font-size: 0.8em;
+    display: inline;
+}
+
+.bagit-side-by-side {
+    clear: none !important;
+    margin-left: 1em !important;
 }
