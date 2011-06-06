@@ -279,6 +279,26 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     }
 
     /**
+     * Prepare the export.
+     *
+     * @return void
+     */
+    public function exportprepAction()
+    {
+
+        $form = $this->_doExportForm();
+
+        // Getters.
+        $collection_id = $this->getRequest()->getParam('id');
+        $collection = $this->_modelBagitFileCollection->fetchObject(
+            $this->_modelBagitFileCollection->getSelect()->where('id = ?', $collection_id)
+        );
+
+        
+
+    }
+
+    /**
      * Process the final submission.
      *
      * @return void
@@ -305,18 +325,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      */
     public function importAction() {
 
-        $form = $this->_doUploadForm();
-        $this->view->form = $form;
-
-    }
-
-    /**
-     * Process upload form, read bag, unpack to Dropbox.
-     *
-     * @return void
-     */
-    public function uploadAction() {
-
         if ($this->getRequest()->isPost()) {
 
             $form = $this->_doUploadForm();
@@ -326,38 +334,29 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             if ($form->isValid($posted_form)) {
 
                 $original_filename = pathinfo($form->bag->getFileName());
-                $new_filename = 'bagit-' . uniqid() . '.' . $original_filename['extension'];
+                $new_filename = $original_filename['basename'];
                 $form->bag->addFilter('Rename', $new_filename);
 
-                try {
+                $form->bag->receive();
 
-                    $form->bag->receive();
-
-                    if ($this->_doReadBagIt($new_filename)) {
-                        return $this->_forward('index', 'index', 'dropbox');
-                    } else {
-                        $this->flashError('Error unpacking the files.');
-                        return $this->_forward('import', 'collections', 'bag-it');
-                    }
-
-                } catch (Exception $e) {
-
-                    $this->flashError('Error saving the file.');
-                    return $this->_forward('import', 'collections', 'bag-it');
+                if ($this->_doReadBagIt($new_filename)) {
+                    $this->_redirect('dropbox');
+                    exit();
+                } else {
+                    $this->flashError('Error unpacking the files.');
                 }
 
             } else {
 
                 $this->flashError('Validation failed or no file selected. Make sure the file is a .tgz.');
-                return $this->_forward('import', 'collections', 'bag-it');
 
             }
 
-        } else {
-
-            $this->redirect->goto('browse');
-
         }
+
+        $form = $this->_doUploadForm();
+        $this->view->form = $form;
+
 
     }
 
@@ -372,21 +371,48 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     protected function _doUploadForm($tmp = BAGIT_TMP_DIRECTORY) {
 
         $form = new Zend_Form();
-        $form->setAction('collections/upload')
+        $form->setAction('import')
             ->setMethod('post');
 
         $uploader = new Zend_Form_Element_File('bag');
         $uploader->setLabel('Select the Bag file:')
             ->setDestination($tmp)
             ->addValidator('count', false, 1)
-            ->addValidator('extension', false, 'tgz')
-            ->addValidator('NotEmpty')
             ->setRequired(true);
 
         $submit = new Zend_Form_Element_Submit('bag_submit');
         $submit->setLabel('Upload');
 
         $form->addElement($uploader);
+        $form->addElement($submit);
+
+        return $form;
+
+      }
+
+    /**
+     * Build the export form.
+     *
+     * @param string $tmp The location of the temporary directory
+     * where the tar files should be stored.
+     *
+     * @return object $form The upload form.
+     */
+    protected function _doExportForm() {
+
+        $form = new Zend_Form();
+        $form->setAction('export')
+            ->setMethod('post');
+
+        $format = new Zend_Form_Element_Radio('format');
+
+        $name_override = new Zend_Form_Element_Text('name_override');
+        $name_override->setLabel('Name:');
+
+        $submit = new Zend_Form_Element_Submit('export_submit');
+        $submit->setLabel('Upload');
+
+        $form->addElement($name_override);
         $form->addElement($submit);
 
         return $form;
@@ -415,7 +441,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             ->joinLeft(array('a' => $db->prefix . 'bagit_file_collection_associations'), 'f.id = a.file_id')
             ->columns(array('size', 'type' => 'type_os', 'id' => 'f.id', 'archive_filename', 'original_filename', 'parent_item' =>
                 "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
-            ->where('a.collection_id = ' . $collection_id)        );
+                ->where('a.collection_id = ' . $collection_id)
+        );
 
         // Retrieve the files and add them to the new bag.
         foreach ($files as $file) {
@@ -430,7 +457,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $bag->update();
 
         // Tar it up.
-        $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name);
+        $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name, 'zip');
 
         // Why are the bags not validating?
         return true;
@@ -448,6 +475,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     protected function _doReadBagIt($filename)
     {
 
+        $success = false;
+
         $bag = new BagIt(BAGIT_TMP_DIRECTORY . DIRECTORY_SEPARATOR . $filename);
         $bag->validate();
 
@@ -461,13 +490,10 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                     'Dropbox' . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . basename($file));
             }
 
-            return true;
-
-        } else {
-
-            return false;
-
+            $success = true;
         }
+
+        return $success;
 
     }
 
