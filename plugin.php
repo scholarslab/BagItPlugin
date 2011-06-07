@@ -40,7 +40,6 @@ define('BAGIT_TMP_DIRECTORY', BAGIT_PLUGIN_DIRECTORY . DIRECTORY_SEPARATOR . 'ba
 // {{{ hooks
 add_plugin_hook('install', 'bagitInstall');
 add_plugin_hook('uninstall', 'bagitUninstall');
-add_plugin_hook('define_acl', 'bagitDefineAcl');
 add_plugin_hook('define_routes', 'bagitDefineRoutes');
 add_plugin_hook('admin_theme_header', 'bagitAdminThemeHeader');
 // }}}
@@ -110,34 +109,6 @@ function bagitUninstall()
 /**
  * Define the access control list, instantiate controller resources.
  *
- * @param object $acl Access control list passed in by the 'define_acl'
- * hook callback.
- *
- * @return void
- */
-function bagitDefineAcl($acl)
-{
-
-    if (version_compare(OMEKA_VERSION, '2.0-dev', '<')) {
-
-        $resource = new Omeka_Acl_Resource('BagIt_Index');
-        $resource->add(array('index', 'browse', 'preview', 'create'));
-
-    } else {
-
-        $resource = new Zend_Acl_Resource('BagIt_Index');
-
-    }
-
-    $acl->add($resource);
-    $acl->allow('super', 'BagIt_Index');
-    $acl->allow('admin', 'BagIt_Index');
-
-}
-
-/**
- * Define the access control list, instantiate controller resources.
- *
  * @param object $router Router passed in by the front controller
  *
  * @return void
@@ -181,10 +152,7 @@ function bagitAdminThemeHeader($request)
 function bagitAdminNavigationMain($nav)
 {
 
-    if (has_permission('BagIt_Index', 'index')) {
-        $nav['BagIt'] = uri('bag-it');
-    }
-
+    $nav['BagIt'] = uri('bag-it');
     return $nav;
 
 }
