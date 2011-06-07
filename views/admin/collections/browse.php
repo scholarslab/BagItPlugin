@@ -37,7 +37,7 @@
 
     <h2 class="bagit-create-new-collection-header">Create a new collection:</h2>
 
-    <form method="post" action="<?php echo uri(array('action' => 'browse', 'controller' => 'collections')) ?>" accept-charset="utf-8">
+    <form method="post" action="<?php echo uri(array('action' => 'addcollection', 'controller' => 'collections')) ?>" accept-charset="utf-8">
 
         <div id="bagit-create-collection">
             <?php echo $this->formText('collection_name', '', array('size' => 30)); ?>

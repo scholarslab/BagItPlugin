@@ -30,20 +30,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 {
 
     /**
-     * Set shortcut for the models.
-     *
-     * @return void
-     */
-    public function init()
-    {
-
-        $this->_modelFile = $this->getTable('File');
-        $this->_modelBagitFileCollection = $this->getTable('BagitFileCollection');
-        $this->_modelBagitFileCollectionAssociation = $this->getTable('BagitFileCollectionAssociation');
-
-    }
-
-    /**
      * By default, redirect index requests to the browse action.
      *
      * @return void
@@ -63,34 +49,13 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function browseAction()
     {
 
-        // If form is posted, add new collection.
-        if ($this->_request->isPost()) {
-
-            $collection_name = $this->_request->collection_name;
-
-            if (trim($collection_name) == '') {
-                $this->flashError('Enter a name for the collection.');
-            }
-
-            else if ($this->_modelBagitFileCollection->confirmUniqueName($collection_name)) {
-                $collection = new BagitFileCollection;
-                $collection->name = $collection_name;
-                $collection->save();
-            }
-
-            else {
-                $this->flashError('A collection already exists with that name.');
-            }
-
-        }
-
         // Process the sorting parameters.
-        $order = $this->_doColumnSortProcessing($this->getRequest());
+        $order = $this->_doColumnSortProcessing($this->_request);
 
         // Query for collections, tacking on extra column with the number of associated files.
         $db = get_db();
-        $collections = $this->_modelBagitFileCollection->fetchObjects(
-            $this->_modelBagitFileCollection->select()
+        $collections = $this->getTable('BagitFileCollection')->fetchObjects(
+            $this->getTable('BagitFileCollection')->select()
             ->from(array('fc' => $db->prefix . 'bagit_file_collections'))
             ->columns(array('id', 'name', 'updated', 'number_of_files' =>
                 "(SELECT COUNT(collection_id) from `$db->BagitFileCollectionAssociation` WHERE collection_id = fc.id)"))
@@ -98,6 +63,34 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         );
 
         $this->view->collections = $collections;
+
+    }
+
+    /**
+     * Process new collection submission.
+     *
+     * @return void
+     */
+    public function addcollectionAction()
+    {
+
+        $collection_name = $this->_request->collection_name;
+
+        if (trim($collection_name) == '') {
+            $this->flashError('Enter a name for the collection.');
+        }
+
+        else if ($this->getTable('BagitFileCollection')->confirmUniqueName($collection_name)) {
+            $collection = new BagitFileCollection;
+            $collection->name = $collection_name;
+            $collection->save();
+        }
+
+        else {
+            $this->flashError('A collection already exists with that name.');
+        }
+
+        $this->_forward('browse', 'collections', 'bag-it');
 
     }
 
@@ -110,9 +103,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     {
 
         $collection_id = $this->_request->id;
-        $collection = $this->_modelBagitFileCollection->fetchObject(
-            $this->_modelBagitFileCollection->getSelect()->where('id = ?', $collection_id)
-        );
+        $collection = $this->getTable('BagitFileCollection')->find($collection_id);
 
         if ($this->_request->browsecollection_submit == 'Create Bag') {
             $this->_redirect('bag-it/collections/' . $collection_id . '/exportprep');
@@ -129,8 +120,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
                 if ($value == 'remove') {
 
-                    $assoc = $this->_modelBagitFileCollectionAssociation->fetchObject(
-                        $this->_modelBagitFileCollectionAssociation->getSelect()
+                    $assoc = $this->getTable('BagitFileCollectionAssociation')->fetchObject(
+                        $this->getTable('BagitFileCollectionAssociation')->getSelect()
                             ->where('file_id = ' . $id . ' AND collection_id = ' . $collection_id)
                     );
 
@@ -150,8 +141,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         // Get files, left joining on the file-collection association table and
         // adding a column with the name of the parent item from the _element_texts table.
         $db = get_db();
-        $files = $this->_modelFile->fetchObjects(
-            $this->_modelFile->select()
+        $files = $this->getTable('File')->fetchObjects(
+            $this->getTable('File')->select()
             ->from(array('f' => $db->prefix . 'files'))
             ->joinLeft(array('a' => $db->prefix . 'bagit_file_collection_associations'), 'f.id = a.file_id')
             ->columns(array('size', 'type' => 'type_os', 'id' => 'f.id', 'name' => 'original_filename', 'parent_item' =>
@@ -178,9 +169,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     {
 
         $collection_id = $this->_request->id;
-        $collection = $this->_modelBagitFileCollection->fetchObject(
-            $this->_modelBagitFileCollection->getSelect()->where('id = ?', $collection_id)
-        );
+        $collection = $this->getTable('BagitFileCollection')->find($collection_id);
 
         // Check for form submission, iterate over files and add/remove.
         if ($this->_request->isPost()) {
@@ -200,8 +189,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
                 if ($value == 'remove') {
 
-                    $assoc = $this->_modelBagitFileCollectionAssociation->fetchObject(
-                        $this->_modelBagitFileCollectionAssociation->getSelect()
+                    $assoc = $this->getTable('BagitFileCollectionAssociation')->fetchObject(
+                        $this->getTable('BagitFileCollectionAssociation')->getSelect()
                             ->where('file_id = ' . $id . ' AND collection_id = ' . $collection_id)
                     );
 
@@ -220,8 +209,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         // Get files with parent item name.
         $db = get_db();
-        $files = $this->_modelFile->fetchObjects(
-            $this->_modelFile->select()
+        $files = $this->getTable('File')->fetchObjects(
+            $this->getTable('File')->select()
             ->from(array('f' => $db->prefix . 'files'))
             ->columns(array('size', 'type' => 'type_os', 'name' => 'original_filename', 'parent_item' =>
                 "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
@@ -231,8 +220,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         // Get total files for pagination rendering (not constrained by page length limit).
         // Is there a good way to do this without running two queries here?
-        $total_files = count($this->_modelFile->fetchObjects(
-            $this->_modelFile->getSelect()
+        $total_files = count($this->getTable('File')->fetchObjects(
+            $this->getTable('File')->getSelect()
         ));
 
         $this->view->collection = $collection;
@@ -253,15 +242,13 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     {
 
         $collection_id = $this->_request->id;
-        $collection = $this->_modelBagitFileCollection->fetchObject(
-            $this->_modelBagitFileCollection->getSelect()->where('id = ?', $collection_id)
-        );
+        $collection = $this->getTable('BagitFileCollection')->find($collection_id);
 
         // If delete confirmed, go delete.
         if ($this->_request->getParam('confirm') == 'true') {
 
-            $file_associations = $this->_modelBagitFileCollectionAssociation->fetchObjects(
-                $this->_modelBagitFileCollectionAssociation->getSelect()->where('collection_id = ?', $collection_id)
+            $file_associations = $this->getTable('BagitFileCollectionAssociation')->fetchObjects(
+                $this->getTable('BagitFileCollectionAssociation')->getSelect()->where('collection_id = ?', $collection_id)
             );
 
             $collection->delete();
@@ -290,9 +277,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         // Getters.
         $collection_id = $this->_request->id;
-        $collection = $this->_modelBagitFileCollection->fetchObject(
-            $this->_modelBagitFileCollection->getSelect()->where('id = ?', $collection_id)
-        );
+        $collection = $this->getTable('BagitFileCollection')->find($collection_id);
 
         $form = $this->_doExportForm($collection);
 
@@ -309,19 +294,15 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function exportAction()
     {
 
-        if ($this->_request->isPost()) {
+        $form = $this->_doExportForm();
+        $posted_form = $this->_request->getPost();
 
-            $form = $this->_doExportForm();
-            $posted_form = $this->_request->getPost();
+        if ($form->isValid($posted_form)) {
 
-            if ($form->isValid($posted_form)) {
+            $values = $form->getValues();
 
-                $values = $form->getValues();
-
-                $this->view->success = $this->_doBagIt($values['collection_id'], $values['name_override'], $values['format']);
-                $this->view->bag_name = $values['name_override'] . '.' . $values['format'];
-
-            }
+            $this->view->success = $this->_doBagIt($values['collection_id'], $values['name_override'], $values['format']);
+            $this->view->bag_name = $values['name_override'] . '.' . $values['format'];
 
         }
 
@@ -454,8 +435,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         // Get the files associated with the collection.
         $db = get_db();
-        $files = $this->_modelFile->fetchObjects(
-            $this->_modelFile->select()
+        $files = $this->getTable('File')->fetchObjects(
+            $this->getTable('File')->select()
             ->from(array('f' => $db->prefix . 'files'))
             ->joinLeft(array('a' => $db->prefix . 'bagit_file_collection_associations'), 'f.id = a.file_id')
             ->columns(array('size', 'type' => 'type_os', 'id' => 'f.id', 'archive_filename', 'original_filename', 'parent_item' =>
