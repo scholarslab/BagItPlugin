@@ -68,16 +68,18 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
             $collection_name = $this->_request->collection_name;
 
-            if (!$this->_modelBagitFileCollection->confirmUniqueName($collection_name)) {
+            if (trim($collection_name) == '') {
+                $this->flashError('Enter a name for the collection.');
+            }
 
+            else if ($this->_modelBagitFileCollection->confirmUniqueName($collection_name)) {
                 $collection = new BagitFileCollection;
                 $collection->name = $collection_name;
                 $collection->save();
+            }
 
-            } else {
-
+            else {
                 $this->flashError('A collection already exists with that name.');
-
             }
 
         }
@@ -444,7 +446,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return boolean $success True if the new bag validates.
      */
-    protected function _doBagIt($collection_id, $collection_name, $format)
+    private function _doBagIt($collection_id, $collection_name, $format)
     {
 
         // Instantiate the bag.
@@ -489,7 +491,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return boolean $success True if the read succeeds.
      */
-    protected function _doReadBagIt($filename)
+    private function _doReadBagIt($filename)
     {
 
         $success = false;
@@ -523,7 +525,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return string $order The sorting parameter for the query.
      */
-    protected function _doColumnSortProcessing($request)
+    private function _doColumnSortProcessing($request)
     {
 
         $sort_field = $request->getParam('sort_field');

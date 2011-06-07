@@ -46,7 +46,7 @@ class BagitFileCollectionTable extends Omeka_Db_Table
             $this->getSelect()->where('b.name = "' . $name . '"')
         );
 
-        return (count($matches) > 0) ? true : false;
+        return (count($matches) > 0) ? false : true;
 
     }
 
