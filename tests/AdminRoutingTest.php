@@ -26,7 +26,7 @@
 
 <?php
 
-class BagIt_AdminTest extends Omeka_Test_AppTestCase
+class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
 {
 
     public function setUp()
@@ -53,6 +53,24 @@ class BagIt_AdminTest extends Omeka_Test_AppTestCase
         $this->dispatch('bag-it');
         $this->assertController('collections');
         $this->assertAction('browse');
+
+    }
+
+    public function testCanViewImportInterface()
+    {
+
+        $this->dispatch('bag-it/collections/import');
+        $this->assertController('collections');
+        $this->assertAction('import');
+
+    }
+
+    public function testImportRedirectWorks()
+    {
+
+        $this->dispatch('bag-it/import');
+        $this->assertController('collections');
+        $this->assertAction('import');
 
     }
 

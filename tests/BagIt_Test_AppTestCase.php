@@ -29,6 +29,8 @@
 class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 {
 
+    private $_dbHelper;
+
     public function setUpPlugin()
     {
 
@@ -50,6 +52,8 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
         $bagit_plugin_helper = new Omeka_Test_Helper_Plugin;
         $bagit_plugin_helper->setUp('BagIt');
+
+        $this->_dbHelper = Omeka_Test_Helper_Db::factory($this->core);
 
     }
 
@@ -110,30 +114,4 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
         return $collections;
 
     }
-
-    public function createItem($name)
-    {
-
-        $item = insert_item(array('public'=>true),
-            array('Dublin Core'=>array('Title'=>
-            array(array('text'=>$name, 'html'=>true)))));
-
-        return $collection;
-
-    }
-
-    public function createItems($number)
-    {
-
-        $items = array();
-        for ($i=0; $i < $number; $i++) {
-            $items[] = $this->createItem('Item' . $i);
-        }
-
-        return $items;
-
-
-    }
-
-
 }

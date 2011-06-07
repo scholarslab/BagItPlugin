@@ -43,7 +43,7 @@ class BagIt_AllTests extends PHPUnit_Framework_TestSuite
         //     )
         // );
 
-        $suite->addTestFile('AdminTest.php');
+        $suite->addTestFile('AdminRoutingTest.php');
 
         return $suite;
 
