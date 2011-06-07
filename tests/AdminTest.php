@@ -47,4 +47,13 @@ class BagIt_AdminTest extends Omeka_Test_AppTestCase
 
     }
 
+    public function testIndexRedirectWorks()
+    {
+
+        $this->dispatch('bag-it');
+        $this->assertController('collections');
+        $this->assertAction('browse');
+
+    }
+
 }

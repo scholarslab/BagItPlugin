@@ -88,5 +88,52 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     }
 
+    public function createFileCollection($name)
+    {
+
+        $collection = new BagitFileCollection;
+        $collection->name = $name;
+        $collection->save();
+
+        return $collection;
+
+    }
+
+    public function createFileCollections($number)
+    {
+
+        $collections = array();
+        for ($i=0; $i < $number; $i++) {
+            $collections[] = $this->createFileCollection('Testing Collection' . $i);
+        }
+
+        return $collections;
+
+    }
+
+    public function createItem($name)
+    {
+
+        $item = insert_item(array('public'=>true),
+            array('Dublin Core'=>array('Title'=>
+            array(array('text'=>$name, 'html'=>true)))));
+
+        return $collection;
+
+    }
+
+    public function createItems($number)
+    {
+
+        $items = array();
+        for ($i=0; $i < $number; $i++) {
+            $items[] = $this->createItem('Item' . $i);
+        }
+
+        return $items;
+
+
+    }
+
 
 }
