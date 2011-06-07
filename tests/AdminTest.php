@@ -2,7 +2,7 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * Ignition for BagIt test suite.
+ * Interface tests.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -26,26 +26,24 @@
 
 <?php
 
-require_once 'BagIt_Test_AppTestCase.php';
-
-class BagIt_AllTests extends PHPUnit_Framework_TestSuite
+class BagIt_AdminTest extends Omeka_Test_AppTestCase
 {
 
-    public static function suite()
+    public function setUp()
     {
 
-        $suite = new BagIt_AllTests('BagIt Tests');
+        parent::setUp();
+        $this->helper = new BagIt_Test_AppTestCase;
+        $this->helper->setUpPlugin();
 
-        // $collector = new PHPUnit_Runner_IncludePathTestCollector(
-        //     array(
-        //         dirname(__FILE__) . '/integration',
-        //         dirname(__FILE__) . '/unit'
-        //     )
-        // );
+    }
 
-        $suite->addTestFile('AdminTest.php');
+    public function testCanBrowseCollections()
+    {
 
-        return $suite;
+        $this->dispatch('bag-it/collections/browse');
+        $this->assertController('collections');
+        $this->assertAction('browse');
 
     }
 

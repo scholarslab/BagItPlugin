@@ -29,14 +29,7 @@
 class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 {
 
-    const PLUGIN_NAME = 'BagIt';
-
-    /**
-     * Initialize helper and broker.
-     *
-     * @return void
-     */
-    public function setUp()
+    public function setUpPlugin()
     {
 
         parent::setUp();
@@ -44,23 +37,23 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
         $this->user = $this->db->getTable('User')->find(1);
         $this->_authenticateUser($this->user);
 
-        $plugin_broker = get_plugin_broker();
-        $this->_addPluginHooksAndFilters($plugin_broker, self::PLUGIN_NAME);
+        // First set up Dropbox...
+        $dropbox_plugin_broker = get_plugin_broker();
+        $this->_addDropboxPluginHooksAndFilters($dropbox_plugin_broker, 'Dropbox');
 
-        $plugin_helper = new Omeka_Test_Helper_Plugin;
-        $plugin_helper->setUp(self::PLUGIN_NAME);
+        $dropbox_plugin_helper = new Omeka_Test_Helper_Plugin;
+        $dropbox_plugin_helper->setUp('Dropbox');
+
+        // Then set up BagIt.
+        $bagit_plugin_broker = get_plugin_broker();
+        $this->_addBagItPluginHooksAndFilters($bagit_plugin_broker, 'BagIt');
+
+        $bagit_plugin_helper = new Omeka_Test_Helper_Plugin;
+        $bagit_plugin_helper->setUp('BagIt');
 
     }
 
-    /**
-     * Add hooks and filters for the tests.
-     *
-     * @param $broker Returned by get_plugin_broker().
-     * @param $name The name of the plugin being tested.
-     *
-     * @return void
-     */
-    public function _addPluginHooksAndFilters($plugin_broker, $plugin_name)
+    public function _addBagItPluginHooksAndFilters($plugin_broker, $plugin_name)
     {
 
         $plugin_broker->setCurrentPluginDirName($plugin_name);
@@ -74,6 +67,23 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
         // {{{ filters
         add_filter('admin_navigation_main', 'bagitAdminNavigationMain');
+        // }}}
+
+    }
+
+    public function _addDropboxPluginHooksAndFilters($plugin_broker, $plugin_name)
+    {
+
+        $plugin_broker->setCurrentPluginDirName($plugin_name);
+
+        // {{{ hooks
+        add_plugin_hook('after_save_form_item', 'dropbox_save_files');
+        add_plugin_hook('admin_append_to_items_form_files', 'dropbox_list');
+        add_plugin_hook('define_acl', 'dropbox_define_acl');
+        // }}}
+
+        // {{{ filters
+        add_filter('admin_navigation_main', 'dropbox_admin_nav');
         // }}}
 
     }

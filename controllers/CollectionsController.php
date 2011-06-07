@@ -95,7 +95,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             ->order($order)
         );
 
-        $this->view->form = $form;
         $this->view->collections = $collections;
 
     }
