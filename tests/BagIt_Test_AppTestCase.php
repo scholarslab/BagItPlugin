@@ -52,6 +52,31 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     }
 
+    /**
+     * Add hooks and filters for the tests.
+     *
+     * @param $broker Returned by get_plugin_broker().
+     * @param $name The name of the plugin being tested.
+     *
+     * @return void
+     */
+    public function _addPluginHooksAndFilters($plugin_broker, $plugin_name)
+    {
+
+        $plugin_broker->setCurrentPluginDirName($plugin_name);
+
+        // {{{ hooks
+        add_plugin_hook('install', 'bagitInstall');
+        add_plugin_hook('uninstall', 'bagitUninstall');
+        add_plugin_hook('define_routes', 'bagitDefineRoutes');
+        add_plugin_hook('admin_theme_header', 'bagitAdminThemeHeader');
+        // }}}
+
+        // {{{ filters
+        add_filter('admin_navigation_main', 'bagitAdminNavigationMain');
+        // }}}
+
+    }
 
 
 }
