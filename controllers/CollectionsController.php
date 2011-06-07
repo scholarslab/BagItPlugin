@@ -102,13 +102,13 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function browsecollectionAction()
     {
 
-        $collection_id = $this->_request->id;
-        $collection = $this->getTable('BagitFileCollection')->find($collection_id);
-
         if ($this->_request->browsecollection_submit == 'Create Bag') {
             $this->_redirect('bag-it/collections/' . $collection_id . '/exportprep');
             exit();
         }
+
+        $collection_id = $this->_request->id;
+        $collection = $this->getTable('BagitFileCollection')->find($collection_id);
 
         // If the list of associations was updated, check to see if files were
         // checked for deletion and delete them.
