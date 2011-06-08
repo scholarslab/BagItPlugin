@@ -244,7 +244,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $collection_id = $this->_request->id;
         $collection = $this->getTable('BagitFileCollection')->find($collection_id);
 
-        // If delete confirmed, go delete.
+        // If delete confirmed, do delete.
         if ($this->_request->getParam('confirm') == 'true') {
 
             $file_associations = $this->getTable('BagitFileCollectionAssociation')->fetchObjects(

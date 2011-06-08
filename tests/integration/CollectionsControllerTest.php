@@ -42,7 +42,70 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
     {
 
         $this->dispatch('bag-it');
+        $this->assertQueryContentContains('p', 'There are no collections. Create one!');
 
+    }
+
+    public function testAddCollection()
+    {
+
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'collection_name' => 'Testing Collection'
+            )
+        );
+        $this->dispatch('bag-it/collections/addcollection');
+        $this->assertQueryContentContains('a', 'Testing Collection');
+
+    }
+
+    public function testRejectBlankCollectionName()
+    {
+
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'collection_name' => ''
+            )
+        );
+        $this->dispatch('bag-it/collections/addcollection');
+        $this->assertQueryContentContains('div.error', 'Enter a name for the collection');
+
+    }
+
+    public function testCollectionNameTrim()
+    {
+
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'collection_name' => '    '
+            )
+        );
+        $this->dispatch('bag-it/collections/addcollection');
+        $this->assertQueryContentContains('div.error', 'Enter a name for the collection');
+
+    }
+
+    public function testDeleteCollection()
+    {
+
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'collection_name' => 'Testing Collection'
+            )
+        );
+        $this->dispatch('bag-it/collections/addcollection');
+        $this->assertQueryContentContains('a', 'Testing Collection');
+
+        $this->resetRequest()->resetResponse();
+
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'confirm' => 'true'
+            )
+        );
+        $this->dispatch('bag-it/collections/1/delete');
+        $this->assertQueryContentContains('div.error', 'Collection "Testing Collection" deleted.');
+        $this->assertQueryContentContains('p', 'There are no collections. Create one!');
 
     }
 

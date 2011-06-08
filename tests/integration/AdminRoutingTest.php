@@ -42,6 +42,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
     {
 
         $this->dispatch('bag-it/collections/browse');
+        $this->assertModule('bag-it');
         $this->assertController('collections');
         $this->assertAction('browse');
 
@@ -51,6 +52,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
     {
 
         $this->dispatch('bag-it');
+        $this->assertModule('bag-it');
         $this->assertController('collections');
         $this->assertAction('browse');
 
@@ -60,6 +62,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
     {
 
         $this->dispatch('bag-it/collections/import');
+        $this->assertModule('bag-it');
         $this->assertController('collections');
         $this->assertAction('import');
 
@@ -69,6 +72,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
     {
 
         $this->dispatch('bag-it/import');
+        $this->assertModule('bag-it');
         $this->assertController('collections');
         $this->assertAction('import');
 
@@ -79,6 +83,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
 
         $this->helper->createFileCollections(1);
         $this->dispatch('bag-it/collections/1');
+        $this->assertModule('bag-it');
         $this->assertController('collections');
         $this->assertAction('browsecollection');
 
@@ -89,6 +94,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
 
         $this->helper->createFileCollections(1);
         $this->dispatch('bag-it/collections/1/delete');
+        $this->assertModule('bag-it');
         $this->assertController('collections');
         $this->assertAction('deletecollection');
 
@@ -99,6 +105,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
 
         $this->helper->createFileCollections(1);
         $this->dispatch('bag-it/collections/1/exportprep');
+        $this->assertModule('bag-it');
         $this->assertController('collections');
         $this->assertAction('exportprep');
 
@@ -108,6 +115,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
 
         $this->helper->createFileCollections(1);
         $this->dispatch('bag-it/collections/1/add');
+        $this->assertModule('bag-it');
         $this->assertController('collections');
         $this->assertAction('addfiles');
 
