@@ -108,10 +108,18 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
         $collections = array();
         for ($i=0; $i < $number; $i++) {
-            $collections[] = $this->createFileCollection('Testing Collection' . $i);
+            $collections[] = $this->createFileCollection('Testing Collection ' . $i+1);
         }
 
         return $collections;
 
     }
+
+    public function createFile()
+    {
+
+        
+
+    }
+
 }

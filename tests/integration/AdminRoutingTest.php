@@ -65,12 +65,61 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
 
     }
 
-    public function testImportRedirectWorks()
+    public function testImportRoute()
     {
 
         $this->dispatch('bag-it/import');
         $this->assertController('collections');
         $this->assertAction('import');
+
+    }
+
+    public function testBrowseCollectionRoute()
+    {
+
+        $this->helper->createFileCollections(1);
+        $this->dispatch('bag-it/collections/1');
+        $this->assertController('collections');
+        $this->assertAction('browsecollection');
+
+    }
+
+    public function testDeleteCollectionRoute()
+    {
+
+        $this->helper->createFileCollections(1);
+        $this->dispatch('bag-it/collections/1/delete');
+        $this->assertController('collections');
+        $this->assertAction('deletecollection');
+
+    }
+
+    public function testExportRoute()
+    {
+
+        $this->helper->createFileCollections(1);
+        $this->dispatch('bag-it/collections/1/export');
+        $this->assertController('collections');
+        $this->assertAction('export');
+
+    }
+
+    public function testExportPrepRoute()
+    {
+
+        $this->helper->createFileCollections(1);
+        $this->dispatch('bag-it/collections/1/exportprep');
+        $this->assertController('collections');
+        $this->assertAction('exportprep');
+
+    }
+
+    public function testAddFilesRoute() {
+
+        $this->helper->createFileCollections(1);
+        $this->dispatch('bag-it/collections/1/add');
+        $this->assertController('collections');
+        $this->assertAction('addfiles');
 
     }
 
