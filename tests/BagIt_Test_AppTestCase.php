@@ -115,10 +115,21 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     }
 
-    public function createFile()
+    public function createItem($name)
     {
 
-        
+        $item = new Item;
+        $item->featured = 0;
+        $item->public = 1;
+        $item->save();
+
+        $element_text = new ElementText;
+        $element_text->record_id = $item->id;
+        $element_text->record_type_id = 2;
+        $element_text->element_id = 50;
+        $element_text->html = 0;
+        $element_text->text = $name;
+        $element_text->save();
 
     }
 
