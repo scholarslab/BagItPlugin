@@ -511,6 +511,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             }
 
             $success = true;
+
         }
 
         return $success;

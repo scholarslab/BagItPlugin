@@ -74,14 +74,8 @@ class BagIt_BagItTest extends Omeka_Test_AppTestCase
         $this->dispatch('bag-it/collections/1/export');
         $this->assertQueryContentContains('a', 'Click here to download the Bag');
 
-        
-
-    }
-
-    public function testReadBag()
-    {
-
-        
+        $testbag = new BagIt(BAGIT_PLUGIN_DIRECTORY . '/bags/TestCollection.zip');
+        $this->assertEquals(0, count($testbag->getBagErrors()));
 
     }
 
