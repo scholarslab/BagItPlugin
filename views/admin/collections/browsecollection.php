@@ -43,7 +43,16 @@
             <input type="submit" name="browsecollection_submit" value="Create Bag" class="bagit-create-bag bagit-side-by-side">
             <input type="submit" name="browsecollection_submit" value="Update Bag" class="bagit-side-by-side submit">
 
-            <div class="pagination"><?php echo pagination_links(array('page' => $current_page, 'per_page' => $results_per_page, 'total_results' => $total_results)); ?></div>
+              <div class="pagination">
+
+                  <?php echo pagination_links(array('scrolling_style' => 'All', 
+                  'page_range' => '5',
+                  'partial_file' => 'common' . DIRECTORY_SEPARATOR . 'pagination_control.php',
+                  'page' => $current_page,
+                  'per_page' => $results_per_page,
+                  'total_results' => $total_results)); ?>
+
+              </div>
 
             </fieldset>
 

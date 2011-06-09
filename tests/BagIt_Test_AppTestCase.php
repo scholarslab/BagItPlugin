@@ -155,4 +155,17 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     }
 
+    public function deleteFiles()
+    {
+
+        $src = '../../../archive/files/';
+        $handle = opendir($src);
+        while (false !== ($file = readdir($handle))) {
+            if (($file != '.') && ($file != '..') && ($file != '.DS_Store')) {
+                unlink($src . $file);
+            }
+        }
+
+    }
+
 }

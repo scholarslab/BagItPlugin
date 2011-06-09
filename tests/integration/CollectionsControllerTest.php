@@ -54,6 +54,7 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
                 'collection_name' => 'Testing Collection'
             )
         );
+
         $this->dispatch('bag-it/collections/addcollection');
         $this->assertQueryContentContains('a', 'Testing Collection');
 
@@ -67,6 +68,7 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
                 'collection_name' => ''
             )
         );
+
         $this->dispatch('bag-it/collections/addcollection');
         $this->assertQueryContentContains('div.error', 'Enter a name for the collection');
 
@@ -80,6 +82,7 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
                 'collection_name' => '    '
             )
         );
+
         $this->dispatch('bag-it/collections/addcollection');
         $this->assertQueryContentContains('div.error', 'Enter a name for the collection');
 
@@ -93,16 +96,16 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
                 'collection_name' => 'Testing Collection'
             )
         );
+
         $this->dispatch('bag-it/collections/addcollection');
         $this->assertQueryContentContains('a', 'Testing Collection');
-
-        // $this->resetRequest()->resetResponse();
 
         $this->request->setMethod('POST')
             ->setPost(array(
                 'confirm' => 'true'
             )
         );
+
         $this->dispatch('bag-it/collections/1/delete');
         $this->assertQueryContentContains('div.error', 'Collection "Testing Collection" deleted.');
         $this->assertQueryContentContains('p', 'There are no collections. Create one!');
@@ -118,14 +121,56 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
 
     }
 
-    public function testAddItem()
+    public function testAddAndRemoveFiles()
     {
 
         $this->helper->createItem('Testing Item');
         $this->helper->createFiles();
         $this->helper->createFileCollection('Test Collection');
+
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'file' => array(
+                    '3' => 'add',
+                    '4' => 'add',
+                    '5' => 'add'
+                )
+            )
+        );
+
         $this->dispatch('bag-it/collections/1/add');
-        $this->assertController('collections');
+        $this->assertQueryCount(3, 'input[value="remove"]');
+
+        $this->dispatch('bag-it/collections/1');
+        $this->assertQueryContentContains('h2', '"Test Collection" contains 3 files:');
+
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'file' => array(
+                    '3' => 'remove',
+                    '4' => 'remove'
+                )
+            )
+        );
+
+        $this->dispatch('bag-it/collections/1');
+        $this->assertQueryContentContains('h2', '"Test Collection" contains 1 files:');
+
+        $this->resetRequest()->resetResponse();
+
+        $this->dispatch('bag-it/collections/1/add');
+        $this->assertQueryCount(1, 'input[value="remove"]');
+
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'file' => array(
+                    '5' => 'remove'
+                )
+            )
+        );
+
+        $this->dispatch('bag-it/collections/1/add');
+        $this->assertQueryCount(0, 'input[value="remove"]');
 
     }
 

@@ -102,13 +102,13 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function browsecollectionAction()
     {
 
+        $collection_id = $this->_request->id;
+        $collection = $this->getTable('BagitFileCollection')->find($collection_id);
+
         if ($this->_request->browsecollection_submit == 'Create Bag') {
             $this->_redirect('bag-it/collections/' . $collection_id . '/exportprep');
             exit();
         }
-
-        $collection_id = $this->_request->id;
-        $collection = $this->getTable('BagitFileCollection')->find($collection_id);
 
         // If the list of associations was updated, check to see if files were
         // checked for deletion and delete them.
@@ -191,7 +191,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
                     $assoc = $this->getTable('BagitFileCollectionAssociation')->fetchObject(
                         $this->getTable('BagitFileCollectionAssociation')->getSelect()
-                            ->where('file_id = ' . $id . ' AND collection_id = ' . $collection_id)
+                        ->where('file_id = ?', $id)
+                        ->where('collection_id = ?', $collection_id)
                     );
 
                     $assoc->delete();
@@ -294,15 +295,26 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function exportAction()
     {
 
-        $form = $this->_doExportForm();
-        $posted_form = $this->_request->getPost();
+        if ($this->_request->isPost()) {
 
-        if ($form->isValid($posted_form)) {
+            $posted_form = $this->_request->getPost();
 
-            $values = $form->getValues();
+            if (!isset($posted_form['name_override']) || trim($posted_form['name_override'] == '')) {
 
-            $this->view->success = $this->_doBagIt($values['collection_id'], $values['name_override'], $values['format']);
-            $this->view->bag_name = $values['name_override'] . '.' . $values['format'];
+                $this->flashError('Enter a name for the bag.');
+                $this->_redirect('bag-it/collections/' . $posted_form['collection_id'] . '/exportprep');
+                exit();
+
+            } else {
+
+                $this->view->success = $this->_doBagIt($posted_form['collection_id'], $posted_form['name_override'], $posted_form['format']);
+                $this->view->bag_name = $posted_form['name_override'] . '.' . $posted_form['format'];
+
+            }
+
+        } else {
+
+            $this->_forward('browse', 'collections', 'bag-it');
 
         }
 
@@ -387,7 +399,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return object $form The upload form.
      */
-    protected function _doExportForm($collection) {
+    protected function _doExportForm($collection = null) {
 
         $form = new Zend_Form();
         $form->setAction('export')
@@ -401,14 +413,22 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         $name_override = new Zend_Form_Element_Text('name_override');
         $name_override->setLabel('Name:')
-            ->setValue(str_replace(' ', '', $collection->name))
+            // ->setValue(str_replace(' ', '', $collection->name))
             ->setRequired(true);
+
+        if ($collection != null) {
+            $name_override->setValue(str_replace(' ', '', $collection->name));
+        }
 
         $submit = new Zend_Form_Element_Submit('export_submit');
         $submit->setLabel('Create');
 
         $id = new Zend_Form_Element_Hidden('collection_id');
-        $id->setValue($collection->id);
+        // $id->setValue($collection->id);
+
+        if ($collection != null) {
+            $id->setValue($collection->id);
+        }
 
         $form->addElement($format);
         $form->addElement($name_override);
@@ -441,13 +461,13 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             ->joinLeft(array('a' => $db->prefix . 'bagit_file_collection_associations'), 'f.id = a.file_id')
             ->columns(array('size', 'type' => 'type_os', 'id' => 'f.id', 'archive_filename', 'original_filename', 'parent_item' =>
                 "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
-                ->where('a.collection_id = ' . $collection_id)
+            ->where('a.collection_id = ?', $collection_id)
         );
 
         // Retrieve the files and add them to the new bag.
         foreach ($files as $file) {
 
-            $bag->addFile('..' . DIRECTORY_SEPARATOR . OMEKA_FILES_RELATIVE_DIRECTORY .
+            $bag->addFile(BASE_DIR . DIRECTORY_SEPARATOR . OMEKA_FILES_RELATIVE_DIRECTORY .
                 DIRECTORY_SEPARATOR .  $file->archive_filename, $file->original_filename
             );
 
