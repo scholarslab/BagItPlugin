@@ -121,7 +121,11 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
     public function testAddItem()
     {
 
-        
+        $this->helper->createItem('Testing Item');
+        $this->helper->createFiles();
+        $this->helper->createFileCollection('Test Collection');
+        $this->dispatch('bag-it/collections/1/add');
+        $this->assertController('collections');
 
     }
 

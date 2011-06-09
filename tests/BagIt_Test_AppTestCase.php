@@ -133,4 +133,26 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     }
 
+    public function createFiles()
+    {
+
+        $src = '_files';
+        $handle = opendir($src);
+        $i = 1;
+        while (false !== ($file = readdir($handle))) {
+
+            if (($file != '.') && ($file != '..') && ($file != '.DS_Store')) {
+
+                copy($src . '/' . $file, '../../../archive/files/' . $file);
+                $db = get_db();
+                $sql = 'INSERT INTO omeka_files (item_id, size, has_derivative_image, archive_filename, original_filename) VALUES (1, 5000, 0, "' . $file . '", "TestFile' . $i . '.jpg")';
+                $db->query($sql);
+                $i++;;
+
+            }
+
+        }
+
+    }
+
 }
