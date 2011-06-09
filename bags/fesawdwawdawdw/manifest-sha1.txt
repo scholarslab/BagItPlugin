@@ -1,3 +1,0 @@
-116af9e58b57241596d9d927dc062b45f89a183e data/TestFile2.jpg
-4d0596d9ca27a95969dd298a5f2a40984e038b1b data/TestFile6.jpg
-0ea65858ef17f6df01a724de6c589cfd12bba4e9 data/TestFile7.jpg
