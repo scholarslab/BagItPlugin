@@ -143,7 +143,7 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
             if (($file != '.') && ($file != '..') && ($file != '.DS_Store')) {
 
-                copy($src . '/' . $file, '../../../archive/files/' . $file);
+                copy($src . '/' . $file, BASE_DIR . '/archive/files/' . $file);
                 $db = get_db();
                 $sql = 'INSERT INTO omeka_files 
                     (item_id, size, has_derivative_image, archive_filename, original_filename) 
@@ -153,19 +153,6 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
             }
 
-        }
-
-    }
-
-    public function deleteFiles()
-    {
-
-        $src = '../../../archive/files/';
-        $handle = opendir($src);
-        while (false !== ($file = readdir($handle))) {
-            if (($file != '.') && ($file != '..') && ($file != '.DS_Store')) {
-                unlink($src . $file);
-            }
         }
 
     }
