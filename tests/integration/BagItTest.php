@@ -56,10 +56,7 @@ class BagIt_BagItTest extends Omeka_Test_AppTestCase
         );
 
         $this->dispatch('bag-it/collections/1/add');
-        $this->assertQueryCount(3, 'input[value="remove"]');
-
         $this->resetRequest()->resetResponse();
-
         $this->dispatch('bag-it/collections/1/exportprep');
         $this->assertQueryCount(1, 'input[value="TestCollection"]');
 
