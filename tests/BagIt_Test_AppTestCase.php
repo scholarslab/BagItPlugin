@@ -149,11 +149,18 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
                     (item_id, size, has_derivative_image, archive_filename, original_filename) 
                     VALUES (1, 5000, 0, "' . $file . '", "TestFile' . $i . '.jpg")';
                 $db->query($sql);
-                $i++;;
+                $i++;
 
             }
 
         }
+
+    }
+
+    public function createTestBagForRead($bag_name)
+    {
+
+        copy($bag_name, BAGIT_PLUGIN_DIRECTORY . '/bagtmp/' . $bag_name);
 
     }
 

@@ -2,7 +2,7 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * Interface tests.
+ * Bag creation integration test.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -73,6 +73,22 @@ class BagIt_BagItTest extends Omeka_Test_AppTestCase
 
         $testbag = new BagIt(BAGIT_PLUGIN_DIRECTORY . '/bags/TestCollection.zip');
         $this->assertEquals(0, count($testbag->getBagErrors()));
+
+    }
+
+    public function testReadBag()
+    {
+
+        $this->helper->createTestBagForRead('TestBag.tgz');
+        bagithelpers_doReadBagIt('TestBag.tgz');
+
+        $this->dispatch('dropbox');
+        $this->assertQueryContentContains('li', 'TestFile1.jpg');
+        $this->assertQueryContentContains('li', 'TestFile2.jpg');
+        $this->assertQueryContentContains('li', 'TestFile3.jpg');
+        $this->assertQueryContentContains('li', 'TestFile4.jpg');
+        $this->assertQueryContentContains('li', 'TestFile5.jpg');
+        $this->assertQueryContentContains('li', 'TestFile7.jpg');
 
     }
 
