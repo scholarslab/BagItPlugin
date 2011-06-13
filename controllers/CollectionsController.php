@@ -263,7 +263,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
             } else {
 
-                if (bagithelpers_doBagIt($posted_form['collection_id'], $posted_form['name_override'], $posted_form['format'])) {
+                if (bagithelpers_doBagIt($posted_form['collection_id'], $posted_form['name_override'], 
+                        $posted_form['format'])) {
 
                     $this->view->bag_name = $posted_form['name_override'] . '.' . $posted_form['format'];
 
