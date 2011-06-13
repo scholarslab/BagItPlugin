@@ -307,8 +307,16 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
             } else {
 
-                $this->view->success = $this->_doBagIt($posted_form['collection_id'], $posted_form['name_override'], $posted_form['format']);
-                $this->view->bag_name = $posted_form['name_override'] . '.' . $posted_form['format'];
+                if ($this->_doBagIt($posted_form['collection_id'], $posted_form['name_override'], $posted_form['format'])) {
+
+                    $this->view->bag_name = $posted_form['name_override'] . '.' . $posted_form['format'];
+
+                } else {
+
+                    $this->flashError('There was an error. The Bag was not created.');
+                    $this->_forward('exportprep', 'collections', 'bag-it');
+
+                }
 
             }
 
@@ -341,7 +349,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
                 $form->bag->receive();
 
-                if ($this->_doReadBagIt($new_filename)) {
+                if (bagithelpers_doReadBagIt($new_filename)) {
                     $this->_redirect('dropbox');
                     exit();
                 } else {
@@ -492,30 +500,30 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return boolean $success True if the read succeeds.
      */
-    private function _doReadBagIt($filename)
-    {
+    // private function _doReadBagIt($filename)
+    // {
 
-        $success = false;
+    //     $success = false;
 
-        $bag = new BagIt(BAGIT_TMP_DIRECTORY . DIRECTORY_SEPARATOR . $filename);
-        $bag->validate();
+    //     $bag = new BagIt(BAGIT_TMP_DIRECTORY . DIRECTORY_SEPARATOR . $filename);
+    //     $bag->validate();
 
-        if (count($bag->getBagErrors()) == 0) {
+    //     if (count($bag->getBagErrors()) == 0) {
 
-            $bag->fetch->download();
+    //         $bag->fetch->download();
 
-            // Copy each of the files.
-            foreach ($bag->getBagContents() as $file) {
-                copy($file, '..' . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR .
-                    'Dropbox' . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . basename($file));
-            }
+    //         // Copy each of the files.
+    //         foreach ($bag->getBagContents() as $file) {
+    //             copy($file, BASE_DIR . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR .
+    //                 'Dropbox' . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . basename($file));
+    //         }
 
-            $success = true;
+    //         $success = true;
 
-        }
+    //     }
 
-        return $success;
+    //     return $success;
 
-    }
+    // }
 
 }

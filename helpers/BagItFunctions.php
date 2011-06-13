@@ -76,3 +76,36 @@ function bagithelpers_doColumnSortProcessing($request)
     return (isset($sort_field)) ? trim(implode(' ', array($sort_field, $sort_dir))) : '';
 
 }
+
+/**
+ * Read the Bag, unpack it, drop files into the Dropbox files directory
+ *
+ * @param string $filename The name of the uploaded bag.
+ *
+ * @return boolean $success True if the read succeeds.
+ */
+function bagithelpers_doReadBagIt($filename)
+{
+
+    $success = false;
+
+    $bag = new BagIt(BAGIT_TMP_DIRECTORY . DIRECTORY_SEPARATOR . $filename);
+    $bag->validate();
+
+    if (count($bag->getBagErrors()) == 0) {
+
+        $bag->fetch->download();
+
+        // Copy each of the files.
+        foreach ($bag->getBagContents() as $file) {
+            copy($file, BASE_DIR . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR .
+                'Dropbox' . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . basename($file));
+        }
+
+        $success = true;
+
+    }
+
+    return $success;
+
+}
