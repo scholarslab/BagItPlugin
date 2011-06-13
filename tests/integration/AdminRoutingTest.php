@@ -34,7 +34,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
 
         parent::setUp();
         $this->helper = new BagIt_Test_AppTestCase;
-        $this->helper->_setUpPlugin();
+        $this->helper->setUpPlugin();
 
     }
 
