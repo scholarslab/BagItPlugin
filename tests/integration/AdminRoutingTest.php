@@ -34,7 +34,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
 
         parent::setUp();
         $this->helper = new BagIt_Test_AppTestCase;
-        $this->helper->setUpPlugin();
+        $this->helper->_setUpPlugin();
 
     }
 
@@ -81,7 +81,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
     public function testBrowseCollectionRoute()
     {
 
-        $this->helper->createFileCollections(1);
+        $this->helper->_createFileCollections(1);
         $this->dispatch('bag-it/collections/1');
         $this->assertModule('bag-it');
         $this->assertController('collections');
@@ -92,7 +92,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
     public function testDeleteCollectionRoute()
     {
 
-        $this->helper->createFileCollections(1);
+        $this->helper->_createFileCollections(1);
         $this->dispatch('bag-it/collections/1/delete');
         $this->assertModule('bag-it');
         $this->assertController('collections');
@@ -103,7 +103,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
     public function testExportPrepRoute()
     {
 
-        $this->helper->createFileCollections(1);
+        $this->helper->_createFileCollections(1);
         $this->dispatch('bag-it/collections/1/exportprep');
         $this->assertModule('bag-it');
         $this->assertController('collections');
@@ -113,7 +113,7 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
 
     public function testAddFilesRoute() {
 
-        $this->helper->createFileCollections(1);
+        $this->helper->_createFileCollections(1);
         $this->dispatch('bag-it/collections/1/add');
         $this->assertModule('bag-it');
         $this->assertController('collections');

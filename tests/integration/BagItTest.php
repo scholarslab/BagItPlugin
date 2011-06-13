@@ -34,26 +34,26 @@ class BagIt_BagItTest extends Omeka_Test_AppTestCase
 
         parent::setUp();
         $this->helper = new BagIt_Test_AppTestCase;
-        $this->helper->setUpPlugin();
+        $this->helper->_setUpPlugin();
 
     }
 
     public function tearDown()
     {
 
-        $this->helper->clearDirectory(BASE_DIR . '/plugins/Dropbox/files');
-        $this->helper->clearDirectory(BASE_DIR . '/plugins/BagIt/bagtmp');
-        $this->helper->clearDirectory(BASE_DIR . '/plugins/BagIt/bags');
-        $this->helper->clearDirectory(BASE_DIR . '/archive/files');
+        $this->helper->_clearDirectory(BASE_DIR . '/plugins/Dropbox/files');
+        $this->helper->_clearDirectory(BASE_DIR . '/plugins/BagIt/bagtmp');
+        $this->helper->_clearDirectory(BASE_DIR . '/plugins/BagIt/bags');
+        $this->helper->_clearDirectory(BASE_DIR . '/archive/files');
 
     }
 
     public function testCreateBag()
     {
 
-        $this->helper->createItem('Testing Item');
-        $this->helper->createFiles();
-        $this->helper->createFileCollection('Test Collection');
+        $this->helper->_createItem('Testing Item');
+        $this->helper->_createFiles();
+        $this->helper->_createFileCollection('Test Collection');
 
         $this->request->setMethod('POST')
             ->setPost(array(
@@ -84,15 +84,12 @@ class BagIt_BagItTest extends Omeka_Test_AppTestCase
         $testbag = new BagIt(BAGIT_PLUGIN_DIRECTORY . '/bags/TestCollection.zip');
         $this->assertEquals(0, count($testbag->getBagErrors()));
 
-        $this->helper->clearDirectory(BASE_DIR . '/plugins/BagIt/bags');
-        $this->helper->clearDirectory(BASE_DIR . '/archive/files');
-
     }
 
     public function testReadBag()
     {
 
-        $this->helper->createTestBagForRead('TestBag.tgz');
+        $this->helper->_createTestBagForRead('TestBag.tgz');
         bagithelpers_doReadBagIt('TestBag.tgz');
 
         $this->dispatch('dropbox');
@@ -102,9 +99,6 @@ class BagIt_BagItTest extends Omeka_Test_AppTestCase
         $this->assertQueryContentContains('li', 'TestFile4.jpg');
         $this->assertQueryContentContains('li', 'TestFile5.jpg');
         $this->assertQueryContentContains('li', 'TestFile7.jpg');
-
-        $this->helper->clearDirectory(BASE_DIR . '/plugins/Dropbox/files');
-        $this->helper->clearDirectory(BASE_DIR . '/plugins/BagIt/bagtmp');
 
     }
 

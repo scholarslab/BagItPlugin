@@ -92,7 +92,7 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     }
 
-    public function createFileCollection($name)
+    public function _createFileCollection($name)
     {
 
         $collection = new BagitFileCollection;
@@ -103,7 +103,7 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     }
 
-    public function createFileCollections($number)
+    public function _createFileCollections($number)
     {
 
         $collections = array();
@@ -115,7 +115,7 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     }
 
-    public function createItem($name)
+    public function _createItem($name)
     {
 
         $item = new Item;
@@ -133,7 +133,7 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     }
 
-    public function createFiles()
+    public function _createFiles()
     {
 
         $src = '_files';
@@ -157,26 +157,22 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     }
 
-    public function createTestBagForRead($bag_name)
+    public function _createTestBagForRead($bag_name)
     {
 
         copy($bag_name, BAGIT_PLUGIN_DIRECTORY . '/bagtmp/' . $bag_name);
 
     }
 
-    public function clearDirectory($dir_name)
+    public function _clearDirectory($dir_name)
     {
 
         $handle = opendir($dir_name);
         while (false !== ($file = readdir($handle))) {
 
-            if (($file != '.') && ($file != '..') && ($file != '.DS_Store')) {
+            if (is_file($dir_name . '/' . $file)) {
 
                 unlink($dir_name . '/' . $file);
-
-            } else {
-
-                
 
             }
 
