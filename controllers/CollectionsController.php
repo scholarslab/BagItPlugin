@@ -307,7 +307,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
             } else {
 
-                if ($this->_doBagIt($posted_form['collection_id'], $posted_form['name_override'], $posted_form['format'])) {
+                if (bagithelpers_doBagIt($posted_form['collection_id'], $posted_form['name_override'], $posted_form['format'])) {
 
                     $this->view->bag_name = $posted_form['name_override'] . '.' . $posted_form['format'];
 
@@ -346,7 +346,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                 $original_filename = pathinfo($form->bag->getFileName());
                 $new_filename = $original_filename['basename'];
                 $form->bag->addFilter('Rename', $new_filename);
-
                 $form->bag->receive();
 
                 if (bagithelpers_doReadBagIt($new_filename)) {
@@ -357,9 +356,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                 }
 
             } else {
-
                 $this->flashError('Validation failed or no file selected. Make sure the file is a .tgz.');
-
             }
 
         }
@@ -446,84 +443,5 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         return $form;
 
       }
-
-    /**
-     * Create the bag, generate tar.
-     *
-     * @param array $file_ids Array of ids, posted from the form.
-     * @param string $name The name of the bag.
-     *
-     * @return boolean $success True if the new bag validates.
-     */
-    private function _doBagIt($collection_id, $collection_name, $format)
-    {
-
-        // Instantiate the bag.
-        $bag = new BagIt(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name);
-
-        // Get the files associated with the collection.
-        $db = get_db();
-        $files = $this->getTable('File')->fetchObjects(
-            $this->getTable('File')->select()
-            ->from(array('f' => $db->prefix . 'files'))
-            ->joinLeft(array('a' => $db->prefix . 'bagit_file_collection_associations'), 'f.id = a.file_id')
-            ->columns(array('size', 'type' => 'type_os', 'id' => 'f.id', 'archive_filename', 'original_filename', 'parent_item' =>
-                "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
-            ->where('a.collection_id = ?', $collection_id)
-        );
-
-        // Retrieve the files and add them to the new bag.
-        foreach ($files as $file) {
-
-            $bag->addFile(BASE_DIR . DIRECTORY_SEPARATOR . OMEKA_FILES_RELATIVE_DIRECTORY .
-                DIRECTORY_SEPARATOR .  $file->archive_filename, $file->original_filename
-            );
-
-        }
-
-        // Update the hashes.
-        $bag->update();
-
-        // Tar it up.
-        $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name, $format);
-
-        // Why are the bags not validating?
-        return true;
-        // return $bag->isValid() ? true : false;
-
-    }
-
-    /**
-     * Read the Bag, unpack it, drop files into the Dropbox files directory
-     *
-     * @param string $filename The name of the uploaded bag.
-     *
-     * @return boolean $success True if the read succeeds.
-     */
-    // private function _doReadBagIt($filename)
-    // {
-
-    //     $success = false;
-
-    //     $bag = new BagIt(BAGIT_TMP_DIRECTORY . DIRECTORY_SEPARATOR . $filename);
-    //     $bag->validate();
-
-    //     if (count($bag->getBagErrors()) == 0) {
-
-    //         $bag->fetch->download();
-
-    //         // Copy each of the files.
-    //         foreach ($bag->getBagContents() as $file) {
-    //             copy($file, BASE_DIR . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR .
-    //                 'Dropbox' . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . basename($file));
-    //         }
-
-    //         $success = true;
-
-    //     }
-
-    //     return $success;
-
-    // }
 
 }

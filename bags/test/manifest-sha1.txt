@@ -1,4 +1,0 @@
-9bf252ac29df94933a4c3bd3383921e7b98ee46a data/TestFile1.jpg
-116af9e58b57241596d9d927dc062b45f89a183e data/TestFile2.jpg
-a5a1a2434ea1df614ea376f5c93ffd93e870d41a data/TestFile3.jpg
-939a2343e501219eca95f772bfb600d47f23b2f3 data/TestFile5.jpg

@@ -36,7 +36,6 @@ define('KB_PER_BYTE', 0.0009765625);
 function bagithelpers_testForFiles() {
 
     $file_count = get_db()->getTable('File')->count();
-
     return ($file_count > 0) ? true : false;
 
 }
@@ -74,6 +73,50 @@ function bagithelpers_doColumnSortProcessing($request)
     }
 
     return (isset($sort_field)) ? trim(implode(' ', array($sort_field, $sort_dir))) : '';
+
+}
+
+/**
+ * Create the bag, generate tar.
+ *
+ * @param array $file_ids Array of ids, posted from the form.
+ * @param string $name The name of the bag.
+ *
+ * @return boolean $success True if the new bag validates.
+ */
+function bagithelpers_doBagIt($collection_id, $collection_name, $format)
+{
+
+    // Instantiate the bag.
+    $bag = new BagIt(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name);
+
+    // Get the files associated with the collection.
+    $db = get_db();
+    $files = $db->getTable('File')->fetchObjects(
+        $db->getTable('File')->select()
+        ->from(array('f' => $db->prefix . 'files'))
+        ->joinLeft(array('a' => $db->prefix . 'bagit_file_collection_associations'), 'f.id = a.file_id')
+        ->columns(array('size', 'type' => 'type_os', 'id' => 'f.id', 'archive_filename', 'original_filename', 'parent_item' =>
+            "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
+        ->where('a.collection_id = ?', $collection_id)
+    );
+
+    // Retrieve the files and add them to the new bag.
+    foreach ($files as $file) {
+        $bag->addFile(BASE_DIR . DIRECTORY_SEPARATOR . OMEKA_FILES_RELATIVE_DIRECTORY .
+            DIRECTORY_SEPARATOR .  $file->archive_filename, $file->original_filename
+        );
+    }
+
+    // Update the hashes.
+    $bag->update();
+
+    // Tar it up.
+    $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name, $format);
+
+    // Why are the bags not validating?
+    // return true;
+    return $bag->isValid() ? true : false;
 
 }
 
