@@ -170,7 +170,7 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
         $handle = opendir($dir_name);
         while (false !== ($file = readdir($handle))) {
 
-            if (is_file($dir_name . '/' . $file)) {
+            if (is_file($dir_name . '/' . $file) && $file !== '.gitignore') {
                 unlink($dir_name . '/' . $file);
             } elseif (is_dir($dir_name . '/' . $file) && $file !== '.' && $file !== '..') {
                 $this->_clearDirectory($dir_name . '/' . $file);
