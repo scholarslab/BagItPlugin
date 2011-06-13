@@ -48,6 +48,7 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
         $this->helper->_clearDirectory(BASE_DIR . '/archive/files');
 
         $this->helper->_clearDbTable('files');
+        $this->helper->_clearDbTable('items');
         $this->helper->_clearDbTable('bagit_file_collections');
         $this->helper->_clearDbTable('bagit_file_collection_associations');
 
