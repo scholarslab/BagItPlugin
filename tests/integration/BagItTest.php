@@ -38,6 +38,16 @@ class BagIt_BagItTest extends Omeka_Test_AppTestCase
 
     }
 
+    public function tearDown()
+    {
+
+        $this->helper->clearDirectory(BASE_DIR . '/plugins/Dropbox/files');
+        $this->helper->clearDirectory(BASE_DIR . '/plugins/BagIt/bagtmp');
+        $this->helper->clearDirectory(BASE_DIR . '/plugins/BagIt/bags');
+        $this->helper->clearDirectory(BASE_DIR . '/archive/files');
+
+    }
+
     public function testCreateBag()
     {
 
@@ -74,6 +84,9 @@ class BagIt_BagItTest extends Omeka_Test_AppTestCase
         $testbag = new BagIt(BAGIT_PLUGIN_DIRECTORY . '/bags/TestCollection.zip');
         $this->assertEquals(0, count($testbag->getBagErrors()));
 
+        $this->helper->clearDirectory(BASE_DIR . '/plugins/BagIt/bags');
+        $this->helper->clearDirectory(BASE_DIR . '/archive/files');
+
     }
 
     public function testReadBag()
@@ -89,6 +102,9 @@ class BagIt_BagItTest extends Omeka_Test_AppTestCase
         $this->assertQueryContentContains('li', 'TestFile4.jpg');
         $this->assertQueryContentContains('li', 'TestFile5.jpg');
         $this->assertQueryContentContains('li', 'TestFile7.jpg');
+
+        $this->helper->clearDirectory(BASE_DIR . '/plugins/Dropbox/files');
+        $this->helper->clearDirectory(BASE_DIR . '/plugins/BagIt/bagtmp');
 
     }
 

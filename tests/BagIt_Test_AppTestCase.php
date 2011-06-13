@@ -164,4 +164,24 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     }
 
+    public function clearDirectory($dir_name)
+    {
+
+        $handle = opendir($dir_name);
+        while (false !== ($file = readdir($handle))) {
+
+            if (($file != '.') && ($file != '..') && ($file != '.DS_Store')) {
+
+                unlink($dir_name . '/' . $file);
+
+            } else {
+
+                
+
+            }
+
+        }
+
+    }
+
 }
