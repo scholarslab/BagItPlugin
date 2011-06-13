@@ -76,4 +76,11 @@ class BagIt_BagItTest extends Omeka_Test_AppTestCase
 
     }
 
+    public function testReadBag()
+    {
+
+        
+
+    }
+
 }

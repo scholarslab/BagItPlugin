@@ -50,7 +50,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     {
 
         // Process the sorting parameters.
-        $order = $this->_doColumnSortProcessing($this->_request);
+        $order = bagithelpers_doColumnSortProcessing($this->_request);
 
         // Query for collections, tacking on extra column with the number of associated files.
         $db = get_db();
@@ -136,7 +136,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         // Get paging information for the pagination function in the view,
         // process column sorting.
         $page = $this->_request->page;
-        $order = $this->_doColumnSortProcessing($this->_request);
+        $order = bagithelpers_doColumnSortProcessing($this->_request);
 
         // Get files, left joining on the file-collection association table and
         // adding a column with the name of the parent item from the _element_texts table.
@@ -206,7 +206,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         // Get paging information for the pagination function in the view,
         // process column sorting.
         $page = $this->_request->page;
-        $order = $this->_doColumnSortProcessing($this->_request);
+        $order = bagithelpers_doColumnSortProcessing($this->_request);
 
         // Get files with parent item name.
         $db = get_db();
@@ -515,29 +515,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         }
 
         return $success;
-
-    }
-
-    /**
-     * A homebrew colum sorter, implemented so as to keep more control 
-     * over how the record loop is handled in the view.
-     *
-     * @param object $request The incoming request dispatched by the 
-     * front controller.
-     *
-     * @return string $order The sorting parameter for the query.
-     */
-    private function _doColumnSortProcessing($request)
-    {
-
-        $sort_field = $request->getParam('sort_field');
-        $sort_dir = $request->getParam('sort_dir');
-
-        if (isset($sort_dir)) {
-            $sort_dir = ($sort_dir == 'a') ? 'ASC' : 'DESC';
-        }
-
-        return (isset($sort_field)) ? trim(implode(' ', array($sort_field, $sort_dir))) : '';
 
     }
 
