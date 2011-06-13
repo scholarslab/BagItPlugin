@@ -113,24 +113,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         // If the list of associations was updated, check to see if files were
         // checked for deletion and delete them.
         if ($this->_request->isPost()) {
-
-            $files = $this->_request->file;
-
-            foreach ($files as $id => $value) {
-
-                if ($value == 'remove') {
-
-                    $assoc = $this->getTable('BagitFileCollectionAssociation')->fetchObject(
-                        $this->getTable('BagitFileCollectionAssociation')->getSelect()
-                            ->where('file_id = ' . $id . ' AND collection_id = ' . $collection_id)
-                    );
-
-                    $assoc->delete();
-
-                }
-
-            }
-
+            $this->_addRemoveFilesFromCollection($collection, $this->_request->file);
         }
 
         // Get paging information for the pagination function in the view,
@@ -173,34 +156,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         // Check for form submission, iterate over files and add/remove.
         if ($this->_request->isPost()) {
-
-            $files = $this->_request->file;
-
-            foreach ($files as $id => $value) {
-
-                if ($value == 'add' && !$collection->checkForFileMembership($id)) {
-
-                    $assoc = new BagitFileCollectionAssociation;
-                    $assoc->collection_id = $collection_id;
-                    $assoc->file_id = $id;
-                    $assoc->save();
-
-                }
-
-                if ($value == 'remove') {
-
-                    $assoc = $this->getTable('BagitFileCollectionAssociation')->fetchObject(
-                        $this->getTable('BagitFileCollectionAssociation')->getSelect()
-                        ->where('file_id = ?', $id)
-                        ->where('collection_id = ?', $collection_id)
-                    );
-
-                    $assoc->delete();
-
-                }
-
-            }
-
+            $this->_addRemoveFilesFromCollection($collection, $this->_request->file);
         }
 
         // Get paging information for the pagination function in the view,
@@ -364,6 +320,42 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $form = $this->_doUploadForm();
         $this->view->form = $form;
 
+
+    }
+
+    /**
+     * Build the upload form.
+     *
+     * @param object $collection The collection to be altered
+     *
+     * @return void.
+     */
+    protected function _addRemoveFilesFromCollection($collection, $files) {
+
+        foreach ($files as $id => $value) {
+
+            if ($value == 'add' && !$collection->checkForFileMembership($id)) {
+
+                $assoc = new BagitFileCollectionAssociation;
+                $assoc->collection_id = $collection->id;
+                $assoc->file_id = $id;
+                $assoc->save();
+
+            }
+
+            if ($value == 'remove') {
+
+                $assoc = $this->getTable('BagitFileCollectionAssociation')->fetchObject(
+                    $this->getTable('BagitFileCollectionAssociation')->getSelect()
+                    ->where('file_id = ?', $id)
+                    ->where('collection_id = ?', $collection->id)
+                );
+
+                $assoc->delete();
+
+            }
+
+        }
 
     }
 
