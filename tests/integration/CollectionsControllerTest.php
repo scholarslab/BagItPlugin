@@ -35,6 +35,7 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
         parent::setUp();
         $this->helper = new BagIt_Test_AppTestCase;
         $this->helper->setUpPlugin();
+        $this->db = get_db();
 
     }
 
@@ -46,6 +47,10 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
         $this->helper->_clearDirectory(BASE_DIR . '/plugins/BagIt/bags');
         $this->helper->_clearDirectory(BASE_DIR . '/archive/files');
 
+        $this->helper->_clearDbTable('files');
+        $this->helper->_clearDbTable('bagit_file_collections');
+        $this->helper->_clearDbTable('bagit_file_collection_associations');
+
     }
 
     public function testDetectNoCollections()
@@ -53,6 +58,7 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
 
         $this->dispatch('bag-it');
         $this->assertQueryContentContains('p', 'There are no collections. Create one!');
+        $this->assertEquals(0, $this->db->getTable('BagitFileCollection')->count());
 
     }
 
@@ -67,6 +73,7 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
 
         $this->dispatch('bag-it/collections/addcollection');
         $this->assertQueryContentContains('a', 'Testing Collection');
+        $this->assertEquals(1, $this->db->getTable('BagitFileCollection')->count());
 
     }
 
@@ -109,6 +116,7 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
 
         $this->dispatch('bag-it/collections/addcollection');
         $this->assertQueryContentContains('a', 'Testing Collection');
+        $this->assertEquals(1, $this->db->getTable('BagitFileCollection')->count());
 
         $this->request->setMethod('POST')
             ->setPost(array(
@@ -117,8 +125,8 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
         );
 
         $this->dispatch('bag-it/collections/1/delete');
-        $this->assertQueryContentContains('div.error', 'Collection "Testing Collection" deleted.');
         $this->assertQueryContentContains('p', 'There are no collections. Create one!');
+        $this->assertEquals(0, $this->db->getTable('BagitFileCollection')->count());
 
     }
 

@@ -171,12 +171,21 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
         while (false !== ($file = readdir($handle))) {
 
             if (is_file($dir_name . '/' . $file)) {
-
                 unlink($dir_name . '/' . $file);
-
+            } elseif (is_dir($dir_name . '/' . $file) && $file !== '.' && $file !== '..') {
+                $this->_clearDirectory($dir_name . '/' . $file);
+                rmdir($dir_name . '/' . $file);
             }
 
         }
+
+    }
+
+    public function _clearDbTable($table_name)
+    {
+
+        $db = get_db();
+        $db->query('TRUNCATE TABLE ' . $db->prefix . $table_name);
 
     }
 
