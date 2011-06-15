@@ -1,4 +1,4 @@
-<phpunit bootstrap="../../../application/tests/bootstrap.php"
+<phpunit bootstrap="/Applications/MAMP/htdocs/omeka_testing/application/tests/bootstrap.php"
          convertErrorsToExceptions="true"
          convertWarningsToExceptions="true">
     <testsuite name="BagIt Tests">
