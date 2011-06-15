@@ -4,7 +4,7 @@
 
     <testsuite name="BagIt Tests">
       <!-- <file>tests/AllTests.php</file>-->
-      <directory>tests</directory>
+      <directory suffix="AllTests.php">tests</directory>
     </testsuite>
 
 
