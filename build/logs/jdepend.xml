@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PDepend>
+  <Packages>
+    <Package name="+global">
+      <Stats>
+        <TotalClasses>29</TotalClasses>
+        <ConcreteClasses>29</ConcreteClasses>
+        <AbstractClasses>0</AbstractClasses>
+        <Ca>0</Ca>
+        <Ce>2</Ce>
+        <A>0</A>
+        <I>1</I>
+        <D>0</D>
+      </Stats>
+      <ConcreteClasses>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/controllers/CollectionsController.php">BagIt_CollectionsController</Class>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/controllers/IndexController.php">BagIt_IndexController</Class>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/models/BagitFileCollection.php">BagitFileCollection</Class>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/models/BagitFileCollectionAssociation.php">BagitFileCollectionAssociation</Class>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/models/BagitFileCollectionAssociationTable.php">BagitFileCollectionAssociationTable</Class>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/models/BagitFileCollectionTable.php">BagitFileCollectionTable</Class>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/tests/AllTests.php">BagIt_AllTests</Class>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/tests/BagIt_Test_AppTestCase.php">BagIt_Test_AppTestCase</Class>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/tests/integration/AdminRoutingTest.php">BagIt_AdminRoutingTest</Class>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/tests/integration/BagItTest.php">BagIt_BagItTest</Class>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/tests/integration/CollectionsControllerTest.php">BagIt_CollectionsControllerTest</Class>
+      </ConcreteClasses>
+      <AbstractClasses/>
+      <DependsUpon>
+        <Package>+date</Package>
+        <Package>Bagit</Package>
+      </DependsUpon>
+      <UsedBy/>
+    </Package>
+    <Package name="Bagit\Exception">
+      <Stats>
+        <TotalClasses>1</TotalClasses>
+        <ConcreteClasses>1</ConcreteClasses>
+        <AbstractClasses>0</AbstractClasses>
+        <Ca>1</Ca>
+        <Ce>1</Ce>
+        <A>0</A>
+        <I>0.5</I>
+        <D>0.5</D>
+      </Stats>
+      <ConcreteClasses>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/lib/bagit.php">BagItException</Class>
+      </ConcreteClasses>
+      <AbstractClasses/>
+      <DependsUpon>
+        <Package>+core</Package>
+      </DependsUpon>
+      <UsedBy>
+        <Package>Bagit</Package>
+      </UsedBy>
+    </Package>
+    <Package name="Bagit">
+      <Stats>
+        <TotalClasses>3</TotalClasses>
+        <ConcreteClasses>3</ConcreteClasses>
+        <AbstractClasses>0</AbstractClasses>
+        <Ca>1</Ca>
+        <Ce>2</Ce>
+        <A>0</A>
+        <I>0.66666666666667</I>
+        <D>0.33333333333333</D>
+      </Stats>
+      <ConcreteClasses>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/lib/bagit.php">BagIt</Class>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/lib/bagit_fetch.php">BagItFetch</Class>
+        <Class sourceFile="/Applications/MAMP/htdocs/omeka_testing/plugins/BagIt/lib/bagit_manifest.php">BagItManifest</Class>
+      </ConcreteClasses>
+      <AbstractClasses/>
+      <DependsUpon>
+        <Package>+core</Package>
+        <Package>Bagit\Exception</Package>
+      </DependsUpon>
+      <UsedBy>
+        <Package>+global</Package>
+      </UsedBy>
+    </Package>
+  </Packages>
+  <Cycles/>
+</PDepend>

@@ -1,0 +1,673 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>
+            Mayflower Code Browser - Source Code
+        </title>
+        <link rel="stylesheet" type="text/css" href="../../js/jquery.sidebar/css/codebrowser/sidebar.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/global.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/cruisecontrol.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/review.css" />
+
+        <script type="text/javascript" src="../../js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="../../js/jquery.sidebar/jquery-ui-1.7.2.custom.min.js"></script>
+        <script type="text/javascript" src="../../js/jquery.sidebar/jquery.sidebar.js"></script>
+        <script type="text/javascript" src="../../js/jquery.cluetip/lib/jquery.hoverIntent.js"></script>
+        <script type="text/javascript" src="../../js/jquery.cluetip/lib/jquery.bgiframe.min.js"></script>
+        <script type="text/javascript" src="../../js/jquery.cluetip/jquery.cluetip.min.js"></script>
+
+        <script type="text/javascript" src="../../js/review.js"></script>
+    </head>
+    <body class="codebrowser">
+        <div class="header">
+            <a href="./../../index.html">Go back to index</a> |
+            <a href="http://github.com/mayflowergmbh/PHP_CodeBrowser">PHP CodeBrowser</a>
+        </div>
+        <hr/>
+        <div id="review">
+            <div class="filepath">
+                build/api/Bagit/_lib---bagit_utils.php.html            </div>
+
+            <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div class="code"><ol class="code"><li id="line_1" class="odd"><span class="lineNumber">&nbsp;&nbsp;1&nbsp;</span>&lt;?xml&nbsp;version="1.0"&nbsp;encoding="iso-8859-1"?&gt;<a name="line_1"></a></li>
+<li id="line_2" class="even"><span class="lineNumber">&nbsp;&nbsp;2&nbsp;</span>&lt;!DOCTYPE&nbsp;html&nbsp;PUBLIC&nbsp;"-//W3C//DTD&nbsp;XHTML&nbsp;1.0&nbsp;Transitional//EN"&nbsp;"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;<a name="line_2"></a></li>
+<li id="line_3" class="odd"><span class="lineNumber">&nbsp;&nbsp;3&nbsp;</span>&nbsp;&nbsp;&lt;html&nbsp;xmlns="http://www.w3.org/1999/xhtml"&gt;<a name="line_3"></a></li>
+<li id="line_4" class="even"><span class="lineNumber">&nbsp;&nbsp;4&nbsp;</span>		&lt;head&gt;<a name="line_4"></a></li>
+<li id="line_5" class="odd"><span class="lineNumber">&nbsp;&nbsp;5&nbsp;</span>			&lt;!--&nbsp;template&nbsp;designed&nbsp;by&nbsp;Marco&nbsp;Von&nbsp;Ballmoos&nbsp;--&gt;<a name="line_5"></a></li>
+<li id="line_6" class="even"><span class="lineNumber">&nbsp;&nbsp;6&nbsp;</span>			&lt;title&gt;Docs&nbsp;for&nbsp;page&nbsp;bagit_utils.php&lt;/title&gt;<a name="line_6"></a></li>
+<li id="line_7" class="odd"><span class="lineNumber">&nbsp;&nbsp;7&nbsp;</span>			&lt;link&nbsp;rel="stylesheet"&nbsp;href="../media/stylesheet.css"&nbsp;/&gt;<a name="line_7"></a></li>
+<li id="line_8" class="even"><span class="lineNumber">&nbsp;&nbsp;8&nbsp;</span>			&lt;meta&nbsp;http-equiv='Content-Type'&nbsp;content='text/html;&nbsp;charset=iso-8859-1'/&gt;<a name="line_8"></a></li>
+<li id="line_9" class="odd"><span class="lineNumber">&nbsp;&nbsp;9&nbsp;</span>		&lt;/head&gt;<a name="line_9"></a></li>
+<li id="line_10" class="even"><span class="lineNumber">&nbsp;10&nbsp;</span>		&lt;body&gt;<a name="line_10"></a></li>
+<li id="line_11" class="odd"><span class="lineNumber">&nbsp;11&nbsp;</span>			&lt;div&nbsp;class="page-body"&gt;			<a name="line_11"></a></li>
+<li id="line_12" class="even"><span class="lineNumber">&nbsp;12&nbsp;</span>&lt;h2&nbsp;class="file-name"&gt;/lib/bagit_utils.php&lt;/h2&gt;<a name="line_12"></a></li>
+
+<li id="line_13" class="odd"><span class="lineNumber">&nbsp;13&nbsp;</span>&lt;a&nbsp;name="sec-description"&gt;&lt;/a&gt;<a name="line_13"></a></li>
+<li id="line_14" class="even"><span class="lineNumber">&nbsp;14&nbsp;</span>&lt;div&nbsp;class="info-box"&gt;<a name="line_14"></a></li>
+<li id="line_15" class="odd"><span class="lineNumber">&nbsp;15&nbsp;</span>	&lt;div&nbsp;class="info-box-title"&gt;Description&lt;/div&gt;<a name="line_15"></a></li>
+<li id="line_16" class="even"><span class="lineNumber">&nbsp;16&nbsp;</span>	&lt;div&nbsp;class="nav-bar"&gt;<a name="line_16"></a></li>
+<li id="line_17" class="odd"><span class="lineNumber">&nbsp;17&nbsp;</span>					&lt;span&nbsp;class="disabled"&gt;Description&lt;/span&gt;&nbsp;|<a name="line_17"></a></li>
+<li id="line_18" class="even"><span class="lineNumber">&nbsp;18&nbsp;</span>															&lt;a&nbsp;href="#sec-functions"&gt;Functions&lt;/a&gt;<a name="line_18"></a></li>
+<li id="line_19" class="odd"><span class="lineNumber">&nbsp;19&nbsp;</span>			&lt;/div&gt;<a name="line_19"></a></li>
+<li id="line_20" class="even"><span class="lineNumber">&nbsp;20&nbsp;</span>	&lt;div&nbsp;class="info-box-body"&gt;	<a name="line_20"></a></li>
+<li id="line_21" class="odd"><span class="lineNumber">&nbsp;21&nbsp;</span>		&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_21"></a></li>
+<li id="line_22" class="even"><span class="lineNumber">&nbsp;22&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;is&nbsp;a&nbsp;PHP&nbsp;implementation&nbsp;of&nbsp;the&nbsp;&lt;a&nbsp;href="https://wiki.ucop.edu/display/Curation/BagIt"&gt;BagIt&nbsp;specification&lt;/a&gt;.&nbsp;Really,&nbsp;&nbsp;it&nbsp;is&nbsp;a&nbsp;port&nbsp;of&nbsp;&lt;a&nbsp;href="https://github.com/ahankinson/pybagit/"&gt;PyBagIt&lt;/a&gt;&nbsp;for&nbsp;&nbsp;PHP.&nbsp;This&nbsp;contains&nbsp;some&nbsp;useful&nbsp;functions.&lt;/p&gt;<a name="line_22"></a></li>
+<li id="line_23" class="odd"><span class="lineNumber">&nbsp;23&nbsp;</span>&lt;p&nbsp;class="description"&gt;&lt;p&gt;PHP&nbsp;version&nbsp;5&lt;/p&gt;&lt;p&gt;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;&amp;quot;License&amp;quot;);&nbsp;you&nbsp;may&nbsp;not&nbsp;&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.&nbsp;You&nbsp;may&nbsp;obtain&nbsp;a&nbsp;copy&nbsp;of&nbsp;&nbsp;the&nbsp;License&nbsp;at&nbsp;http://www.apache.org/licenses/LICENSE-2.0&nbsp;Unless&nbsp;required&nbsp;by&nbsp;&nbsp;applicable&nbsp;law&nbsp;or&nbsp;agreed&nbsp;to&nbsp;in&nbsp;writing,&nbsp;software&nbsp;distributed&nbsp;under&nbsp;the&nbsp;&nbsp;License&nbsp;is&nbsp;distributed&nbsp;on&nbsp;an&nbsp;&amp;quot;AS&nbsp;IS&amp;quot;&nbsp;BASIS,&nbsp;WITHOUT&nbsp;WARRANTIES&nbsp;OR&nbsp;CONDITIONS&nbsp;&nbsp;OF&nbsp;ANY&nbsp;KIND,&nbsp;either&nbsp;express&nbsp;or&nbsp;implied.&nbsp;See&nbsp;the&nbsp;License&nbsp;for&nbsp;the&nbsp;specific&nbsp;&nbsp;language&nbsp;governing&nbsp;permissions&nbsp;and&nbsp;limitations&nbsp;under&nbsp;the&nbsp;License.&lt;/p&gt;&lt;/p&gt;<a name="line_23"></a></li>
+<li id="line_24" class="even"><span class="lineNumber">&nbsp;24&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_24"></a></li>
+<li id="line_25" class="odd"><span class="lineNumber">&nbsp;25&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;author:&lt;/span&gt;&nbsp;Wayne&nbsp;Graham&nbsp;&amp;lt;&lt;a&nbsp;href="mailto:wayne.graham@gmail.com"&gt;wayne.graham@gmail.com&lt;/a&gt;&amp;gt;&lt;/li&gt;<a name="line_25"></a></li>
+<li id="line_26" class="even"><span class="lineNumber">&nbsp;26&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;author:&lt;/span&gt;&nbsp;Eric&nbsp;Rochester&nbsp;&amp;lt;&lt;a&nbsp;href="mailto:erochest@gmail.com"&gt;erochest@gmail.com&lt;/a&gt;&amp;gt;&lt;/li&gt;<a name="line_26"></a></li>
+<li id="line_27" class="odd"><span class="lineNumber">&nbsp;27&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;version:&lt;/span&gt;&nbsp;0.1&lt;/li&gt;<a name="line_27"></a></li>
+<li id="line_28" class="even"><span class="lineNumber">&nbsp;28&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;copyright:&lt;/span&gt;&nbsp;2011&nbsp;The&nbsp;Board&nbsp;and&nbsp;Visitors&nbsp;of&nbsp;the&nbsp;University&nbsp;of&nbsp;Virginia&lt;/li&gt;<a name="line_28"></a></li>
+<li id="line_29" class="odd"><span class="lineNumber">&nbsp;29&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;link:&lt;/span&gt;&nbsp;&lt;a&nbsp;href="https://github.com/erochest/BagItPHP"&gt;https://github.com/erochest/BagItPHP&lt;/a&gt;&lt;/li&gt;<a name="line_29"></a></li>
+<li id="line_30" class="even"><span class="lineNumber">&nbsp;30&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;license:&lt;/span&gt;&nbsp;&lt;a&nbsp;href="http://www.apache.org/licenses/LICENSE-2.0"&gt;Apache&nbsp;2.0&lt;/a&gt;&lt;/li&gt;<a name="line_30"></a></li>
+<li id="line_31" class="odd"><span class="lineNumber">&nbsp;31&nbsp;</span>			&lt;/ul&gt;<a name="line_31"></a></li>
+<li id="line_32" class="even"><span class="lineNumber">&nbsp;32&nbsp;</span>		<a name="line_32"></a></li>
+<li id="line_33" class="odd"><span class="lineNumber">&nbsp;33&nbsp;</span>			&lt;/div&gt;<a name="line_33"></a></li>
+<li id="line_34" class="even"><span class="lineNumber">&nbsp;34&nbsp;</span>&lt;/div&gt;<a name="line_34"></a></li>
+<li id="line_35" class="odd"><span class="lineNumber">&nbsp;35&nbsp;</span>		<a name="line_35"></a></li>
+
+<li id="line_36" class="even"><span class="lineNumber">&nbsp;36&nbsp;</span>	<a name="line_36"></a></li>
+<li id="line_37" class="odd"><span class="lineNumber">&nbsp;37&nbsp;</span>	<a name="line_37"></a></li>
+<li id="line_38" class="even"><span class="lineNumber">&nbsp;38&nbsp;</span>	<a name="line_38"></a></li>
+<li id="line_39" class="odd"><span class="lineNumber">&nbsp;39&nbsp;</span>	&lt;a&nbsp;name="sec-functions"&gt;&lt;/a&gt;	<a name="line_39"></a></li>
+<li id="line_40" class="even"><span class="lineNumber">&nbsp;40&nbsp;</span>	&lt;div&nbsp;class="info-box"&gt;<a name="line_40"></a></li>
+<li id="line_41" class="odd"><span class="lineNumber">&nbsp;41&nbsp;</span>		&lt;div&nbsp;class="info-box-title"&gt;Functions&lt;/div&gt;<a name="line_41"></a></li>
+<li id="line_42" class="even"><span class="lineNumber">&nbsp;42&nbsp;</span>		&lt;div&nbsp;class="nav-bar"&gt;<a name="line_42"></a></li>
+<li id="line_43" class="odd"><span class="lineNumber">&nbsp;43&nbsp;</span>			&lt;a&nbsp;href="#sec-description"&gt;Description&lt;/a&gt;&nbsp;|<a name="line_43"></a></li>
+<li id="line_44" class="even"><span class="lineNumber">&nbsp;44&nbsp;</span>															&lt;span&nbsp;class="disabled"&gt;Functions&lt;/span&gt;<a name="line_44"></a></li>
+<li id="line_45" class="odd"><span class="lineNumber">&nbsp;45&nbsp;</span>		&lt;/div&gt;<a name="line_45"></a></li>
+<li id="line_46" class="even"><span class="lineNumber">&nbsp;46&nbsp;</span>		&lt;div&nbsp;class="info-box-body"&gt;	<a name="line_46"></a></li>
+<li id="line_47" class="odd"><span class="lineNumber">&nbsp;47&nbsp;</span>			&lt;a&nbsp;name="functionBagIt_compressBag"&nbsp;id="functionBagIt_compressBag"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_47"></a></li>
+<li id="line_48" class="even"><span class="lineNumber">&nbsp;48&nbsp;</span>&lt;div&nbsp;class="evenrow"&gt;<a name="line_48"></a></li>
+<li id="line_49" class="odd"><span class="lineNumber">&nbsp;49&nbsp;</span>	<a name="line_49"></a></li>
+<li id="line_50" class="even"><span class="lineNumber">&nbsp;50&nbsp;</span>	&lt;div&gt;<a name="line_50"></a></li>
+<li id="line_51" class="odd"><span class="lineNumber">&nbsp;51&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;BagIt_compressBag&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;423&lt;/span&gt;)<a name="line_51"></a></li>
+<li id="line_52" class="even"><span class="lineNumber">&nbsp;52&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_52"></a></li>
+
+<li id="line_53" class="odd"><span class="lineNumber">&nbsp;53&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_53"></a></li>
+<li id="line_54" class="even"><span class="lineNumber">&nbsp;54&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;compresses&nbsp;the&nbsp;bag&nbsp;into&nbsp;a&nbsp;new&nbsp;file.&lt;/p&gt;<a name="line_54"></a></li>
+<li id="line_55" class="odd"><span class="lineNumber">&nbsp;55&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_55"></a></li>
+<li id="line_56" class="even"><span class="lineNumber">&nbsp;56&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;The&nbsp;file&nbsp;name&nbsp;for&nbsp;the&nbsp;file.&lt;/li&gt;<a name="line_56"></a></li>
+<li id="line_57" class="odd"><span class="lineNumber">&nbsp;57&nbsp;</span>			&lt;/ul&gt;<a name="line_57"></a></li>
+<li id="line_58" class="even"><span class="lineNumber">&nbsp;58&nbsp;</span>	<a name="line_58"></a></li>
+<li id="line_59" class="odd"><span class="lineNumber">&nbsp;59&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_59"></a></li>
+<li id="line_60" class="even"><span class="lineNumber">&nbsp;60&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;string&lt;/span&gt;<a name="line_60"></a></li>
+<li id="line_61" class="odd"><span class="lineNumber">&nbsp;61&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_61"></a></li>
+<li id="line_62" class="even"><span class="lineNumber">&nbsp;62&nbsp;</span>			BagIt_compressBag<a name="line_62"></a></li>
+<li id="line_63" class="odd"><span class="lineNumber">&nbsp;63&nbsp;</span>		&lt;/span&gt;<a name="line_63"></a></li>
+<li id="line_64" class="even"><span class="lineNumber">&nbsp;64&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$dirname&lt;/span&gt;,&nbsp;&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$output&lt;/span&gt;,&nbsp;[&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$method&lt;/span&gt;&nbsp;=&nbsp;&lt;span&nbsp;class="var-default"&gt;&amp;#039;tgz&amp;#039;&lt;/span&gt;])<a name="line_64"></a></li>
+<li id="line_65" class="odd"><span class="lineNumber">&nbsp;65&nbsp;</span>			&lt;/div&gt;<a name="line_65"></a></li>
+
+<li id="line_66" class="even"><span class="lineNumber">&nbsp;66&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_66"></a></li>
+<li id="line_67" class="odd"><span class="lineNumber">&nbsp;67&nbsp;</span>					&lt;li&gt;<a name="line_67"></a></li>
+<li id="line_68" class="even"><span class="lineNumber">&nbsp;68&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_68"></a></li>
+<li id="line_69" class="odd"><span class="lineNumber">&nbsp;69&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$dirname&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;directory&nbsp;to&nbsp;compress.&lt;/span&gt;			&lt;/li&gt;<a name="line_69"></a></li>
+<li id="line_70" class="even"><span class="lineNumber">&nbsp;70&nbsp;</span>					&lt;li&gt;<a name="line_70"></a></li>
+<li id="line_71" class="odd"><span class="lineNumber">&nbsp;71&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_71"></a></li>
+<li id="line_72" class="even"><span class="lineNumber">&nbsp;72&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$output&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;output&nbsp;file.&lt;/span&gt;			&lt;/li&gt;<a name="line_72"></a></li>
+<li id="line_73" class="odd"><span class="lineNumber">&nbsp;73&nbsp;</span>					&lt;li&gt;<a name="line_73"></a></li>
+<li id="line_74" class="even"><span class="lineNumber">&nbsp;74&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_74"></a></li>
+<li id="line_75" class="odd"><span class="lineNumber">&nbsp;75&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$method&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;Either&nbsp;'tgz'&nbsp;or&nbsp;'zip'.&nbsp;Default&nbsp;is&nbsp;'tgz'.&lt;/span&gt;			&lt;/li&gt;<a name="line_75"></a></li>
+<li id="line_76" class="even"><span class="lineNumber">&nbsp;76&nbsp;</span>				&lt;/ul&gt;<a name="line_76"></a></li>
+<li id="line_77" class="odd"><span class="lineNumber">&nbsp;77&nbsp;</span>		<a name="line_77"></a></li>
+<li id="line_78" class="even"><span class="lineNumber">&nbsp;78&nbsp;</span>	<a name="line_78"></a></li>
+<li id="line_79" class="odd"><span class="lineNumber">&nbsp;79&nbsp;</span>&lt;/div&gt;<a name="line_79"></a></li>
+<li id="line_80" class="even"><span class="lineNumber">&nbsp;80&nbsp;</span>&lt;a&nbsp;name="functionBagIt_parseBagInfo"&nbsp;id="functionBagIt_parseBagInfo"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_80"></a></li>
+<li id="line_81" class="odd"><span class="lineNumber">&nbsp;81&nbsp;</span>&lt;div&nbsp;class="oddrow"&gt;<a name="line_81"></a></li>
+<li id="line_82" class="even"><span class="lineNumber">&nbsp;82&nbsp;</span>	<a name="line_82"></a></li>
+<li id="line_83" class="odd"><span class="lineNumber">&nbsp;83&nbsp;</span>	&lt;div&gt;<a name="line_83"></a></li>
+<li id="line_84" class="even"><span class="lineNumber">&nbsp;84&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;BagIt_parseBagInfo&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;474&lt;/span&gt;)<a name="line_84"></a></li>
+<li id="line_85" class="odd"><span class="lineNumber">&nbsp;85&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_85"></a></li>
+
+<li id="line_86" class="even"><span class="lineNumber">&nbsp;86&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_86"></a></li>
+<li id="line_87" class="odd"><span class="lineNumber">&nbsp;87&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;Parse&nbsp;bag&nbsp;info&nbsp;file.&lt;/p&gt;<a name="line_87"></a></li>
+<li id="line_88" class="even"><span class="lineNumber">&nbsp;88&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_88"></a></li>
+<li id="line_89" class="odd"><span class="lineNumber">&nbsp;89&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;The&nbsp;parsed&nbsp;bag-info&nbsp;data.&lt;/li&gt;<a name="line_89"></a></li>
+<li id="line_90" class="even"><span class="lineNumber">&nbsp;90&nbsp;</span>			&lt;/ul&gt;<a name="line_90"></a></li>
+<li id="line_91" class="odd"><span class="lineNumber">&nbsp;91&nbsp;</span>	<a name="line_91"></a></li>
+<li id="line_92" class="even"><span class="lineNumber">&nbsp;92&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_92"></a></li>
+<li id="line_93" class="odd"><span class="lineNumber">&nbsp;93&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;array&lt;/span&gt;<a name="line_93"></a></li>
+<li id="line_94" class="even"><span class="lineNumber">&nbsp;94&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_94"></a></li>
+<li id="line_95" class="odd"><span class="lineNumber">&nbsp;95&nbsp;</span>			BagIt_parseBagInfo<a name="line_95"></a></li>
+<li id="line_96" class="even"><span class="lineNumber">&nbsp;96&nbsp;</span>		&lt;/span&gt;<a name="line_96"></a></li>
+<li id="line_97" class="odd"><span class="lineNumber">&nbsp;97&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;array&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$lines&lt;/span&gt;)<a name="line_97"></a></li>
+<li id="line_98" class="even"><span class="lineNumber">&nbsp;98&nbsp;</span>			&lt;/div&gt;<a name="line_98"></a></li>
+
+<li id="line_99" class="odd"><span class="lineNumber">&nbsp;99&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_99"></a></li>
+<li id="line_100" class="even"><span class="lineNumber">100&nbsp;</span>					&lt;li&gt;<a name="line_100"></a></li>
+<li id="line_101" class="odd"><span class="lineNumber">101&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;array&lt;/span&gt;<a name="line_101"></a></li>
+<li id="line_102" class="even"><span class="lineNumber">102&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$lines&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;An&nbsp;array&nbsp;of&nbsp;lines&nbsp;from&nbsp;the&nbsp;file.&lt;/span&gt;			&lt;/li&gt;<a name="line_102"></a></li>
+<li id="line_103" class="odd"><span class="lineNumber">103&nbsp;</span>				&lt;/ul&gt;<a name="line_103"></a></li>
+<li id="line_104" class="even"><span class="lineNumber">104&nbsp;</span>		<a name="line_104"></a></li>
+<li id="line_105" class="odd"><span class="lineNumber">105&nbsp;</span>	<a name="line_105"></a></li>
+<li id="line_106" class="even"><span class="lineNumber">106&nbsp;</span>&lt;/div&gt;<a name="line_106"></a></li>
+<li id="line_107" class="odd"><span class="lineNumber">107&nbsp;</span>&lt;a&nbsp;name="functionBagIt_parseEncodingString"&nbsp;id="functionBagIt_parseEncodingString"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_107"></a></li>
+<li id="line_108" class="even"><span class="lineNumber">108&nbsp;</span>&lt;div&nbsp;class="evenrow"&gt;<a name="line_108"></a></li>
+<li id="line_109" class="odd"><span class="lineNumber">109&nbsp;</span>	<a name="line_109"></a></li>
+<li id="line_110" class="even"><span class="lineNumber">110&nbsp;</span>	&lt;div&gt;<a name="line_110"></a></li>
+<li id="line_111" class="odd"><span class="lineNumber">111&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;BagIt_parseEncodingString&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;356&lt;/span&gt;)<a name="line_111"></a></li>
+<li id="line_112" class="even"><span class="lineNumber">112&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_112"></a></li>
+
+<li id="line_113" class="odd"><span class="lineNumber">113&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_113"></a></li>
+<li id="line_114" class="even"><span class="lineNumber">114&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;parses&nbsp;the&nbsp;encoding&nbsp;string&nbsp;from&nbsp;the&nbsp;bagit.txt&nbsp;file.&lt;/p&gt;<a name="line_114"></a></li>
+<li id="line_115" class="odd"><span class="lineNumber">115&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_115"></a></li>
+<li id="line_116" class="even"><span class="lineNumber">116&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;The&nbsp;encoding.&lt;/li&gt;<a name="line_116"></a></li>
+<li id="line_117" class="odd"><span class="lineNumber">117&nbsp;</span>			&lt;/ul&gt;<a name="line_117"></a></li>
+<li id="line_118" class="even"><span class="lineNumber">118&nbsp;</span>	<a name="line_118"></a></li>
+<li id="line_119" class="odd"><span class="lineNumber">119&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_119"></a></li>
+<li id="line_120" class="even"><span class="lineNumber">120&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;string&lt;/span&gt;<a name="line_120"></a></li>
+<li id="line_121" class="odd"><span class="lineNumber">121&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_121"></a></li>
+<li id="line_122" class="even"><span class="lineNumber">122&nbsp;</span>			BagIt_parseEncodingString<a name="line_122"></a></li>
+<li id="line_123" class="odd"><span class="lineNumber">123&nbsp;</span>		&lt;/span&gt;<a name="line_123"></a></li>
+<li id="line_124" class="even"><span class="lineNumber">124&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$bagitFileData&lt;/span&gt;)<a name="line_124"></a></li>
+<li id="line_125" class="odd"><span class="lineNumber">125&nbsp;</span>			&lt;/div&gt;<a name="line_125"></a></li>
+
+<li id="line_126" class="even"><span class="lineNumber">126&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_126"></a></li>
+<li id="line_127" class="odd"><span class="lineNumber">127&nbsp;</span>					&lt;li&gt;<a name="line_127"></a></li>
+<li id="line_128" class="even"><span class="lineNumber">128&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_128"></a></li>
+<li id="line_129" class="odd"><span class="lineNumber">129&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$bagitFileData&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;contents&nbsp;of&nbsp;the&nbsp;bagit&nbsp;file.&lt;/span&gt;			&lt;/li&gt;<a name="line_129"></a></li>
+<li id="line_130" class="even"><span class="lineNumber">130&nbsp;</span>				&lt;/ul&gt;<a name="line_130"></a></li>
+<li id="line_131" class="odd"><span class="lineNumber">131&nbsp;</span>		<a name="line_131"></a></li>
+<li id="line_132" class="even"><span class="lineNumber">132&nbsp;</span>	<a name="line_132"></a></li>
+<li id="line_133" class="odd"><span class="lineNumber">133&nbsp;</span>&lt;/div&gt;<a name="line_133"></a></li>
+<li id="line_134" class="even"><span class="lineNumber">134&nbsp;</span>&lt;a&nbsp;name="functionBagIt_parseVersionString"&nbsp;id="functionBagIt_parseVersionString"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_134"></a></li>
+<li id="line_135" class="odd"><span class="lineNumber">135&nbsp;</span>&lt;div&nbsp;class="oddrow"&gt;<a name="line_135"></a></li>
+<li id="line_136" class="even"><span class="lineNumber">136&nbsp;</span>	<a name="line_136"></a></li>
+<li id="line_137" class="odd"><span class="lineNumber">137&nbsp;</span>	&lt;div&gt;<a name="line_137"></a></li>
+<li id="line_138" class="even"><span class="lineNumber">138&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;BagIt_parseVersionString&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;328&lt;/span&gt;)<a name="line_138"></a></li>
+<li id="line_139" class="odd"><span class="lineNumber">139&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_139"></a></li>
+
+<li id="line_140" class="even"><span class="lineNumber">140&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_140"></a></li>
+<li id="line_141" class="odd"><span class="lineNumber">141&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;parses&nbsp;the&nbsp;version&nbsp;string&nbsp;from&nbsp;the&nbsp;bagit.txt&nbsp;file.&lt;/p&gt;<a name="line_141"></a></li>
+<li id="line_142" class="even"><span class="lineNumber">142&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_142"></a></li>
+<li id="line_143" class="odd"><span class="lineNumber">143&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;A&nbsp;two-item&nbsp;array&nbsp;containing&nbsp;the&nbsp;version&nbsp;string&nbsp;as&nbsp;&nbsp;integers.&nbsp;The&nbsp;keys&nbsp;for&nbsp;this&nbsp;array&nbsp;are&nbsp;'major'&nbsp;and&nbsp;'minor'.&lt;/li&gt;<a name="line_143"></a></li>
+<li id="line_144" class="even"><span class="lineNumber">144&nbsp;</span>			&lt;/ul&gt;<a name="line_144"></a></li>
+<li id="line_145" class="odd"><span class="lineNumber">145&nbsp;</span>	<a name="line_145"></a></li>
+<li id="line_146" class="even"><span class="lineNumber">146&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_146"></a></li>
+<li id="line_147" class="odd"><span class="lineNumber">147&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;array&lt;/span&gt;<a name="line_147"></a></li>
+<li id="line_148" class="even"><span class="lineNumber">148&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_148"></a></li>
+<li id="line_149" class="odd"><span class="lineNumber">149&nbsp;</span>			BagIt_parseVersionString<a name="line_149"></a></li>
+<li id="line_150" class="even"><span class="lineNumber">150&nbsp;</span>		&lt;/span&gt;<a name="line_150"></a></li>
+<li id="line_151" class="odd"><span class="lineNumber">151&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$bagitFileData&lt;/span&gt;)<a name="line_151"></a></li>
+<li id="line_152" class="even"><span class="lineNumber">152&nbsp;</span>			&lt;/div&gt;<a name="line_152"></a></li>
+
+<li id="line_153" class="odd"><span class="lineNumber">153&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_153"></a></li>
+<li id="line_154" class="even"><span class="lineNumber">154&nbsp;</span>					&lt;li&gt;<a name="line_154"></a></li>
+<li id="line_155" class="odd"><span class="lineNumber">155&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_155"></a></li>
+<li id="line_156" class="even"><span class="lineNumber">156&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$bagitFileData&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;contents&nbsp;of&nbsp;the&nbsp;bagit&nbsp;file.&lt;/span&gt;			&lt;/li&gt;<a name="line_156"></a></li>
+<li id="line_157" class="odd"><span class="lineNumber">157&nbsp;</span>				&lt;/ul&gt;<a name="line_157"></a></li>
+<li id="line_158" class="even"><span class="lineNumber">158&nbsp;</span>		<a name="line_158"></a></li>
+<li id="line_159" class="odd"><span class="lineNumber">159&nbsp;</span>	<a name="line_159"></a></li>
+<li id="line_160" class="even"><span class="lineNumber">160&nbsp;</span>&lt;/div&gt;<a name="line_160"></a></li>
+<li id="line_161" class="odd"><span class="lineNumber">161&nbsp;</span>&lt;a&nbsp;name="functionBagIt_readBagItFile"&nbsp;id="functionBagIt_readBagItFile"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_161"></a></li>
+<li id="line_162" class="even"><span class="lineNumber">162&nbsp;</span>&lt;div&nbsp;class="evenrow"&gt;<a name="line_162"></a></li>
+<li id="line_163" class="odd"><span class="lineNumber">163&nbsp;</span>	<a name="line_163"></a></li>
+<li id="line_164" class="even"><span class="lineNumber">164&nbsp;</span>	&lt;div&gt;<a name="line_164"></a></li>
+<li id="line_165" class="odd"><span class="lineNumber">165&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;BagIt_readBagItFile&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;294&lt;/span&gt;)<a name="line_165"></a></li>
+<li id="line_166" class="even"><span class="lineNumber">166&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_166"></a></li>
+
+<li id="line_167" class="odd"><span class="lineNumber">167&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_167"></a></li>
+<li id="line_168" class="even"><span class="lineNumber">168&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;reads&nbsp;the&nbsp;information&nbsp;from&nbsp;the&nbsp;bag&nbsp;it&nbsp;file.&lt;/p&gt;<a name="line_168"></a></li>
+<li id="line_169" class="odd"><span class="lineNumber">169&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_169"></a></li>
+<li id="line_170" class="even"><span class="lineNumber">170&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;An&nbsp;array&nbsp;triple&nbsp;of&nbsp;the&nbsp;version,&nbsp;the&nbsp;file&nbsp;encoding,&nbsp;and&nbsp;any&nbsp;&nbsp;errors&nbsp;encountered.&lt;/li&gt;<a name="line_170"></a></li>
+<li id="line_171" class="odd"><span class="lineNumber">171&nbsp;</span>			&lt;/ul&gt;<a name="line_171"></a></li>
+<li id="line_172" class="even"><span class="lineNumber">172&nbsp;</span>	<a name="line_172"></a></li>
+<li id="line_173" class="odd"><span class="lineNumber">173&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_173"></a></li>
+<li id="line_174" class="even"><span class="lineNumber">174&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;array&lt;/span&gt;<a name="line_174"></a></li>
+<li id="line_175" class="odd"><span class="lineNumber">175&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_175"></a></li>
+<li id="line_176" class="even"><span class="lineNumber">176&nbsp;</span>			BagIt_readBagItFile<a name="line_176"></a></li>
+<li id="line_177" class="odd"><span class="lineNumber">177&nbsp;</span>		&lt;/span&gt;<a name="line_177"></a></li>
+<li id="line_178" class="even"><span class="lineNumber">178&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$filename&lt;/span&gt;)<a name="line_178"></a></li>
+<li id="line_179" class="odd"><span class="lineNumber">179&nbsp;</span>			&lt;/div&gt;<a name="line_179"></a></li>
+
+<li id="line_180" class="even"><span class="lineNumber">180&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_180"></a></li>
+<li id="line_181" class="odd"><span class="lineNumber">181&nbsp;</span>					&lt;li&gt;<a name="line_181"></a></li>
+<li id="line_182" class="even"><span class="lineNumber">182&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_182"></a></li>
+<li id="line_183" class="odd"><span class="lineNumber">183&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$filename&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;bagit.txt&nbsp;file&nbsp;to&nbsp;read.&lt;/span&gt;			&lt;/li&gt;<a name="line_183"></a></li>
+<li id="line_184" class="even"><span class="lineNumber">184&nbsp;</span>				&lt;/ul&gt;<a name="line_184"></a></li>
+<li id="line_185" class="odd"><span class="lineNumber">185&nbsp;</span>		<a name="line_185"></a></li>
+<li id="line_186" class="even"><span class="lineNumber">186&nbsp;</span>	<a name="line_186"></a></li>
+<li id="line_187" class="odd"><span class="lineNumber">187&nbsp;</span>&lt;/div&gt;<a name="line_187"></a></li>
+<li id="line_188" class="even"><span class="lineNumber">188&nbsp;</span>&lt;a&nbsp;name="functionBagIt_sanitizeFileName"&nbsp;id="functionBagIt_sanitizeFileName"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_188"></a></li>
+<li id="line_189" class="odd"><span class="lineNumber">189&nbsp;</span>&lt;div&nbsp;class="oddrow"&gt;<a name="line_189"></a></li>
+<li id="line_190" class="even"><span class="lineNumber">190&nbsp;</span>	<a name="line_190"></a></li>
+<li id="line_191" class="odd"><span class="lineNumber">191&nbsp;</span>	&lt;div&gt;<a name="line_191"></a></li>
+<li id="line_192" class="even"><span class="lineNumber">192&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;BagIt_sanitizeFileName&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;262&lt;/span&gt;)<a name="line_192"></a></li>
+<li id="line_193" class="odd"><span class="lineNumber">193&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_193"></a></li>
+
+<li id="line_194" class="even"><span class="lineNumber">194&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_194"></a></li>
+<li id="line_195" class="odd"><span class="lineNumber">195&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;cleans&nbsp;up&nbsp;the&nbsp;file&nbsp;name.&lt;/p&gt;<a name="line_195"></a></li>
+<li id="line_196" class="even"><span class="lineNumber">196&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_196"></a></li>
+<li id="line_197" class="odd"><span class="lineNumber">197&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;The&nbsp;cleaned&nbsp;up&nbsp;file&nbsp;name.&lt;/li&gt;<a name="line_197"></a></li>
+<li id="line_198" class="even"><span class="lineNumber">198&nbsp;</span>			&lt;/ul&gt;<a name="line_198"></a></li>
+<li id="line_199" class="odd"><span class="lineNumber">199&nbsp;</span>	<a name="line_199"></a></li>
+<li id="line_200" class="even"><span class="lineNumber">200&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_200"></a></li>
+<li id="line_201" class="odd"><span class="lineNumber">201&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;string&lt;/span&gt;<a name="line_201"></a></li>
+<li id="line_202" class="even"><span class="lineNumber">202&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_202"></a></li>
+<li id="line_203" class="odd"><span class="lineNumber">203&nbsp;</span>			BagIt_sanitizeFileName<a name="line_203"></a></li>
+<li id="line_204" class="even"><span class="lineNumber">204&nbsp;</span>		&lt;/span&gt;<a name="line_204"></a></li>
+<li id="line_205" class="odd"><span class="lineNumber">205&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$filename&lt;/span&gt;)<a name="line_205"></a></li>
+<li id="line_206" class="even"><span class="lineNumber">206&nbsp;</span>			&lt;/div&gt;<a name="line_206"></a></li>
+
+<li id="line_207" class="odd"><span class="lineNumber">207&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_207"></a></li>
+<li id="line_208" class="even"><span class="lineNumber">208&nbsp;</span>					&lt;li&gt;<a name="line_208"></a></li>
+<li id="line_209" class="odd"><span class="lineNumber">209&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_209"></a></li>
+<li id="line_210" class="even"><span class="lineNumber">210&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$filename&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;file&nbsp;name&nbsp;to&nbsp;clean&nbsp;up.&lt;/span&gt;			&lt;/li&gt;<a name="line_210"></a></li>
+<li id="line_211" class="odd"><span class="lineNumber">211&nbsp;</span>				&lt;/ul&gt;<a name="line_211"></a></li>
+<li id="line_212" class="even"><span class="lineNumber">212&nbsp;</span>		<a name="line_212"></a></li>
+<li id="line_213" class="odd"><span class="lineNumber">213&nbsp;</span>	<a name="line_213"></a></li>
+<li id="line_214" class="even"><span class="lineNumber">214&nbsp;</span>&lt;/div&gt;<a name="line_214"></a></li>
+<li id="line_215" class="odd"><span class="lineNumber">215&nbsp;</span>&lt;a&nbsp;name="functionBagIt_uncompressBag"&nbsp;id="functionBagIt_uncompressBag"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_215"></a></li>
+<li id="line_216" class="even"><span class="lineNumber">216&nbsp;</span>&lt;div&nbsp;class="evenrow"&gt;<a name="line_216"></a></li>
+<li id="line_217" class="odd"><span class="lineNumber">217&nbsp;</span>	<a name="line_217"></a></li>
+<li id="line_218" class="even"><span class="lineNumber">218&nbsp;</span>	&lt;div&gt;<a name="line_218"></a></li>
+<li id="line_219" class="odd"><span class="lineNumber">219&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;BagIt_uncompressBag&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;379&lt;/span&gt;)<a name="line_219"></a></li>
+<li id="line_220" class="even"><span class="lineNumber">220&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_220"></a></li>
+
+<li id="line_221" class="odd"><span class="lineNumber">221&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_221"></a></li>
+<li id="line_222" class="even"><span class="lineNumber">222&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;uncompresses&nbsp;a&nbsp;bag.&lt;/p&gt;<a name="line_222"></a></li>
+<li id="line_223" class="odd"><span class="lineNumber">223&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_223"></a></li>
+<li id="line_224" class="even"><span class="lineNumber">224&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;bagDirectory.&lt;/li&gt;<a name="line_224"></a></li>
+<li id="line_225" class="odd"><span class="lineNumber">225&nbsp;</span>			&lt;/ul&gt;<a name="line_225"></a></li>
+<li id="line_226" class="even"><span class="lineNumber">226&nbsp;</span>	<a name="line_226"></a></li>
+<li id="line_227" class="odd"><span class="lineNumber">227&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_227"></a></li>
+<li id="line_228" class="even"><span class="lineNumber">228&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;The&lt;/span&gt;<a name="line_228"></a></li>
+<li id="line_229" class="odd"><span class="lineNumber">229&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_229"></a></li>
+<li id="line_230" class="even"><span class="lineNumber">230&nbsp;</span>			BagIt_uncompressBag<a name="line_230"></a></li>
+<li id="line_231" class="odd"><span class="lineNumber">231&nbsp;</span>		&lt;/span&gt;<a name="line_231"></a></li>
+<li id="line_232" class="even"><span class="lineNumber">232&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$compressedFile&lt;/span&gt;)<a name="line_232"></a></li>
+<li id="line_233" class="odd"><span class="lineNumber">233&nbsp;</span>			&lt;/div&gt;<a name="line_233"></a></li>
+
+<li id="line_234" class="even"><span class="lineNumber">234&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_234"></a></li>
+<li id="line_235" class="odd"><span class="lineNumber">235&nbsp;</span>					&lt;li&gt;<a name="line_235"></a></li>
+<li id="line_236" class="even"><span class="lineNumber">236&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_236"></a></li>
+<li id="line_237" class="odd"><span class="lineNumber">237&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$compressedFile&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;file&nbsp;name&nbsp;of&nbsp;the&nbsp;compressed&nbsp;file.&lt;/span&gt;			&lt;/li&gt;<a name="line_237"></a></li>
+<li id="line_238" class="even"><span class="lineNumber">238&nbsp;</span>				&lt;/ul&gt;<a name="line_238"></a></li>
+<li id="line_239" class="odd"><span class="lineNumber">239&nbsp;</span>		<a name="line_239"></a></li>
+<li id="line_240" class="even"><span class="lineNumber">240&nbsp;</span>	<a name="line_240"></a></li>
+<li id="line_241" class="odd"><span class="lineNumber">241&nbsp;</span>&lt;/div&gt;<a name="line_241"></a></li>
+<li id="line_242" class="even"><span class="lineNumber">242&nbsp;</span>&lt;a&nbsp;name="functionBagIt_validateExists"&nbsp;id="functionBagIt_validateExists"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_242"></a></li>
+<li id="line_243" class="odd"><span class="lineNumber">243&nbsp;</span>&lt;div&nbsp;class="oddrow"&gt;<a name="line_243"></a></li>
+<li id="line_244" class="even"><span class="lineNumber">244&nbsp;</span>	<a name="line_244"></a></li>
+<li id="line_245" class="odd"><span class="lineNumber">245&nbsp;</span>	&lt;div&gt;<a name="line_245"></a></li>
+<li id="line_246" class="even"><span class="lineNumber">246&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;BagIt_validateExists&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;454&lt;/span&gt;)<a name="line_246"></a></li>
+<li id="line_247" class="odd"><span class="lineNumber">247&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_247"></a></li>
+
+<li id="line_248" class="even"><span class="lineNumber">248&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_248"></a></li>
+<li id="line_249" class="odd"><span class="lineNumber">249&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;validates&nbsp;that&nbsp;a&nbsp;file&nbsp;or&nbsp;directory&nbsp;exists.&lt;/p&gt;<a name="line_249"></a></li>
+<li id="line_250" class="even"><span class="lineNumber">250&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_250"></a></li>
+<li id="line_251" class="odd"><span class="lineNumber">251&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;True&nbsp;if&nbsp;the&nbsp;file&nbsp;does&nbsp;exist;&nbsp;false&nbsp;otherwise.&lt;/li&gt;<a name="line_251"></a></li>
+<li id="line_252" class="even"><span class="lineNumber">252&nbsp;</span>			&lt;/ul&gt;<a name="line_252"></a></li>
+<li id="line_253" class="odd"><span class="lineNumber">253&nbsp;</span>	<a name="line_253"></a></li>
+<li id="line_254" class="even"><span class="lineNumber">254&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_254"></a></li>
+<li id="line_255" class="odd"><span class="lineNumber">255&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;boolean&lt;/span&gt;<a name="line_255"></a></li>
+<li id="line_256" class="even"><span class="lineNumber">256&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_256"></a></li>
+<li id="line_257" class="odd"><span class="lineNumber">257&nbsp;</span>			BagIt_validateExists<a name="line_257"></a></li>
+<li id="line_258" class="even"><span class="lineNumber">258&nbsp;</span>		&lt;/span&gt;<a name="line_258"></a></li>
+<li id="line_259" class="odd"><span class="lineNumber">259&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$filename&lt;/span&gt;,&nbsp;&lt;span&nbsp;class="var-type"&gt;array&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;&amp;$errors&lt;/span&gt;)<a name="line_259"></a></li>
+<li id="line_260" class="even"><span class="lineNumber">260&nbsp;</span>			&lt;/div&gt;<a name="line_260"></a></li>
+
+<li id="line_261" class="odd"><span class="lineNumber">261&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_261"></a></li>
+<li id="line_262" class="even"><span class="lineNumber">262&nbsp;</span>					&lt;li&gt;<a name="line_262"></a></li>
+<li id="line_263" class="odd"><span class="lineNumber">263&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_263"></a></li>
+<li id="line_264" class="even"><span class="lineNumber">264&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$filename&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;file&nbsp;name&nbsp;to&nbsp;check&nbsp;for.&lt;/span&gt;			&lt;/li&gt;<a name="line_264"></a></li>
+<li id="line_265" class="odd"><span class="lineNumber">265&nbsp;</span>					&lt;li&gt;<a name="line_265"></a></li>
+<li id="line_266" class="even"><span class="lineNumber">266&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;array&lt;/span&gt;<a name="line_266"></a></li>
+<li id="line_267" class="odd"><span class="lineNumber">267&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;&amp;$errors&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;list&nbsp;of&nbsp;errors&nbsp;to&nbsp;add&nbsp;the&nbsp;message&nbsp;to,&nbsp;if&nbsp;the&nbsp;&nbsp;file&nbsp;doesn't&nbsp;exist.&lt;/span&gt;			&lt;/li&gt;<a name="line_267"></a></li>
+<li id="line_268" class="even"><span class="lineNumber">268&nbsp;</span>				&lt;/ul&gt;<a name="line_268"></a></li>
+<li id="line_269" class="odd"><span class="lineNumber">269&nbsp;</span>		<a name="line_269"></a></li>
+<li id="line_270" class="even"><span class="lineNumber">270&nbsp;</span>	<a name="line_270"></a></li>
+<li id="line_271" class="odd"><span class="lineNumber">271&nbsp;</span>&lt;/div&gt;<a name="line_271"></a></li>
+<li id="line_272" class="even"><span class="lineNumber">272&nbsp;</span>&lt;a&nbsp;name="functionendsWith"&nbsp;id="functionendsWith"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_272"></a></li>
+<li id="line_273" class="odd"><span class="lineNumber">273&nbsp;</span>&lt;div&nbsp;class="evenrow"&gt;<a name="line_273"></a></li>
+<li id="line_274" class="even"><span class="lineNumber">274&nbsp;</span>	<a name="line_274"></a></li>
+<li id="line_275" class="odd"><span class="lineNumber">275&nbsp;</span>	&lt;div&gt;<a name="line_275"></a></li>
+<li id="line_276" class="even"><span class="lineNumber">276&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;endsWith&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;63&lt;/span&gt;)<a name="line_276"></a></li>
+<li id="line_277" class="odd"><span class="lineNumber">277&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_277"></a></li>
+
+<li id="line_278" class="even"><span class="lineNumber">278&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_278"></a></li>
+<li id="line_279" class="odd"><span class="lineNumber">279&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;tests&nbsp;whether&nbsp;a&nbsp;string&nbsp;ends&nbsp;with&nbsp;another&nbsp;string.&lt;/p&gt;<a name="line_279"></a></li>
+<li id="line_280" class="even"><span class="lineNumber">280&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_280"></a></li>
+<li id="line_281" class="odd"><span class="lineNumber">281&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;if&nbsp;$suffix&nbsp;occurs&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;$main.&lt;/li&gt;<a name="line_281"></a></li>
+<li id="line_282" class="even"><span class="lineNumber">282&nbsp;</span>			&lt;/ul&gt;<a name="line_282"></a></li>
+<li id="line_283" class="odd"><span class="lineNumber">283&nbsp;</span>	<a name="line_283"></a></li>
+<li id="line_284" class="even"><span class="lineNumber">284&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_284"></a></li>
+<li id="line_285" class="odd"><span class="lineNumber">285&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;True&lt;/span&gt;<a name="line_285"></a></li>
+<li id="line_286" class="even"><span class="lineNumber">286&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_286"></a></li>
+<li id="line_287" class="odd"><span class="lineNumber">287&nbsp;</span>			endsWith<a name="line_287"></a></li>
+<li id="line_288" class="even"><span class="lineNumber">288&nbsp;</span>		&lt;/span&gt;<a name="line_288"></a></li>
+<li id="line_289" class="odd"><span class="lineNumber">289&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$main&lt;/span&gt;,&nbsp;&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$suffix&lt;/span&gt;)<a name="line_289"></a></li>
+<li id="line_290" class="even"><span class="lineNumber">290&nbsp;</span>			&lt;/div&gt;<a name="line_290"></a></li>
+
+<li id="line_291" class="odd"><span class="lineNumber">291&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_291"></a></li>
+<li id="line_292" class="even"><span class="lineNumber">292&nbsp;</span>					&lt;li&gt;<a name="line_292"></a></li>
+<li id="line_293" class="odd"><span class="lineNumber">293&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_293"></a></li>
+<li id="line_294" class="even"><span class="lineNumber">294&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$main&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;primary&nbsp;string&nbsp;to&nbsp;test.&lt;/span&gt;			&lt;/li&gt;<a name="line_294"></a></li>
+<li id="line_295" class="odd"><span class="lineNumber">295&nbsp;</span>					&lt;li&gt;<a name="line_295"></a></li>
+<li id="line_296" class="even"><span class="lineNumber">296&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_296"></a></li>
+<li id="line_297" class="odd"><span class="lineNumber">297&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$suffix&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;string&nbsp;to&nbsp;test&nbsp;against&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;other.&lt;/span&gt;			&lt;/li&gt;<a name="line_297"></a></li>
+<li id="line_298" class="even"><span class="lineNumber">298&nbsp;</span>				&lt;/ul&gt;<a name="line_298"></a></li>
+<li id="line_299" class="odd"><span class="lineNumber">299&nbsp;</span>		<a name="line_299"></a></li>
+<li id="line_300" class="even"><span class="lineNumber">300&nbsp;</span>	<a name="line_300"></a></li>
+<li id="line_301" class="odd"><span class="lineNumber">301&nbsp;</span>&lt;/div&gt;<a name="line_301"></a></li>
+<li id="line_302" class="even"><span class="lineNumber">302&nbsp;</span>&lt;a&nbsp;name="functionfilterArrayMatches"&nbsp;id="functionfilterArrayMatches"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_302"></a></li>
+<li id="line_303" class="odd"><span class="lineNumber">303&nbsp;</span>&lt;div&nbsp;class="oddrow"&gt;<a name="line_303"></a></li>
+<li id="line_304" class="even"><span class="lineNumber">304&nbsp;</span>	<a name="line_304"></a></li>
+<li id="line_305" class="odd"><span class="lineNumber">305&nbsp;</span>	&lt;div&gt;<a name="line_305"></a></li>
+<li id="line_306" class="even"><span class="lineNumber">306&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;filterArrayMatches&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;41&lt;/span&gt;)<a name="line_306"></a></li>
+<li id="line_307" class="odd"><span class="lineNumber">307&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_307"></a></li>
+
+<li id="line_308" class="even"><span class="lineNumber">308&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_308"></a></li>
+<li id="line_309" class="odd"><span class="lineNumber">309&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;filters&nbsp;an&nbsp;array&nbsp;by&nbsp;items&nbsp;that&nbsp;match&nbsp;a&nbsp;regex.&lt;/p&gt;<a name="line_309"></a></li>
+<li id="line_310" class="even"><span class="lineNumber">310&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_310"></a></li>
+<li id="line_311" class="odd"><span class="lineNumber">311&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;match&nbsp;objects&nbsp;for&nbsp;items&nbsp;from&nbsp;$list&nbsp;that&nbsp;match&nbsp;$regex.&lt;/li&gt;<a name="line_311"></a></li>
+<li id="line_312" class="even"><span class="lineNumber">312&nbsp;</span>			&lt;/ul&gt;<a name="line_312"></a></li>
+<li id="line_313" class="odd"><span class="lineNumber">313&nbsp;</span>	<a name="line_313"></a></li>
+<li id="line_314" class="even"><span class="lineNumber">314&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_314"></a></li>
+<li id="line_315" class="odd"><span class="lineNumber">315&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;The&lt;/span&gt;<a name="line_315"></a></li>
+<li id="line_316" class="even"><span class="lineNumber">316&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_316"></a></li>
+<li id="line_317" class="odd"><span class="lineNumber">317&nbsp;</span>			filterArrayMatches<a name="line_317"></a></li>
+<li id="line_318" class="even"><span class="lineNumber">318&nbsp;</span>		&lt;/span&gt;<a name="line_318"></a></li>
+<li id="line_319" class="odd"><span class="lineNumber">319&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$regex&lt;/span&gt;,&nbsp;&lt;span&nbsp;class="var-type"&gt;array&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$list&lt;/span&gt;)<a name="line_319"></a></li>
+<li id="line_320" class="even"><span class="lineNumber">320&nbsp;</span>			&lt;/div&gt;<a name="line_320"></a></li>
+
+<li id="line_321" class="odd"><span class="lineNumber">321&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_321"></a></li>
+<li id="line_322" class="even"><span class="lineNumber">322&nbsp;</span>					&lt;li&gt;<a name="line_322"></a></li>
+<li id="line_323" class="odd"><span class="lineNumber">323&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_323"></a></li>
+<li id="line_324" class="even"><span class="lineNumber">324&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$regex&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;regex&nbsp;to&nbsp;filter&nbsp;by.&lt;/span&gt;			&lt;/li&gt;<a name="line_324"></a></li>
+<li id="line_325" class="odd"><span class="lineNumber">325&nbsp;</span>					&lt;li&gt;<a name="line_325"></a></li>
+<li id="line_326" class="even"><span class="lineNumber">326&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;array&lt;/span&gt;<a name="line_326"></a></li>
+<li id="line_327" class="odd"><span class="lineNumber">327&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$list&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;list&nbsp;of&nbsp;items&nbsp;to&nbsp;filter.&lt;/span&gt;			&lt;/li&gt;<a name="line_327"></a></li>
+<li id="line_328" class="even"><span class="lineNumber">328&nbsp;</span>				&lt;/ul&gt;<a name="line_328"></a></li>
+<li id="line_329" class="odd"><span class="lineNumber">329&nbsp;</span>		<a name="line_329"></a></li>
+<li id="line_330" class="even"><span class="lineNumber">330&nbsp;</span>	<a name="line_330"></a></li>
+<li id="line_331" class="odd"><span class="lineNumber">331&nbsp;</span>&lt;/div&gt;<a name="line_331"></a></li>
+<li id="line_332" class="even"><span class="lineNumber">332&nbsp;</span>&lt;a&nbsp;name="functionfindFirstExisting"&nbsp;id="functionfindFirstExisting"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_332"></a></li>
+<li id="line_333" class="odd"><span class="lineNumber">333&nbsp;</span>&lt;div&nbsp;class="evenrow"&gt;<a name="line_333"></a></li>
+<li id="line_334" class="even"><span class="lineNumber">334&nbsp;</span>	<a name="line_334"></a></li>
+<li id="line_335" class="odd"><span class="lineNumber">335&nbsp;</span>	&lt;div&gt;<a name="line_335"></a></li>
+<li id="line_336" class="even"><span class="lineNumber">336&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;findFirstExisting&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;197&lt;/span&gt;)<a name="line_336"></a></li>
+<li id="line_337" class="odd"><span class="lineNumber">337&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_337"></a></li>
+
+<li id="line_338" class="even"><span class="lineNumber">338&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_338"></a></li>
+<li id="line_339" class="odd"><span class="lineNumber">339&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;returns&nbsp;the&nbsp;first&nbsp;file&nbsp;name&nbsp;that&nbsp;exists,&nbsp;or&nbsp;the&nbsp;default&nbsp;if&nbsp;none&nbsp;do.&lt;/p&gt;<a name="line_339"></a></li>
+<li id="line_340" class="even"><span class="lineNumber">340&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_340"></a></li>
+<li id="line_341" class="odd"><span class="lineNumber">341&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;first&nbsp;existing&nbsp;file.&lt;/li&gt;<a name="line_341"></a></li>
+<li id="line_342" class="even"><span class="lineNumber">342&nbsp;</span>			&lt;/ul&gt;<a name="line_342"></a></li>
+<li id="line_343" class="odd"><span class="lineNumber">343&nbsp;</span>	<a name="line_343"></a></li>
+<li id="line_344" class="even"><span class="lineNumber">344&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_344"></a></li>
+<li id="line_345" class="odd"><span class="lineNumber">345&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;string&lt;/span&gt;<a name="line_345"></a></li>
+<li id="line_346" class="even"><span class="lineNumber">346&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_346"></a></li>
+<li id="line_347" class="odd"><span class="lineNumber">347&nbsp;</span>			findFirstExisting<a name="line_347"></a></li>
+<li id="line_348" class="even"><span class="lineNumber">348&nbsp;</span>		&lt;/span&gt;<a name="line_348"></a></li>
+<li id="line_349" class="odd"><span class="lineNumber">349&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;array&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$fileNames&lt;/span&gt;,&nbsp;[&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$default&lt;/span&gt;&nbsp;=&nbsp;&lt;span&nbsp;class="var-default"&gt;null&lt;/span&gt;])<a name="line_349"></a></li>
+<li id="line_350" class="even"><span class="lineNumber">350&nbsp;</span>			&lt;/div&gt;<a name="line_350"></a></li>
+
+<li id="line_351" class="odd"><span class="lineNumber">351&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_351"></a></li>
+<li id="line_352" class="even"><span class="lineNumber">352&nbsp;</span>					&lt;li&gt;<a name="line_352"></a></li>
+<li id="line_353" class="odd"><span class="lineNumber">353&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;array&lt;/span&gt;<a name="line_353"></a></li>
+<li id="line_354" class="even"><span class="lineNumber">354&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$fileNames&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;A&nbsp;list&nbsp;of&nbsp;file&nbsp;names&nbsp;to&nbsp;test&nbsp;for.&lt;/span&gt;			&lt;/li&gt;<a name="line_354"></a></li>
+<li id="line_355" class="odd"><span class="lineNumber">355&nbsp;</span>					&lt;li&gt;<a name="line_355"></a></li>
+<li id="line_356" class="even"><span class="lineNumber">356&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_356"></a></li>
+<li id="line_357" class="odd"><span class="lineNumber">357&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$default&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;default&nbsp;value&nbsp;to&nbsp;return.&nbsp;Defaults&nbsp;to&nbsp;null.&lt;/span&gt;			&lt;/li&gt;<a name="line_357"></a></li>
+<li id="line_358" class="even"><span class="lineNumber">358&nbsp;</span>				&lt;/ul&gt;<a name="line_358"></a></li>
+<li id="line_359" class="odd"><span class="lineNumber">359&nbsp;</span>		<a name="line_359"></a></li>
+<li id="line_360" class="even"><span class="lineNumber">360&nbsp;</span>	<a name="line_360"></a></li>
+<li id="line_361" class="odd"><span class="lineNumber">361&nbsp;</span>&lt;/div&gt;<a name="line_361"></a></li>
+<li id="line_362" class="even"><span class="lineNumber">362&nbsp;</span>&lt;a&nbsp;name="functionreadFileText"&nbsp;id="functionreadFileText"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_362"></a></li>
+<li id="line_363" class="odd"><span class="lineNumber">363&nbsp;</span>&lt;div&nbsp;class="oddrow"&gt;<a name="line_363"></a></li>
+<li id="line_364" class="even"><span class="lineNumber">364&nbsp;</span>	<a name="line_364"></a></li>
+<li id="line_365" class="odd"><span class="lineNumber">365&nbsp;</span>	&lt;div&gt;<a name="line_365"></a></li>
+<li id="line_366" class="even"><span class="lineNumber">366&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;readFileText&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;217&lt;/span&gt;)<a name="line_366"></a></li>
+<li id="line_367" class="odd"><span class="lineNumber">367&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_367"></a></li>
+
+<li id="line_368" class="even"><span class="lineNumber">368&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_368"></a></li>
+<li id="line_369" class="odd"><span class="lineNumber">369&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;reads&nbsp;the&nbsp;data&nbsp;in&nbsp;$fileName&nbsp;and&nbsp;converts&nbsp;it&nbsp;from&nbsp;$fileEncoding&nbsp;to&nbsp;&nbsp;UTF-8.&lt;/p&gt;<a name="line_369"></a></li>
+<li id="line_370" class="even"><span class="lineNumber">370&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_370"></a></li>
+<li id="line_371" class="odd"><span class="lineNumber">371&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;The&nbsp;data&nbsp;in&nbsp;$fileName&nbsp;in&nbsp;UTF-8.&lt;/li&gt;<a name="line_371"></a></li>
+<li id="line_372" class="even"><span class="lineNumber">372&nbsp;</span>			&lt;/ul&gt;<a name="line_372"></a></li>
+<li id="line_373" class="odd"><span class="lineNumber">373&nbsp;</span>	<a name="line_373"></a></li>
+<li id="line_374" class="even"><span class="lineNumber">374&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_374"></a></li>
+<li id="line_375" class="odd"><span class="lineNumber">375&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;string&lt;/span&gt;<a name="line_375"></a></li>
+<li id="line_376" class="even"><span class="lineNumber">376&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_376"></a></li>
+<li id="line_377" class="odd"><span class="lineNumber">377&nbsp;</span>			readFileText<a name="line_377"></a></li>
+<li id="line_378" class="even"><span class="lineNumber">378&nbsp;</span>		&lt;/span&gt;<a name="line_378"></a></li>
+<li id="line_379" class="odd"><span class="lineNumber">379&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$fileName&lt;/span&gt;,&nbsp;&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$fileEncoding&lt;/span&gt;)<a name="line_379"></a></li>
+<li id="line_380" class="even"><span class="lineNumber">380&nbsp;</span>			&lt;/div&gt;<a name="line_380"></a></li>
+
+<li id="line_381" class="odd"><span class="lineNumber">381&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_381"></a></li>
+<li id="line_382" class="even"><span class="lineNumber">382&nbsp;</span>					&lt;li&gt;<a name="line_382"></a></li>
+<li id="line_383" class="odd"><span class="lineNumber">383&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_383"></a></li>
+<li id="line_384" class="even"><span class="lineNumber">384&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$fileName&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;file&nbsp;name&nbsp;to&nbsp;read.&lt;/span&gt;			&lt;/li&gt;<a name="line_384"></a></li>
+<li id="line_385" class="odd"><span class="lineNumber">385&nbsp;</span>					&lt;li&gt;<a name="line_385"></a></li>
+<li id="line_386" class="even"><span class="lineNumber">386&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_386"></a></li>
+<li id="line_387" class="odd"><span class="lineNumber">387&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$fileEncoding&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;encoding&nbsp;that&nbsp;the&nbsp;text&nbsp;in&nbsp;the&nbsp;file&nbsp;is&nbsp;stored&nbsp;&nbsp;in.&lt;/span&gt;			&lt;/li&gt;<a name="line_387"></a></li>
+<li id="line_388" class="even"><span class="lineNumber">388&nbsp;</span>				&lt;/ul&gt;<a name="line_388"></a></li>
+<li id="line_389" class="odd"><span class="lineNumber">389&nbsp;</span>		<a name="line_389"></a></li>
+<li id="line_390" class="even"><span class="lineNumber">390&nbsp;</span>	<a name="line_390"></a></li>
+<li id="line_391" class="odd"><span class="lineNumber">391&nbsp;</span>&lt;/div&gt;<a name="line_391"></a></li>
+<li id="line_392" class="even"><span class="lineNumber">392&nbsp;</span>&lt;a&nbsp;name="functionreadLines"&nbsp;id="functionreadLines"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_392"></a></li>
+<li id="line_393" class="odd"><span class="lineNumber">393&nbsp;</span>&lt;div&nbsp;class="evenrow"&gt;<a name="line_393"></a></li>
+<li id="line_394" class="even"><span class="lineNumber">394&nbsp;</span>	<a name="line_394"></a></li>
+<li id="line_395" class="odd"><span class="lineNumber">395&nbsp;</span>	&lt;div&gt;<a name="line_395"></a></li>
+<li id="line_396" class="even"><span class="lineNumber">396&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;readLines&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;233&lt;/span&gt;)<a name="line_396"></a></li>
+<li id="line_397" class="odd"><span class="lineNumber">397&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_397"></a></li>
+
+<li id="line_398" class="even"><span class="lineNumber">398&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_398"></a></li>
+<li id="line_399" class="odd"><span class="lineNumber">399&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;reads&nbsp;the&nbsp;data&nbsp;in&nbsp;$fileName,&nbsp;converts&nbsp;it&nbsp;from&nbsp;$fileEncoding&nbsp;to&nbsp;UTF-8,&nbsp;&nbsp;and&nbsp;splits&nbsp;it&nbsp;into&nbsp;lines.&lt;/p&gt;<a name="line_399"></a></li>
+<li id="line_400" class="even"><span class="lineNumber">400&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_400"></a></li>
+<li id="line_401" class="odd"><span class="lineNumber">401&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;The&nbsp;lines&nbsp;of&nbsp;data&nbsp;in&nbsp;the&nbsp;file.&lt;/li&gt;<a name="line_401"></a></li>
+<li id="line_402" class="even"><span class="lineNumber">402&nbsp;</span>			&lt;/ul&gt;<a name="line_402"></a></li>
+<li id="line_403" class="odd"><span class="lineNumber">403&nbsp;</span>	<a name="line_403"></a></li>
+<li id="line_404" class="even"><span class="lineNumber">404&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_404"></a></li>
+<li id="line_405" class="odd"><span class="lineNumber">405&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;array&lt;/span&gt;<a name="line_405"></a></li>
+<li id="line_406" class="even"><span class="lineNumber">406&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_406"></a></li>
+<li id="line_407" class="odd"><span class="lineNumber">407&nbsp;</span>			readLines<a name="line_407"></a></li>
+<li id="line_408" class="even"><span class="lineNumber">408&nbsp;</span>		&lt;/span&gt;<a name="line_408"></a></li>
+<li id="line_409" class="odd"><span class="lineNumber">409&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$fileName&lt;/span&gt;,&nbsp;&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$fileEncoding&lt;/span&gt;)<a name="line_409"></a></li>
+<li id="line_410" class="even"><span class="lineNumber">410&nbsp;</span>			&lt;/div&gt;<a name="line_410"></a></li>
+
+<li id="line_411" class="odd"><span class="lineNumber">411&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_411"></a></li>
+<li id="line_412" class="even"><span class="lineNumber">412&nbsp;</span>					&lt;li&gt;<a name="line_412"></a></li>
+<li id="line_413" class="odd"><span class="lineNumber">413&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_413"></a></li>
+<li id="line_414" class="even"><span class="lineNumber">414&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$fileName&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;file&nbsp;name&nbsp;to&nbsp;read.&lt;/span&gt;			&lt;/li&gt;<a name="line_414"></a></li>
+<li id="line_415" class="odd"><span class="lineNumber">415&nbsp;</span>					&lt;li&gt;<a name="line_415"></a></li>
+<li id="line_416" class="even"><span class="lineNumber">416&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_416"></a></li>
+<li id="line_417" class="odd"><span class="lineNumber">417&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$fileEncoding&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;encoding&nbsp;to&nbsp;that&nbsp;the&nbsp;text&nbsp;in&nbsp;file&nbsp;is&nbsp;stored&nbsp;&nbsp;in.&lt;/span&gt;			&lt;/li&gt;<a name="line_417"></a></li>
+<li id="line_418" class="even"><span class="lineNumber">418&nbsp;</span>				&lt;/ul&gt;<a name="line_418"></a></li>
+<li id="line_419" class="odd"><span class="lineNumber">419&nbsp;</span>		<a name="line_419"></a></li>
+<li id="line_420" class="even"><span class="lineNumber">420&nbsp;</span>	<a name="line_420"></a></li>
+<li id="line_421" class="odd"><span class="lineNumber">421&nbsp;</span>&lt;/div&gt;<a name="line_421"></a></li>
+<li id="line_422" class="even"><span class="lineNumber">422&nbsp;</span>&lt;a&nbsp;name="functionrls"&nbsp;id="functionrls"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_422"></a></li>
+<li id="line_423" class="odd"><span class="lineNumber">423&nbsp;</span>&lt;div&nbsp;class="oddrow"&gt;<a name="line_423"></a></li>
+<li id="line_424" class="even"><span class="lineNumber">424&nbsp;</span>	<a name="line_424"></a></li>
+<li id="line_425" class="odd"><span class="lineNumber">425&nbsp;</span>	&lt;div&gt;<a name="line_425"></a></li>
+<li id="line_426" class="even"><span class="lineNumber">426&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;rls&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;77&lt;/span&gt;)<a name="line_426"></a></li>
+<li id="line_427" class="odd"><span class="lineNumber">427&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_427"></a></li>
+
+<li id="line_428" class="even"><span class="lineNumber">428&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_428"></a></li>
+<li id="line_429" class="odd"><span class="lineNumber">429&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;recursively&nbsp;lists&nbsp;the&nbsp;contents&nbsp;of&nbsp;a&nbsp;directory.&nbsp;This&nbsp;doesn't&nbsp;return&nbsp;&nbsp;hidden&nbsp;files.&lt;/p&gt;<a name="line_429"></a></li>
+<li id="line_430" class="even"><span class="lineNumber">430&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_430"></a></li>
+<li id="line_431" class="odd"><span class="lineNumber">431&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;A&nbsp;list&nbsp;of&nbsp;files&nbsp;in&nbsp;the&nbsp;directory.&lt;/li&gt;<a name="line_431"></a></li>
+<li id="line_432" class="even"><span class="lineNumber">432&nbsp;</span>			&lt;/ul&gt;<a name="line_432"></a></li>
+<li id="line_433" class="odd"><span class="lineNumber">433&nbsp;</span>	<a name="line_433"></a></li>
+<li id="line_434" class="even"><span class="lineNumber">434&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_434"></a></li>
+<li id="line_435" class="odd"><span class="lineNumber">435&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;array&lt;/span&gt;<a name="line_435"></a></li>
+<li id="line_436" class="even"><span class="lineNumber">436&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_436"></a></li>
+<li id="line_437" class="odd"><span class="lineNumber">437&nbsp;</span>			rls<a name="line_437"></a></li>
+<li id="line_438" class="even"><span class="lineNumber">438&nbsp;</span>		&lt;/span&gt;<a name="line_438"></a></li>
+<li id="line_439" class="odd"><span class="lineNumber">439&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$dir&lt;/span&gt;)<a name="line_439"></a></li>
+<li id="line_440" class="even"><span class="lineNumber">440&nbsp;</span>			&lt;/div&gt;<a name="line_440"></a></li>
+
+<li id="line_441" class="odd"><span class="lineNumber">441&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_441"></a></li>
+<li id="line_442" class="even"><span class="lineNumber">442&nbsp;</span>					&lt;li&gt;<a name="line_442"></a></li>
+<li id="line_443" class="odd"><span class="lineNumber">443&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_443"></a></li>
+<li id="line_444" class="even"><span class="lineNumber">444&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$dir&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;directory&nbsp;to&nbsp;list.&lt;/span&gt;			&lt;/li&gt;<a name="line_444"></a></li>
+<li id="line_445" class="odd"><span class="lineNumber">445&nbsp;</span>				&lt;/ul&gt;<a name="line_445"></a></li>
+<li id="line_446" class="even"><span class="lineNumber">446&nbsp;</span>		<a name="line_446"></a></li>
+<li id="line_447" class="odd"><span class="lineNumber">447&nbsp;</span>	<a name="line_447"></a></li>
+<li id="line_448" class="even"><span class="lineNumber">448&nbsp;</span>&lt;/div&gt;<a name="line_448"></a></li>
+<li id="line_449" class="odd"><span class="lineNumber">449&nbsp;</span>&lt;a&nbsp;name="functionrrmdir"&nbsp;id="functionrrmdir"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_449"></a></li>
+<li id="line_450" class="even"><span class="lineNumber">450&nbsp;</span>&lt;div&nbsp;class="evenrow"&gt;<a name="line_450"></a></li>
+<li id="line_451" class="odd"><span class="lineNumber">451&nbsp;</span>	<a name="line_451"></a></li>
+<li id="line_452" class="even"><span class="lineNumber">452&nbsp;</span>	&lt;div&gt;<a name="line_452"></a></li>
+<li id="line_453" class="odd"><span class="lineNumber">453&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;rrmdir&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;112&lt;/span&gt;)<a name="line_453"></a></li>
+<li id="line_454" class="even"><span class="lineNumber">454&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_454"></a></li>
+
+<li id="line_455" class="odd"><span class="lineNumber">455&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_455"></a></li>
+<li id="line_456" class="even"><span class="lineNumber">456&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;Recursively&nbsp;delete&nbsp;a&nbsp;directory.&lt;/p&gt;<a name="line_456"></a></li>
+<li id="line_457" class="odd"><span class="lineNumber">457&nbsp;</span>	<a name="line_457"></a></li>
+<li id="line_458" class="even"><span class="lineNumber">458&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_458"></a></li>
+<li id="line_459" class="odd"><span class="lineNumber">459&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;void&lt;/span&gt;<a name="line_459"></a></li>
+<li id="line_460" class="even"><span class="lineNumber">460&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_460"></a></li>
+<li id="line_461" class="odd"><span class="lineNumber">461&nbsp;</span>			rrmdir<a name="line_461"></a></li>
+<li id="line_462" class="even"><span class="lineNumber">462&nbsp;</span>		&lt;/span&gt;<a name="line_462"></a></li>
+<li id="line_463" class="odd"><span class="lineNumber">463&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$dir&lt;/span&gt;)<a name="line_463"></a></li>
+<li id="line_464" class="even"><span class="lineNumber">464&nbsp;</span>			&lt;/div&gt;<a name="line_464"></a></li>
+
+<li id="line_465" class="odd"><span class="lineNumber">465&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_465"></a></li>
+<li id="line_466" class="even"><span class="lineNumber">466&nbsp;</span>					&lt;li&gt;<a name="line_466"></a></li>
+<li id="line_467" class="odd"><span class="lineNumber">467&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_467"></a></li>
+<li id="line_468" class="even"><span class="lineNumber">468&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$dir&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;directory&nbsp;to&nbsp;delete.&lt;/span&gt;			&lt;/li&gt;<a name="line_468"></a></li>
+<li id="line_469" class="odd"><span class="lineNumber">469&nbsp;</span>				&lt;/ul&gt;<a name="line_469"></a></li>
+<li id="line_470" class="even"><span class="lineNumber">470&nbsp;</span>		<a name="line_470"></a></li>
+<li id="line_471" class="odd"><span class="lineNumber">471&nbsp;</span>	<a name="line_471"></a></li>
+<li id="line_472" class="even"><span class="lineNumber">472&nbsp;</span>&lt;/div&gt;<a name="line_472"></a></li>
+<li id="line_473" class="odd"><span class="lineNumber">473&nbsp;</span>&lt;a&nbsp;name="functionsaveUrl"&nbsp;id="functionsaveUrl"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_473"></a></li>
+<li id="line_474" class="even"><span class="lineNumber">474&nbsp;</span>&lt;div&nbsp;class="oddrow"&gt;<a name="line_474"></a></li>
+<li id="line_475" class="odd"><span class="lineNumber">475&nbsp;</span>	<a name="line_475"></a></li>
+<li id="line_476" class="even"><span class="lineNumber">476&nbsp;</span>	&lt;div&gt;<a name="line_476"></a></li>
+<li id="line_477" class="odd"><span class="lineNumber">477&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;saveUrl&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;175&lt;/span&gt;)<a name="line_477"></a></li>
+<li id="line_478" class="even"><span class="lineNumber">478&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_478"></a></li>
+
+<li id="line_479" class="odd"><span class="lineNumber">479&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_479"></a></li>
+<li id="line_480" class="even"><span class="lineNumber">480&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;copies&nbsp;a&nbsp;URL&nbsp;to&nbsp;a&nbsp;file.&lt;/p&gt;<a name="line_480"></a></li>
+<li id="line_481" class="odd"><span class="lineNumber">481&nbsp;</span>	<a name="line_481"></a></li>
+<li id="line_482" class="even"><span class="lineNumber">482&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_482"></a></li>
+<li id="line_483" class="odd"><span class="lineNumber">483&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;void&lt;/span&gt;<a name="line_483"></a></li>
+<li id="line_484" class="even"><span class="lineNumber">484&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_484"></a></li>
+<li id="line_485" class="odd"><span class="lineNumber">485&nbsp;</span>			saveUrl<a name="line_485"></a></li>
+<li id="line_486" class="even"><span class="lineNumber">486&nbsp;</span>		&lt;/span&gt;<a name="line_486"></a></li>
+<li id="line_487" class="odd"><span class="lineNumber">487&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$url&lt;/span&gt;,&nbsp;&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$filename&lt;/span&gt;)<a name="line_487"></a></li>
+<li id="line_488" class="even"><span class="lineNumber">488&nbsp;</span>			&lt;/div&gt;<a name="line_488"></a></li>
+
+<li id="line_489" class="odd"><span class="lineNumber">489&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_489"></a></li>
+<li id="line_490" class="even"><span class="lineNumber">490&nbsp;</span>					&lt;li&gt;<a name="line_490"></a></li>
+<li id="line_491" class="odd"><span class="lineNumber">491&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_491"></a></li>
+<li id="line_492" class="even"><span class="lineNumber">492&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$url&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;URL&nbsp;to&nbsp;pull.&lt;/span&gt;			&lt;/li&gt;<a name="line_492"></a></li>
+<li id="line_493" class="odd"><span class="lineNumber">493&nbsp;</span>					&lt;li&gt;<a name="line_493"></a></li>
+<li id="line_494" class="even"><span class="lineNumber">494&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_494"></a></li>
+<li id="line_495" class="odd"><span class="lineNumber">495&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$filename&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;file&nbsp;name&nbsp;to&nbsp;write&nbsp;to.&lt;/span&gt;			&lt;/li&gt;<a name="line_495"></a></li>
+<li id="line_496" class="even"><span class="lineNumber">496&nbsp;</span>				&lt;/ul&gt;<a name="line_496"></a></li>
+<li id="line_497" class="odd"><span class="lineNumber">497&nbsp;</span>		<a name="line_497"></a></li>
+<li id="line_498" class="even"><span class="lineNumber">498&nbsp;</span>	<a name="line_498"></a></li>
+<li id="line_499" class="odd"><span class="lineNumber">499&nbsp;</span>&lt;/div&gt;<a name="line_499"></a></li>
+<li id="line_500" class="even"><span class="lineNumber">500&nbsp;</span>&lt;a&nbsp;name="functionseenAtKey"&nbsp;id="functionseenAtKey"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_500"></a></li>
+<li id="line_501" class="odd"><span class="lineNumber">501&nbsp;</span>&lt;div&nbsp;class="evenrow"&gt;<a name="line_501"></a></li>
+<li id="line_502" class="even"><span class="lineNumber">502&nbsp;</span>	<a name="line_502"></a></li>
+<li id="line_503" class="odd"><span class="lineNumber">503&nbsp;</span>	&lt;div&gt;<a name="line_503"></a></li>
+<li id="line_504" class="even"><span class="lineNumber">504&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;seenAtKey&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;155&lt;/span&gt;)<a name="line_504"></a></li>
+<li id="line_505" class="odd"><span class="lineNumber">505&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_505"></a></li>
+
+<li id="line_506" class="even"><span class="lineNumber">506&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_506"></a></li>
+<li id="line_507" class="odd"><span class="lineNumber">507&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;This&nbsp;tests&nbsp;whether&nbsp;the&nbsp;item&nbsp;is&nbsp;in&nbsp;a&nbsp;list&nbsp;of&nbsp;lists&nbsp;at&nbsp;the&nbsp;given&nbsp;key.&lt;/p&gt;<a name="line_507"></a></li>
+<li id="line_508" class="even"><span class="lineNumber">508&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_508"></a></li>
+<li id="line_509" class="odd"><span class="lineNumber">509&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;if&nbsp;$item&nbsp;is&nbsp;in&nbsp;a&nbsp;subarray&nbsp;under&nbsp;$key.&lt;/li&gt;<a name="line_509"></a></li>
+<li id="line_510" class="even"><span class="lineNumber">510&nbsp;</span>			&lt;/ul&gt;<a name="line_510"></a></li>
+<li id="line_511" class="odd"><span class="lineNumber">511&nbsp;</span>	<a name="line_511"></a></li>
+<li id="line_512" class="even"><span class="lineNumber">512&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_512"></a></li>
+<li id="line_513" class="odd"><span class="lineNumber">513&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;True&lt;/span&gt;<a name="line_513"></a></li>
+<li id="line_514" class="even"><span class="lineNumber">514&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_514"></a></li>
+<li id="line_515" class="odd"><span class="lineNumber">515&nbsp;</span>			seenAtKey<a name="line_515"></a></li>
+<li id="line_516" class="even"><span class="lineNumber">516&nbsp;</span>		&lt;/span&gt;<a name="line_516"></a></li>
+<li id="line_517" class="odd"><span class="lineNumber">517&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;array&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$array&lt;/span&gt;,&nbsp;&lt;span&nbsp;class="var-type"&gt;integer/string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$key&lt;/span&gt;,&nbsp;&lt;span&nbsp;class="var-type"&gt;anything&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$item&lt;/span&gt;)<a name="line_517"></a></li>
+<li id="line_518" class="even"><span class="lineNumber">518&nbsp;</span>			&lt;/div&gt;<a name="line_518"></a></li>
+
+<li id="line_519" class="odd"><span class="lineNumber">519&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_519"></a></li>
+<li id="line_520" class="even"><span class="lineNumber">520&nbsp;</span>					&lt;li&gt;<a name="line_520"></a></li>
+<li id="line_521" class="odd"><span class="lineNumber">521&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;array&lt;/span&gt;<a name="line_521"></a></li>
+<li id="line_522" class="even"><span class="lineNumber">522&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$array&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;array&nbsp;of&nbsp;arrays&nbsp;to&nbsp;search.&lt;/span&gt;			&lt;/li&gt;<a name="line_522"></a></li>
+<li id="line_523" class="odd"><span class="lineNumber">523&nbsp;</span>					&lt;li&gt;<a name="line_523"></a></li>
+<li id="line_524" class="even"><span class="lineNumber">524&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;integer/string&lt;/span&gt;<a name="line_524"></a></li>
+<li id="line_525" class="odd"><span class="lineNumber">525&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$key&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;key&nbsp;to&nbsp;search&nbsp;under.&lt;/span&gt;			&lt;/li&gt;<a name="line_525"></a></li>
+<li id="line_526" class="even"><span class="lineNumber">526&nbsp;</span>					&lt;li&gt;<a name="line_526"></a></li>
+<li id="line_527" class="odd"><span class="lineNumber">527&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;anything&lt;/span&gt;<a name="line_527"></a></li>
+<li id="line_528" class="even"><span class="lineNumber">528&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$item&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;item&nbsp;to&nbsp;search&nbsp;for.&lt;/span&gt;			&lt;/li&gt;<a name="line_528"></a></li>
+<li id="line_529" class="odd"><span class="lineNumber">529&nbsp;</span>				&lt;/ul&gt;<a name="line_529"></a></li>
+<li id="line_530" class="even"><span class="lineNumber">530&nbsp;</span>		<a name="line_530"></a></li>
+<li id="line_531" class="odd"><span class="lineNumber">531&nbsp;</span>	<a name="line_531"></a></li>
+<li id="line_532" class="even"><span class="lineNumber">532&nbsp;</span>&lt;/div&gt;<a name="line_532"></a></li>
+<li id="line_533" class="odd"><span class="lineNumber">533&nbsp;</span>&lt;a&nbsp;name="functiontmpdir"&nbsp;id="functiontmpdir"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_533"></a></li>
+<li id="line_534" class="even"><span class="lineNumber">534&nbsp;</span>&lt;div&nbsp;class="oddrow"&gt;<a name="line_534"></a></li>
+<li id="line_535" class="odd"><span class="lineNumber">535&nbsp;</span>	<a name="line_535"></a></li>
+<li id="line_536" class="even"><span class="lineNumber">536&nbsp;</span>	&lt;div&gt;<a name="line_536"></a></li>
+<li id="line_537" class="odd"><span class="lineNumber">537&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;tmpdir&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;139&lt;/span&gt;)<a name="line_537"></a></li>
+<li id="line_538" class="even"><span class="lineNumber">538&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_538"></a></li>
+
+<li id="line_539" class="odd"><span class="lineNumber">539&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_539"></a></li>
+<li id="line_540" class="even"><span class="lineNumber">540&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;Get&nbsp;a&nbsp;temporary&nbsp;name&nbsp;and&nbsp;create&nbsp;a&nbsp;directory&nbsp;there.&lt;/p&gt;<a name="line_540"></a></li>
+<li id="line_541" class="odd"><span class="lineNumber">541&nbsp;</span>&lt;p&nbsp;class="description"&gt;&lt;p&gt;The&nbsp;caller&nbsp;is&nbsp;responsible&nbsp;for&nbsp;deleting&nbsp;this&nbsp;directory&nbsp;and&nbsp;its&nbsp;contents.&lt;/p&gt;&lt;/p&gt;<a name="line_541"></a></li>
+<li id="line_542" class="even"><span class="lineNumber">542&nbsp;</span>	&lt;ul&nbsp;class="tags"&gt;<a name="line_542"></a></li>
+<li id="line_543" class="odd"><span class="lineNumber">543&nbsp;</span>				&lt;li&gt;&lt;span&nbsp;class="field"&gt;return:&lt;/span&gt;&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;temporary&nbsp;directory.&lt;/li&gt;<a name="line_543"></a></li>
+<li id="line_544" class="even"><span class="lineNumber">544&nbsp;</span>			&lt;/ul&gt;<a name="line_544"></a></li>
+<li id="line_545" class="odd"><span class="lineNumber">545&nbsp;</span>	<a name="line_545"></a></li>
+<li id="line_546" class="even"><span class="lineNumber">546&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_546"></a></li>
+<li id="line_547" class="odd"><span class="lineNumber">547&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;string&lt;/span&gt;<a name="line_547"></a></li>
+<li id="line_548" class="even"><span class="lineNumber">548&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_548"></a></li>
+<li id="line_549" class="odd"><span class="lineNumber">549&nbsp;</span>			tmpdir<a name="line_549"></a></li>
+<li id="line_550" class="even"><span class="lineNumber">550&nbsp;</span>		&lt;/span&gt;<a name="line_550"></a></li>
+<li id="line_551" class="odd"><span class="lineNumber">551&nbsp;</span>					([&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$prefix&lt;/span&gt;&nbsp;=&nbsp;&lt;span&nbsp;class="var-default"&gt;&amp;#039;bag&amp;#039;&lt;/span&gt;])<a name="line_551"></a></li>
+<li id="line_552" class="even"><span class="lineNumber">552&nbsp;</span>			&lt;/div&gt;<a name="line_552"></a></li>
+
+<li id="line_553" class="odd"><span class="lineNumber">553&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_553"></a></li>
+<li id="line_554" class="even"><span class="lineNumber">554&nbsp;</span>					&lt;li&gt;<a name="line_554"></a></li>
+<li id="line_555" class="odd"><span class="lineNumber">555&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_555"></a></li>
+<li id="line_556" class="even"><span class="lineNumber">556&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$prefix&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;prefix&nbsp;for&nbsp;the&nbsp;temporary&nbsp;directory.&lt;/span&gt;			&lt;/li&gt;<a name="line_556"></a></li>
+<li id="line_557" class="odd"><span class="lineNumber">557&nbsp;</span>				&lt;/ul&gt;<a name="line_557"></a></li>
+<li id="line_558" class="even"><span class="lineNumber">558&nbsp;</span>		<a name="line_558"></a></li>
+<li id="line_559" class="odd"><span class="lineNumber">559&nbsp;</span>	<a name="line_559"></a></li>
+<li id="line_560" class="even"><span class="lineNumber">560&nbsp;</span>&lt;/div&gt;<a name="line_560"></a></li>
+<li id="line_561" class="odd"><span class="lineNumber">561&nbsp;</span>&lt;a&nbsp;name="functionwriteFileText"&nbsp;id="functionwriteFileText"&gt;&lt;!--&nbsp;--&gt;&lt;/a&gt;<a name="line_561"></a></li>
+<li id="line_562" class="even"><span class="lineNumber">562&nbsp;</span>&lt;div&nbsp;class="evenrow"&gt;<a name="line_562"></a></li>
+<li id="line_563" class="odd"><span class="lineNumber">563&nbsp;</span>	<a name="line_563"></a></li>
+<li id="line_564" class="even"><span class="lineNumber">564&nbsp;</span>	&lt;div&gt;<a name="line_564"></a></li>
+<li id="line_565" class="odd"><span class="lineNumber">565&nbsp;</span>		&lt;span&nbsp;class="method-title"&gt;writeFileText&lt;/span&gt;&nbsp;(line&nbsp;&lt;span&nbsp;class="line-number"&gt;250&lt;/span&gt;)<a name="line_565"></a></li>
+<li id="line_566" class="even"><span class="lineNumber">566&nbsp;</span>	&lt;/div&gt;&nbsp;<a name="line_566"></a></li>
+
+<li id="line_567" class="odd"><span class="lineNumber">567&nbsp;</span>	&lt;!--&nbsp;==========&nbsp;Info&nbsp;from&nbsp;phpDoc&nbsp;block&nbsp;=========&nbsp;--&gt;<a name="line_567"></a></li>
+<li id="line_568" class="even"><span class="lineNumber">568&nbsp;</span>&lt;p&nbsp;class="short-description"&gt;Write&nbsp;the&nbsp;data&nbsp;in&nbsp;the&nbsp;file,&nbsp;converting&nbsp;it&nbsp;from&nbsp;UTF-8&nbsp;to&nbsp;tagFileEncoding.&lt;/p&gt;<a name="line_568"></a></li>
+<li id="line_569" class="odd"><span class="lineNumber">569&nbsp;</span>	<a name="line_569"></a></li>
+<li id="line_570" class="even"><span class="lineNumber">570&nbsp;</span>	&lt;div&nbsp;class="method-signature"&gt;<a name="line_570"></a></li>
+<li id="line_571" class="odd"><span class="lineNumber">571&nbsp;</span>		&lt;span&nbsp;class="method-result"&gt;void&lt;/span&gt;<a name="line_571"></a></li>
+<li id="line_572" class="even"><span class="lineNumber">572&nbsp;</span>		&lt;span&nbsp;class="method-name"&gt;<a name="line_572"></a></li>
+<li id="line_573" class="odd"><span class="lineNumber">573&nbsp;</span>			writeFileText<a name="line_573"></a></li>
+<li id="line_574" class="even"><span class="lineNumber">574&nbsp;</span>		&lt;/span&gt;<a name="line_574"></a></li>
+<li id="line_575" class="odd"><span class="lineNumber">575&nbsp;</span>					(&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$fileName&lt;/span&gt;,&nbsp;&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$fileEncoding&lt;/span&gt;,&nbsp;&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;&amp;nbsp;&lt;span&nbsp;class="var-name"&gt;$data&lt;/span&gt;)<a name="line_575"></a></li>
+<li id="line_576" class="even"><span class="lineNumber">576&nbsp;</span>			&lt;/div&gt;<a name="line_576"></a></li>
+
+<li id="line_577" class="odd"><span class="lineNumber">577&nbsp;</span>			&lt;ul&nbsp;class="parameters"&gt;<a name="line_577"></a></li>
+<li id="line_578" class="even"><span class="lineNumber">578&nbsp;</span>					&lt;li&gt;<a name="line_578"></a></li>
+<li id="line_579" class="odd"><span class="lineNumber">579&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_579"></a></li>
+<li id="line_580" class="even"><span class="lineNumber">580&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$fileName&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;file&nbsp;to&nbsp;write&nbsp;to.&lt;/span&gt;			&lt;/li&gt;<a name="line_580"></a></li>
+<li id="line_581" class="odd"><span class="lineNumber">581&nbsp;</span>					&lt;li&gt;<a name="line_581"></a></li>
+<li id="line_582" class="even"><span class="lineNumber">582&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_582"></a></li>
+<li id="line_583" class="odd"><span class="lineNumber">583&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$fileEncoding&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;encoding&nbsp;that&nbsp;the&nbsp;text&nbsp;in&nbsp;the&nbsp;file&nbsp;is&nbsp;stored&nbsp;&nbsp;in.&lt;/span&gt;			&lt;/li&gt;<a name="line_583"></a></li>
+<li id="line_584" class="even"><span class="lineNumber">584&nbsp;</span>					&lt;li&gt;<a name="line_584"></a></li>
+<li id="line_585" class="odd"><span class="lineNumber">585&nbsp;</span>				&lt;span&nbsp;class="var-type"&gt;string&lt;/span&gt;<a name="line_585"></a></li>
+<li id="line_586" class="even"><span class="lineNumber">586&nbsp;</span>				&lt;span&nbsp;class="var-name"&gt;$data&lt;/span&gt;&lt;span&nbsp;class="var-description"&gt;:&nbsp;The&nbsp;data&nbsp;to&nbsp;write.&lt;/span&gt;			&lt;/li&gt;<a name="line_586"></a></li>
+<li id="line_587" class="odd"><span class="lineNumber">587&nbsp;</span>				&lt;/ul&gt;<a name="line_587"></a></li>
+<li id="line_588" class="even"><span class="lineNumber">588&nbsp;</span>		<a name="line_588"></a></li>
+<li id="line_589" class="odd"><span class="lineNumber">589&nbsp;</span>	<a name="line_589"></a></li>
+<li id="line_590" class="even"><span class="lineNumber">590&nbsp;</span>&lt;/div&gt;<a name="line_590"></a></li>
+<li id="line_591" class="odd"><span class="lineNumber">591&nbsp;</span>		&lt;/div&gt;<a name="line_591"></a></li>
+<li id="line_592" class="even"><span class="lineNumber">592&nbsp;</span>	&lt;/div&gt;<a name="line_592"></a></li>
+<li id="line_593" class="odd"><span class="lineNumber">593&nbsp;</span>	<a name="line_593"></a></li>
+<li id="line_594" class="even"><span class="lineNumber">594&nbsp;</span>	&lt;p&nbsp;class="notes"&nbsp;id="credit"&gt;<a name="line_594"></a></li>
+<li id="line_595" class="odd"><span class="lineNumber">595&nbsp;</span>		Documentation&nbsp;generated&nbsp;on&nbsp;Wed,&nbsp;15&nbsp;Jun&nbsp;2011&nbsp;10:48:16&nbsp;-0400&nbsp;by&nbsp;&lt;a&nbsp;href="http://www.phpdoc.org"&nbsp;target="_blank"&gt;phpDocumentor&nbsp;1.4.3&lt;/a&gt;<a name="line_595"></a></li>
+<li id="line_596" class="even"><span class="lineNumber">596&nbsp;</span>	&lt;/p&gt;<a name="line_596"></a></li>
+<li id="line_597" class="odd"><span class="lineNumber">597&nbsp;</span>	&lt;/div&gt;&lt;/body&gt;<a name="line_597"></a></li>
+<li id="line_598" class="even"><span class="lineNumber">598&nbsp;</span>&lt;/html&gt;<a name="line_598"></a></li></ol></div></body></html>
+                    </div>
+    </body>
+</html>
