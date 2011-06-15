@@ -137,13 +137,13 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
     {
 
         $src = '_files';
-        $handle = opendir($src);
+        $handle = opendir(BAGIT_TESTS_DIRECTORY . '/' . $src);
         $i = 1;
         while (false !== ($file = readdir($handle))) {
 
             if (($file != '.') && ($file != '..') && ($file != '.DS_Store')) {
 
-                copy($src . '/' . $file, BASE_DIR . '/archive/files/' . $file);
+                copy(BAGIT_TESTS_DIRECTORY . '/' . $src . '/' . $file, BASE_DIR . '/archive/files/' . $file);
                 $db = get_db();
                 $sql = 'INSERT INTO omeka_files 
                     (item_id, size, has_derivative_image, archive_filename, original_filename) 
@@ -160,7 +160,7 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
     public function _createTestBagForRead($bag_name)
     {
 
-        copy($bag_name, BAGIT_PLUGIN_DIRECTORY . '/bagtmp/' . $bag_name);
+        copy(BAGIT_TESTS_DIRECTORY . '/' . $bag_name, BAGIT_PLUGIN_DIRECTORY . '/bagtmp/' . $bag_name);
 
     }
 
