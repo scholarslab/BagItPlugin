@@ -42,24 +42,6 @@
     font-weight: bold;
 }
 
-.bagit-topnav-button a:hover, .bagit-topnav-button .active {
-    background-color: #c50;
-    color: #f4f3eb;
-}
-
-.horizontal-nav ul#section-nav li.current a {
-    font-weight: normal;
-}
-
-.horizontal-nav ul#section-nav a {
-    padding-bottom: 13px;
-    background-color: #e3e1d3;
-}
-
-.horizontal-nav ul#section-nav li {
-    margin-right: 1em;
-}
-
 #bag_name, #collection_name {
     font-size: 1.5em;
 }
