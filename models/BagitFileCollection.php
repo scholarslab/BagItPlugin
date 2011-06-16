@@ -74,9 +74,12 @@ class BagitFileCollection extends Omeka_record
     /**
      * Returns the files contained in the collection.
      *
+     * @param string $page The page to fetch.
+     * @param string $order The constructed SQL order clause.
+     *
      * @return array $files The files.
      */
-    public function getAssociatedFiles($page, $order)
+    public function getFiles($page = null, $order = null)
     {
 
         $db = get_db();
@@ -87,9 +90,15 @@ class BagitFileCollection extends Omeka_record
             ->joinLeft(array('a' => $db->prefix . 'bagit_file_collection_associations'), 'f.id = a.file_id')
             ->columns(array('size', 'type' => 'type_os', 'id' => 'f.id', 'name' => 'original_filename', 'parent_item' =>
                 "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
-            ->where('a.collection_id = ' . $this->id)
-            ->limitPage($page, get_option('per_page_admin'))
-            ->order($order);
+            ->where('a.collection_id = ' . $this->id);
+
+        if (isset($page)) {
+            $select->limitPage($page, get_option('per_page_admin'));
+        }
+
+        if (isset($order)) {
+            $select->order($order);
+        }
 
         return $fileTable->fetchObjects($select);
 

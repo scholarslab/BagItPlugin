@@ -49,18 +49,9 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function browseAction()
     {
 
-        // Process the sorting parameters.
+        // Process the sorting parameters, get the collections.
         $order = bagithelpers_doColumnSortProcessing($this->_request);
-
-        // Query for collections, tacking on extra column with the number of associated files.
-        $db = get_db();
-        $collections = $this->getTable('BagitFileCollection')->fetchObjects(
-            $this->getTable('BagitFileCollection')->select()
-            ->from(array('fc' => $db->prefix . 'bagit_file_collections'))
-            ->columns(array('id', 'name', 'updated', 'number_of_files' =>
-                "(SELECT COUNT(collection_id) from `$db->BagitFileCollectionAssociation` WHERE collection_id = fc.id)"))
-            ->order($order)
-        );
+        $collections = $this->getTable('BagitFileCollection')->getCollectionsList();
 
         $this->view->collections = $collections;
 
@@ -123,7 +114,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         // process column sorting.
         $page = $this->_request->page;
         $order = bagithelpers_doColumnSortProcessing($this->_request);
-        $files = $collection->getAssociatedFiles($page, $order);
+        $files = $collection->getFiles($page, $order);
 
         $this->view->collection = $collection;
         $this->view->files = $files;
@@ -153,7 +144,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         // process column sorting.
         $page = $this->_request->page;
         $order = bagithelpers_doColumnSortProcessing($this->_request);
-        $files = $collection->getAssociatedFiles($page, $order);
+        $files = $collection->getFiles($page, $order);
 
         // Get files with parent item name.
         $db = get_db();
@@ -194,6 +185,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             );
 
             $collection->delete();
+
             foreach ($file_associations as $assoc) {
                 $assoc->delete();
             }
@@ -217,10 +209,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function exportprepAction()
     {
 
-        // Getters.
         $collection_id = $this->_request->id;
         $collection = $this->getTable('BagitFileCollection')->find($collection_id);
-
         $form = $this->_doExportForm($collection);
 
         $this->view->form = $form;

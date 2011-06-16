@@ -87,19 +87,14 @@ function bagithelpers_doColumnSortProcessing($request)
 function bagithelpers_doBagIt($collection_id, $collection_name, $format)
 {
 
-    // Instantiate the bag.
+    $db = get_db();
+
+    // Instantiate the bag, get the collection.
     $bag = new BagIt(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name);
+    $collection = $db->getTable('BagitFileCollection')->find($collection_id);
 
     // Get the files associated with the collection.
-    $db = get_db();
-    $files = $db->getTable('File')->fetchObjects(
-        $db->getTable('File')->select()
-        ->from(array('f' => $db->prefix . 'files'))
-        ->joinLeft(array('a' => $db->prefix . 'bagit_file_collection_associations'), 'f.id = a.file_id')
-        ->columns(array('size', 'type' => 'type_os', 'id' => 'f.id', 'archive_filename', 'original_filename', 'parent_item' =>
-            "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
-        ->where('a.collection_id = ?', $collection_id)
-    );
+    $files = $collection->getFiles();
 
     // Retrieve the files and add them to the new bag.
     foreach ($files as $file) {

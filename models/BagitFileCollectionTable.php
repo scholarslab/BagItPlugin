@@ -50,4 +50,25 @@ class BagitFileCollectionTable extends Omeka_Db_Table
 
     }
 
+    /**
+     * Returns collections for the main listing.
+     *
+     * @param string $order The constructed SQL order clause.
+     *
+     * @return object The collections.
+     */
+    public function getCollectionsList($order)
+    {
+
+        $db = get_db();
+        $select = $this->select()
+            ->from(array('fc' => $db->prefix . 'bagit_file_collections'))
+            ->columns(array('id', 'name', 'updated', 'number_of_files' =>
+                "(SELECT COUNT(collection_id) from `$db->BagitFileCollectionAssociation` WHERE collection_id = fc.id)"))
+            ->order($order);
+
+        return $this->fetchObjects($select);
+
+    }
+
 }
