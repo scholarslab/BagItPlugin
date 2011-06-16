@@ -30,18 +30,16 @@
 
 // {{{ constants
 define('BAGIT_PLUGIN_DIRECTORY', dirname(__FILE__));
-define('BAGIT_BAG_DIRECTORY', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'bags');
-define('BAGIT_PLUGIN_VERSION', get_plugin_ini('BagIt', 'version'));
-define('OMEKA_FILES_RELATIVE_DIRECTORY', 'archive' . DIRECTORY_SEPARATOR . 'files');
-define('BAGIT_TMP_DIRECTORY', BAGIT_PLUGIN_DIRECTORY . DIRECTORY_SEPARATOR . 'bagtmp');
-define('BAGIT_TESTS_DIRECTORY', BAGIT_PLUGIN_DIRECTORY . DIRECTORY_SEPARATOR . 'tests');
+define('BAGIT_BAG_DIRECTORY', dirname(__FILE__) . '/bags');
+define('OMEKA_FILES_RELATIVE_DIRECTORY', 'archive/files');
+define('BAGIT_TMP_DIRECTORY', BAGIT_PLUGIN_DIRECTORY . '/bagtmp');
+define('BAGIT_TESTS_DIRECTORY', BAGIT_PLUGIN_DIRECTORY . '/tests');
 // }}}
 
 // {{{ requires
-require_once BAGIT_PLUGIN_DIRECTORY . DIRECTORY_SEPARATOR . 'helpers' .
-    DIRECTORY_SEPARATOR . 'BagItFunctions.php'; // Include the helper functions.
-require_once BAGIT_PLUGIN_DIRECTORY . DIRECTORY_SEPARATOR . 'lib' .
-    DIRECTORY_SEPARATOR . 'bagit.php'; // Include the BagIt library.
+require_once BAGIT_PLUGIN_DIRECTORY . '/BagItPlugin.php';
+require_once BAGIT_PLUGIN_DIRECTORY . '/helpers/BagItFunctions.php';
+require_once BAGIT_PLUGIN_DIRECTORY . '/lib/bagit.php';
 // }}}
 
 
