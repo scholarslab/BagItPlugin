@@ -32,7 +32,7 @@ class BagItPlugin
     private static $_hooks = array(
         'install',
         'uninstall',
-        'define_acl',
+        // 'define_acl',
         'define_routes',
         'admin_theme_header'
     );
@@ -74,6 +74,95 @@ class BagItPlugin
             $functionName = Inflector::variablize($filterName);
             add_filter($filterName, array($this, $functionName));
         }
+
+    }
+
+    /**
+     * Create tables for file collections and file associations.
+     *
+     * @return void
+     */
+    public function install()
+    {
+
+        $this->_db->query("
+            CREATE TABLE IF NOT EXISTS `$db->BagitFileCollection` (
+                `id` int(10) unsigned NOT NULL AUTO_INCREMENT primary key,
+                `name` tinytext COLLATE utf8_unicode_ci NOT NULL,
+                `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                INDEX(name(60))
+            ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+        ");
+
+        $this->_db->query("
+            CREATE TABLE IF NOT EXISTS `$db->BagitFileCollectionAssociation` (
+                `id` int(10) unsigned NOT NULL AUTO_INCREMENT primary key,
+                `file_id` int(10) unsigned NOT NULL,
+                `collection_id` int(10) unsigned NOT NULL
+            ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+        ");
+
+    }
+
+    /**
+     * Drop tables.
+     *
+     * @return void
+     */
+    public function uninstall()
+    {
+
+        $this->_db->query("DROP TABLE IF EXISTS `$db->BagitFileCollection`");
+        $this->_db->query("DROP TABLE IF EXISTS `$db->BagitFileCollectionAssociation`");
+
+    }
+
+    /**
+     * Wire up the routes in routes.ini.
+     *
+     * @param object $router Router passed in by the front controller
+     *
+     * @return void
+     */
+    public function defineRoutes($router)
+    {
+
+        $router->addConfig(new Zend_Config_Ini(BAGIT_PLUGIN_DIRECTORY .
+            DIRECTORY_SEPARATOR . 'routes.ini', 'routes'));
+
+    }
+
+    /**
+     * Add custom css.
+     *
+     * @param object $request Page request passed in by the 'admin_theme_header'
+     * hook callback.
+     *
+     * @return void
+     */
+    public function adminThemeHeader($request)
+    {
+
+        if ($request->getModuleName() == 'bag-it') {
+            queue_css('bagit-interface');
+        }
+
+    }
+
+    /**
+     * Add a link to the administrative interface for the plugin.
+     *
+     * @param array $nav An array of main administrative links passed in
+     * by the 'admin_navigation_main' filter callback.
+     *
+     * @return array $nav The array of links, modified to include the
+     * link to the BagIt administrative interface.
+     */
+    public function adminNavigationMain($nav)
+    {
+
+        $nav['BagIt'] = uri('bag-it');
+        return $nav;
 
     }
 
