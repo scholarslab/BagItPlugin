@@ -66,8 +66,6 @@ require_once BAGIT_PLUGIN_DIRECTORY . DIRECTORY_SEPARATOR . 'lib' .
 function bagitInstall()
 {
 
-    set_option('bagit_version', BAGIT_PLUGIN_VERSION);
-
     // Create the tables.
     $db = get_db();
 
@@ -98,8 +96,6 @@ function bagitInstall()
  */
 function bagitUninstall()
 {
-
-    delete_option('bagit_version');
 
     // Drop the tables.
     $db = get_db();
