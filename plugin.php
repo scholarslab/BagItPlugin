@@ -28,7 +28,6 @@
 
 <?php
 
-
 // {{{ constants
 define('BAGIT_PLUGIN_DIRECTORY', dirname(__FILE__));
 define('BAGIT_BAG_DIRECTORY', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'bags');
