@@ -76,7 +76,7 @@ function bagitInstall()
             `id` int(10) unsigned NOT NULL AUTO_INCREMENT primary key,
             `name` tinytext COLLATE utf8_unicode_ci NOT NULL,
             `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        ) ENGINE = MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+        ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
     ");
 
     $db->query("
@@ -84,7 +84,7 @@ function bagitInstall()
             `id` int(10) unsigned NOT NULL AUTO_INCREMENT primary key,
             `file_id` int(10) unsigned NOT NULL,
             `collection_id` int(10) unsigned NOT NULL
-        ) ENGINE = MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+        ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
     ");
 
 }
