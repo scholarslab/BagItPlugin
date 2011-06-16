@@ -138,7 +138,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $this->view->collection = $collection;
         $this->view->files = $files;
         $this->view->current_page = $page;
-        $this->view->total_results = count($files);
+        $this->view->total_results = $this->getTable('File')->count();
         $this->view->results_per_page = 10;
 
     }
@@ -175,16 +175,10 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             ->order($order)
         );
 
-        // Get total files for pagination rendering (not constrained by page length limit).
-        // Is there a good way to do this without running two queries here?
-        $total_files = count($this->getTable('File')->fetchObjects(
-            $this->getTable('File')->getSelect()
-        ));
-
         $this->view->collection = $collection;
         $this->view->files = $files;
         $this->view->current_page = $page;
-        $this->view->total_results = $total_files;
+        $this->view->total_results = $this->getTable('File')->count();
         $this->view->results_per_page = 10;
 
     }
