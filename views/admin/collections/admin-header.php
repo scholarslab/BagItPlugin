@@ -5,14 +5,10 @@
 
 ?>
 
-
-<div id="unpack-bag" class="bagit-topnav-button">
-    <a class="<?php if ($topnav == 'unpack') { echo 'active'; } ?>" href="<?php echo html_escape(uri('bag-it/import')); ?>">Import a Bag</a>
-</div>
-
-<div id="create-bag" class="bagit-topnav-button">
-    <a class="<?php if ($topnav == 'create') { echo 'active'; } ?>" href="<?php echo html_escape(uri('bag-it/collections')); ?>">Assemble and Create Bags</a>
-</div>
-
-
 <h1><?php echo $header['title']; ?></h1>
+<ul id="section-nav" class="navigation">
+<?php echo nav(array(
+    'Assemble Bags' => uri('bag-it/collections'),
+    'Import a Bag'  => uri('bag-it/import')
+))?>
+</ul>
