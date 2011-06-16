@@ -105,6 +105,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $collection_id = $this->_request->id;
         $collection = $this->getTable('BagitFileCollection')->find($collection_id);
 
+        // If the "Create Bag" button was clicked, redirect to the export flow.
         if ($this->_request->browsecollection_submit == 'Create Bag') {
             $this->_redirect('bag-it/collections/' . $collection_id . '/exportprep');
             exit();
@@ -120,26 +121,13 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         // process column sorting.
         $page = $this->_request->page;
         $order = bagithelpers_doColumnSortProcessing($this->_request);
-
-        // Get files, left joining on the file-collection association table and
-        // adding a column with the name of the parent item from the _element_texts table.
-        $db = get_db();
-        $files = $this->getTable('File')->fetchObjects(
-            $this->getTable('File')->select()
-            ->from(array('f' => $db->prefix . 'files'))
-            ->joinLeft(array('a' => $db->prefix . 'bagit_file_collection_associations'), 'f.id = a.file_id')
-            ->columns(array('size', 'type' => 'type_os', 'id' => 'f.id', 'name' => 'original_filename', 'parent_item' =>
-                "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
-            ->where('a.collection_id = ' . $collection_id)
-            ->limitPage($page, 10)
-            ->order($order)
-        );
+        $files = $collection->getAssociatedFiles($page, $order);
 
         $this->view->collection = $collection;
         $this->view->files = $files;
         $this->view->current_page = $page;
-        $this->view->total_results = $this->getTable('File')->count();
-        $this->view->results_per_page = 10;
+        $this->view->total_results = count($files);
+        $this->view->results_per_page = get_option('per_page_admin');
 
     }
 
@@ -171,7 +159,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             ->from(array('f' => $db->prefix . 'files'))
             ->columns(array('size', 'type' => 'type_os', 'name' => 'original_filename', 'parent_item' =>
                 "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
-            ->limitPage($page, 10)
+            ->limitPage($page, get_option('per_page_admin'))
             ->order($order)
         );
 
@@ -179,7 +167,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $this->view->files = $files;
         $this->view->current_page = $page;
         $this->view->total_results = $this->getTable('File')->count();
-        $this->view->results_per_page = 10;
+        $this->view->results_per_page = get_option('per_page_admin');
 
     }
 
