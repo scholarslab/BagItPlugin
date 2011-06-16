@@ -77,17 +77,19 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $collection_name = $this->_request->collection_name;
 
         if (trim($collection_name) == '') {
-            $this->flashError('Enter a name for the collection.');
-        }
 
-        else if ($this->getTable('BagitFileCollection')->confirmUniqueName($collection_name)) {
+            $this->flashError('Enter a name for the collection.');
+
+        } else if ($this->getTable('BagitFileCollection')->confirmUniqueName($collection_name)) {
+
             $collection = new BagitFileCollection;
             $collection->name = $collection_name;
             $collection->save();
-        }
 
-        else {
+        } else {
+
             $this->flashError('A collection already exists with that name.');
+
         }
 
         $this->_forward('browse', 'collections', 'bag-it');
@@ -151,6 +153,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         // process column sorting.
         $page = $this->_request->page;
         $order = bagithelpers_doColumnSortProcessing($this->_request);
+        $files = $collection->getAssociatedFiles($page, $order);
 
         // Get files with parent item name.
         $db = get_db();
@@ -324,9 +327,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                 $assoc->file_id = $id;
                 $assoc->save();
 
-            }
-
-            if ($value == 'remove') {
+            } else if ($value == 'remove') {
 
                 $assoc = $this->getTable('BagitFileCollectionAssociation')->fetchObject(
                     $this->getTable('BagitFileCollectionAssociation')->getSelect()

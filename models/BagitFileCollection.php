@@ -80,7 +80,9 @@ class BagitFileCollection extends Omeka_record
     {
 
         $db = get_db();
-        $select = $this->getTable('File')->select()
+        $fileTable = $this->getTable('File');
+
+        $select = $fileTable->select()
             ->from(array('f' => $db->prefix . 'files'))
             ->joinLeft(array('a' => $db->prefix . 'bagit_file_collection_associations'), 'f.id = a.file_id')
             ->columns(array('size', 'type' => 'type_os', 'id' => 'f.id', 'name' => 'original_filename', 'parent_item' =>
@@ -89,7 +91,7 @@ class BagitFileCollection extends Omeka_record
             ->limitPage($page, get_option('per_page_admin'))
             ->order($order);
 
-        return $this->getTable('File')->fetchObjects($select);
+        return $fileTable->fetchObjects($select);
 
     }
 
