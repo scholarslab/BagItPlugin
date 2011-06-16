@@ -90,7 +90,7 @@ function bagithelpers_doBagIt($collection_id, $collection_name, $format)
     $db = get_db();
 
     // Instantiate the bag, get the collection.
-    $bag = new BagIt(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name);
+    $bag = new BagIt(BAGIT_BAG_DIRECTORY . '/' . $collection_name);
     $collection = $db->getTable('BagitFileCollection')->find($collection_id);
 
     // Get the files associated with the collection.
@@ -98,8 +98,8 @@ function bagithelpers_doBagIt($collection_id, $collection_name, $format)
 
     // Retrieve the files and add them to the new bag.
     foreach ($files as $file) {
-        $bag->addFile(BASE_DIR . DIRECTORY_SEPARATOR . OMEKA_FILES_RELATIVE_DIRECTORY .
-            DIRECTORY_SEPARATOR .  $file->archive_filename, $file->original_filename
+        $bag->addFile(BASE_DIR . '/' . OMEKA_FILES_RELATIVE_DIRECTORY . '/' .
+            $file->archive_filename, $file->original_filename
         );
     }
 
@@ -107,7 +107,7 @@ function bagithelpers_doBagIt($collection_id, $collection_name, $format)
     $bag->update();
 
     // Tar it up.
-    $bag->package(BAGIT_BAG_DIRECTORY . DIRECTORY_SEPARATOR . $collection_name, $format);
+    $bag->package(BAGIT_BAG_DIRECTORY . '/' . $collection_name, $format);
 
     // Why are the bags not validating?
     // return true;
@@ -127,7 +127,7 @@ function bagithelpers_doReadBagIt($filename)
 
     $success = false;
 
-    $bag = new BagIt(BAGIT_TMP_DIRECTORY . DIRECTORY_SEPARATOR . $filename);
+    $bag = new BagIt(BAGIT_TMP_DIRECTORY . '/' . $filename);
     $bag->validate();
 
     if (count($bag->getBagErrors()) == 0) {
@@ -136,8 +136,7 @@ function bagithelpers_doReadBagIt($filename)
 
         // Copy each of the files.
         foreach ($bag->getBagContents() as $file) {
-            copy($file, BASE_DIR . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR .
-                'Dropbox' . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . basename($file));
+            copy($file, BASE_DIR . '/plugins/Dropbox/files/' . basename($file));
         }
 
         $success = true;
