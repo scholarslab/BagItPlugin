@@ -144,18 +144,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         // process column sorting.
         $page = $this->_request->page;
         $order = bagithelpers_doColumnSortProcessing($this->_request);
-        $files = $collection->getFiles($page, $order);
-
-        // Get files with parent item name.
-        $db = get_db();
-        $files = $this->getTable('File')->fetchObjects(
-            $this->getTable('File')->select()
-            ->from(array('f' => $db->prefix . 'files'))
-            ->columns(array('size', 'type' => 'type_os', 'name' => 'original_filename', 'parent_item' =>
-                "(SELECT text from `$db->ElementText` WHERE record_id = f.item_id AND element_id = 50)"))
-            ->limitPage($page, get_option('per_page_admin'))
-            ->order($order)
-        );
+        $files = bagithelpers_getFilesForAdd($page, $order);
 
         $this->view->collection = $collection;
         $this->view->files = $files;
