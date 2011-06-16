@@ -227,10 +227,9 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
             } else {
 
-                if (bagithelpers_doBagIt($posted_form['collection_id'], $posted_form['name_override'],
-                        $posted_form['format'])) {
+                if (bagithelpers_doBagIt($posted_form['collection_id'], $posted_form['name_override'])) {
 
-                    $this->view->bag_name = $posted_form['name_override'] . '.' . $posted_form['format'];
+                    $this->view->bag_name = $posted_form['name_override'] . '.tgz';
 
                 } else {
 
@@ -269,12 +268,14 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                 $form->bag->addFilter('Rename', $new_filename);
                 $form->bag->receive();
 
-                if (bagithelpers_doReadBagIt($new_filename)) {
-                    $this->_redirect('dropbox');
-                    exit();
-                } else {
-                    $this->flashError('Error unpacking the files.');
-                }
+                print_r(bagithelpers_doReadBagIt($new_filename));
+
+                // if (bagithelpers_doReadBagIt($new_filename)) {
+                //     $this->_redirect('dropbox');
+                //     exit();
+                // } else {
+                //     $this->flashError('Error unpacking the files.');
+                // }
 
             } else {
                 $this->flashError('Validation failed or no file selected. Make sure the file is a .tgz.');
@@ -365,14 +366,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $form->setAction('export')
             ->setMethod('post');
 
-        $format = new Zend_Form_Element_Radio('format');
-        $format->setLabel('Format:')
-            ->addMultiOptions(array('tgz' => '.tgz', 'zip' => '.zip'))
-            ->setRequired(true)
-            ->setValue('tgz');
-
         $name_override = new Zend_Form_Element_Text('name_override');
-        $name_override->setLabel('Name:')
+        $name_override->setLabel('Enter a name for the exported file:')
             // ->setValue(str_replace(' ', '', $collection->name))
             ->setRequired(true);
 
@@ -390,7 +385,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             $id->setValue($collection->id);
         }
 
-        $form->addElement($format);
         $form->addElement($name_override);
         $form->addElement($submit);
         $form->addElement($id);

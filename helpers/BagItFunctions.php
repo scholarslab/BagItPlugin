@@ -109,7 +109,7 @@ function bagithelpers_getFilesForAdd($page, $order)
  *
  * @return boolean $success True if the new bag validates.
  */
-function bagithelpers_doBagIt($collection_id, $collection_name, $format)
+function bagithelpers_doBagIt($collection_id, $collection_name)
 {
 
     $db = get_db();
@@ -132,7 +132,7 @@ function bagithelpers_doBagIt($collection_id, $collection_name, $format)
     $bag->update();
 
     // Tar it up.
-    $bag->package(BAGIT_BAG_DIRECTORY . '/' . $collection_name, $format);
+    $bag->package(BAGIT_BAG_DIRECTORY . '/' . $collection_name);
 
     return $bag->isValid() ? true : false;
 
@@ -151,13 +151,11 @@ function bagithelpers_doReadBagIt($filename)
     $success = false;
 
     $bag = new BagIt(BAGIT_TMP_DIRECTORY . '/' . $filename);
+    $bag->fetch->download();
+    $bag->update();
     $bag->validate();
 
     if (count($bag->getBagErrors()) == 0) {
-
-        $bag->fetch->download();
-        $bag->update();
-        $bag->validate();
 
         // Copy each of the files.
         foreach ($bag->getBagContents() as $file) {
@@ -168,6 +166,7 @@ function bagithelpers_doReadBagIt($filename)
 
     }
 
-    return $success;
+    // return $success;
+    return $bag->getBagErrors();
 
 }
