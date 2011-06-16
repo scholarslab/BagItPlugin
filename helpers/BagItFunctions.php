@@ -77,6 +77,21 @@ function bagithelpers_doColumnSortProcessing($request)
 }
 
 /**
+ * Retrieves files to populate the listings in the addfiles view.
+ *
+ * @param object $request The incoming request dispatched by the 
+ * front controller.
+ *
+ * @return array $files The files.
+ */
+function bagithelpers_getFilesForAdd()
+{
+
+
+
+}
+
+/**
  * Create the bag, generate tar.
  *
  * @param array $file_ids Array of ids, posted from the form.
