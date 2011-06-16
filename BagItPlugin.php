@@ -52,7 +52,6 @@ class BagItPlugin
     public function __construct()
     {
 
-        $this->_db = get_db();
         self::addHooksAndFilters();
 
     }
@@ -85,8 +84,10 @@ class BagItPlugin
     public function install()
     {
 
-        $this->_db->query("
-            CREATE TABLE IF NOT EXISTS `$this->_db->BagitFileCollection` (
+        $db = get_db();
+
+        $db->query("
+            CREATE TABLE IF NOT EXISTS `$db->BagitFileCollection` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT primary key,
                 `name` tinytext COLLATE utf8_unicode_ci NOT NULL,
                 `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -94,8 +95,8 @@ class BagItPlugin
             ) ENGINE = innodb DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
         ");
 
-        $this->_db->query("
-            CREATE TABLE IF NOT EXISTS `$this->_db->BagitFileCollectionAssociation` (
+        $db->query("
+            CREATE TABLE IF NOT EXISTS `$db->BagitFileCollectionAssociation` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT primary key,
                 `file_id` int(10) unsigned NOT NULL,
                 `collection_id` int(10) unsigned NOT NULL
@@ -112,8 +113,8 @@ class BagItPlugin
     public function uninstall()
     {
 
-        $this->_db->query("DROP TABLE IF EXISTS `$this->_db->BagitFileCollection`");
-        $this->_db->query("DROP TABLE IF EXISTS `$this->_db->BagitFileCollectionAssociation`");
+        $db->query("DROP TABLE IF EXISTS `$db->BagitFileCollection`");
+        $db->query("DROP TABLE IF EXISTS `$db->BagitFileCollectionAssociation`");
 
     }
 
