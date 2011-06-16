@@ -166,7 +166,6 @@ function bagithelpers_doReadBagIt($filename)
 
     }
 
-    // return $success;
-    return $bag->getBagErrors();
+    return $success;
 
 }

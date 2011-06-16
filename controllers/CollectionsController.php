@@ -268,14 +268,15 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                 $form->bag->addFilter('Rename', $new_filename);
                 $form->bag->receive();
 
-                print_r(bagithelpers_doReadBagIt($new_filename));
+                // print_r(bagithelpers_doReadBagIt($new_filename));
 
-                // if (bagithelpers_doReadBagIt($new_filename)) {
-                //     $this->_redirect('dropbox');
-                //     exit();
-                // } else {
-                //     $this->flashError('Error unpacking the files.');
-                // }
+                if (bagithelpers_doReadBagIt($new_filename)) {
+                    // $this->_redirect('dropbox');
+                    // exit();
+                    $this->flashSuccess('Bag successfully unpacked. Use the Dropbox plugin to process the files.');
+                } else {
+                    $this->flashError('Error unpacking the files.');
+                }
 
             } else {
                 $this->flashError('Validation failed or no file selected. Make sure the file is a .tgz.');

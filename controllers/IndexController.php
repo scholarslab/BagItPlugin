@@ -42,7 +42,8 @@ class BagIt_IndexController extends Omeka_Controller_Action
     public function indexAction()
     {
 
-        $this->_forward('browse', 'collections', 'bag-it');
+        $this->_redirect('bag-it/collections');
+        exit();
 
     }
 
