@@ -42,4 +42,4 @@ require_once BAGIT_PLUGIN_DIRECTORY . '/helpers/BagItFunctions.php';
 require_once BAGIT_PLUGIN_DIRECTORY . '/lib/bagit.php';
 // }}}
 
-
+new BagItPlugin;
