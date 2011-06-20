@@ -139,7 +139,7 @@ function bagithelpers_doBagIt($collection_id, $collection_name)
 }
 
 /**
- * Read the Bag, unpack it, drop files into the Dropbox files directory
+ * Read the Bag, unpack it, drop files into the Dropbox files directory.
  *
  * @param string $filename The name of the uploaded bag.
  *
@@ -167,5 +167,24 @@ function bagithelpers_doReadBagIt($filename)
     }
 
     return $success;
+
+}
+
+/**
+ * Check to see if Dropbox is installed.
+ *
+ * @return boolean True if Dropbox is installed.
+ */
+function bagithelpers_checkForDropbox()
+{
+
+    $dropbox = false;
+
+    $db = get_db();
+    if ($db->getTable('Plugins')->findBySQL('name = ?', array('Dropbox'))) {
+        $dropbox = true;
+    }
+
+    return $dropbox;
 
 }

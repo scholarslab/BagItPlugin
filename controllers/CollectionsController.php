@@ -255,6 +255,12 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      */
     public function importAction() {
 
+        // Check to see if Dropbox is installed.
+        if (!bagithelpers_checkForDropbox()) {
+            $this->flashError('The Dropbox plugin must be installed to import bags.');
+            $this->_forward('browse', 'collections', 'bag-it');
+        }
+
         if ($this->_request->isPost()) {
 
             $form = $this->_doUploadForm();
@@ -268,11 +274,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                 $form->bag->addFilter('Rename', $new_filename);
                 $form->bag->receive();
 
-                // print_r(bagithelpers_doReadBagIt($new_filename));
-
                 if (bagithelpers_doReadBagIt($new_filename)) {
-                    // $this->_redirect('dropbox');
-                    // exit();
                     $this->flashSuccess('Bag successfully unpacked. Use the Dropbox plugin to process the files.');
                 } else {
                     $this->flashError('Error unpacking the files.');
