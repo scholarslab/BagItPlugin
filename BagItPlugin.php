@@ -132,7 +132,6 @@ class BagItPlugin
 
         if (version_compare(OMEKA_VERSION, '2.0-dev', '<')) {
             $indexResource = new Omeka_Acl_Resource('Bagit_Collections');
-            $indexResource->add(array('browse', 'import'));
         } else {
             $indexResource = new Zend_Acl_Resource('Bagit_Collections');
         }
@@ -187,7 +186,10 @@ class BagItPlugin
     public function adminNavigationMain($nav)
     {
 
-        $nav['BagIt'] = uri('bag-it');
+        if (has_permission('Bagit_Collections', 'browse')) {
+            $nav['BagIt'] = uri('bag-it');
+        }
+
         return $nav;
 
     }
