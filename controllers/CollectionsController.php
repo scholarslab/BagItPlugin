@@ -65,6 +65,11 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function addcollectionAction()
     {
 
+        if ($this->_request->getParam('sort_field') != null) {
+            $this->_redirect('bag-it?sort_field=' . $this->_request->getParam('sort_field') .
+                '&sort_dir=' . $this->_request->getParam('sort_dir'));
+        }
+
         $collection_name = $this->_request->collection_name;
 
         if (trim($collection_name) == '') {
