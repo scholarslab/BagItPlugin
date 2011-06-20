@@ -74,7 +74,6 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
         add_filter('admin_navigation_main', 'bagit_adminNavigationMain');
         // }}}
 
-
     }
 
     public function _addDropboxPluginHooksAndFilters($plugin_broker, $plugin_name)
