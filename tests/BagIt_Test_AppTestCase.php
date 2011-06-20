@@ -144,7 +144,7 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
             if (($file != '.') && ($file != '..') && ($file != '.DS_Store')) {
 
-                copy(BAGIT_TESTS_DIRECTORY . '/' . $src . '/' . $file, BASE_DIR . '/archive/files/' . $file);
+                // copy(BAGIT_TESTS_DIRECTORY . '/' . $src . '/' . $file, BASE_DIR . '/archive/files/' . $file);
                 $db = get_db();
                 $sql = 'INSERT INTO omeka_files 
                     (item_id, size, has_derivative_image, archive_filename, original_filename) 

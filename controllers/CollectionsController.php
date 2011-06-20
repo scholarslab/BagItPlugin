@@ -83,8 +83,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         }
 
-        $this->_redirect('bag-it');
-        exit();
+        $this->_forward('browse', 'collections', 'bag-it');
 
     }
 
