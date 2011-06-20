@@ -57,7 +57,7 @@ class BagitFileCollectionTable extends Omeka_Db_Table
      *
      * @return object The collections.
      */
-    public function getCollectionsList($order)
+    public function getCollectionsList($order = '')
     {
 
         $db = get_db();

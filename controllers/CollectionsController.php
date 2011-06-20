@@ -51,7 +51,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         // Process the sorting parameters, get the collections.
         $order = bagithelpers_doColumnSortProcessing($this->_request);
-        $collections = $this->getTable('BagitFileCollection')->getCollectionsList();
+        $collections = $this->getTable('BagitFileCollection')->getCollectionsList($order);
 
         $this->view->collections = $collections;
 
