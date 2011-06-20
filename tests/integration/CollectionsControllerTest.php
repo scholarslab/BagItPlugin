@@ -193,11 +193,4 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
 
     }
 
-    public function testDetectNoDropbox()
-    {
-
-        
-
-    }
-
 }

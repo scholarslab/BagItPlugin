@@ -50,7 +50,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     {
 
         // Process the sorting parameters, get the collections.
-        $order = bagithelpers_doColumnSortProcessing($this->_request);
+        $order = bagithelpers_doColumnSortProcessing($this->_request->getParam('sort_field'), $this->_request->getParam('sort_dir'));
         $collections = $this->getTable('BagitFileCollection')->getCollectionsList($order);
 
         $this->view->collections = $collections;
@@ -113,7 +113,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         // Get paging information for the pagination function in the view,
         // process column sorting.
         $page = $this->_request->page;
-        $order = bagithelpers_doColumnSortProcessing($this->_request);
+        $order = bagithelpers_doColumnSortProcessing($this->_request->getParam('sort_field'), $this->_request->getParam('sort_dir'));
         $files = $collection->getFiles($page, $order);
 
         $this->view->collection = $collection;
@@ -143,7 +143,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         // Get paging information for the pagination function in the view,
         // process column sorting.
         $page = $this->_request->page;
-        $order = bagithelpers_doColumnSortProcessing($this->_request);
+        $order = bagithelpers_doColumnSortProcessing($this->_request->getParam('sort_field'), $this->_request->getParam('sort_dir'));
         $files = bagithelpers_getFilesForAdd($page, $order);
 
         $this->view->collection = $collection;
