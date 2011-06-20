@@ -178,13 +178,7 @@ function bagithelpers_doReadBagIt($filename)
 function bagithelpers_checkForDropbox()
 {
 
-    $dropbox = false;
-
-    $db = get_db();
-    if ($db->getTable('Plugins')->findBySQL('name = ?', array('Dropbox'))) {
-        $dropbox = true;
-    }
-
-    return $dropbox;
+    $dropbox = get_db()->getTable('Plugin')->findByDirectoryName('Dropbox');
+    return isset($dropbox) ? true : false;
 
 }

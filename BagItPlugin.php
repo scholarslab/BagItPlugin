@@ -32,7 +32,7 @@ class BagItPlugin
     private static $_hooks = array(
         'install',
         'uninstall',
-        // 'define_acl',
+        'define_acl',
         'define_routes',
         'admin_theme_header'
     );
@@ -121,9 +121,32 @@ class BagItPlugin
     }
 
     /**
+     * Define access privileges.
+     *
+     * @param $acl The access management object passed in by the front controller.
+     *
+     * @return void
+     */
+    public function defineAcl($acl)
+    {
+
+        if (version_compare(OMEKA_VERSION, '2.0-dev', '<')) {
+            $indexResource = new Omeka_Acl_Resource('Bagit_Collections');
+            $indexResource->add(array('browse', 'import'));
+        } else {
+            $indexResource = new Zend_Acl_Resource('Bagit_Collections');
+        }
+
+        $acl->add($indexResource);
+        $acl->allow('super', 'Bagit_Collections');
+        $acl->allow('admin', 'Bagit_Collections');
+
+    }
+
+    /**
      * Wire up the routes in routes.ini.
      *
-     * @param object $router Router passed in by the front controller
+     * @param object $router Router passed in by the front controller.
      *
      * @return void
      */

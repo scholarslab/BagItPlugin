@@ -289,7 +289,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $form = $this->_doUploadForm();
         $this->view->form = $form;
 
-
     }
 
     /**
