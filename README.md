@@ -59,3 +59,12 @@ unwanted files. Click on the "Create Bag" button to continue.
    of the collection.
 
 6. Click on the link to download the bag.
+
+## Read Bags
+
+1. Click on the "Import a Bag" tab. In order to process the unpacked
+   files, you need to have the Dropbox plugin installed and activated.
+If Dropbox is missing, you will see an error message.
+
+2. Click the "Choose File," button  select the bag file, and click the
+   "Upload" button.
