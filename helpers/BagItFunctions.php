@@ -179,6 +179,6 @@ function bagithelpers_checkForDropbox()
 {
 
     $dropbox = get_db()->getTable('Plugin')->findByDirectoryName('Dropbox');
-    return isset($dropbox) ? true : false;
+    return (isset($dropbox) && $dropbox->active == 1) ? true : false;
 
 }
