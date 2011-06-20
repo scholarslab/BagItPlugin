@@ -37,7 +37,7 @@ define('BAGIT_TESTS_DIRECTORY', BAGIT_PLUGIN_DIRECTORY . '/tests');
 // }}}
 
 // {{{ requires
-require_once BAGIT_PLUGIN_DIRECTORY . '/BagItPlugin.php';
+// require_once BAGIT_PLUGIN_DIRECTORY . '/BagItPlugin.php';
 require_once BAGIT_PLUGIN_DIRECTORY . '/helpers/BagItFunctions.php';
 require_once BAGIT_PLUGIN_DIRECTORY . '/lib/BagItPHP/lib/bagit.php';
 // }}}
