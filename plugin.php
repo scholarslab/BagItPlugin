@@ -91,7 +91,6 @@ function bagit_uninstall()
 {
 
     $db = get_db();
-
     $db->query("DROP TABLE IF EXISTS `$db->BagitFileCollection`");
     $db->query("DROP TABLE IF EXISTS `$db->BagitFileCollectionAssociation`");
 
