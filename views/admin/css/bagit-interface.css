@@ -22,11 +22,6 @@
  *
  */
 
-#primary {
-    position: relative;
-    top: -1px;
-}
-
 .bagit-topnav-button {
     float: right;
     font-size: 1.2em;
