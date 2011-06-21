@@ -375,7 +375,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         $name_override = new Zend_Form_Element_Text('name_override');
         $name_override->setLabel('Enter a name for the exported file:')
-            // ->setValue(str_replace(' ', '', $collection->name))
             ->setRequired(true);
 
         if ($collection != null) {
@@ -386,7 +385,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $submit->setLabel('Create');
 
         $id = new Zend_Form_Element_Hidden('collection_id');
-        // $id->setValue($collection->id);
 
         if ($collection != null) {
             $id->setValue($collection->id);

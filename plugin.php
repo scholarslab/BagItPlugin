@@ -42,15 +42,15 @@ require_once BAGIT_PLUGIN_DIRECTORY . '/lib/BagItPHP/lib/bagit.php';
 // }}}
 
 // {{{ hooks
-add_plugin_hook('install', 'bagit_install');
-add_plugin_hook('uninstall', 'bagit_uninstall');
-add_plugin_hook('define_acl', 'bagit_defineAcl');
-add_plugin_hook('define_routes', 'bagit_defineRoutes');
-add_plugin_hook('admin_theme_header', 'bagit_adminThemeHeader');
+add_plugin_hook('install', 'bagitInstall');
+add_plugin_hook('uninstall', 'bagitUninstall');
+add_plugin_hook('define_acl', 'bagitDefineAcl');
+add_plugin_hook('define_routes', 'bagitDefineRoutes');
+add_plugin_hook('admin_theme_header', 'bagitAdminThemeHeader');
 // }}}
 
 // {{{ filters
-add_filter('admin_navigation_main', 'bagit_adminNavigationMain');
+add_filter('admin_navigation_main', 'bagitAdminNavigationMain');
 // }}}
 
 /**
@@ -58,7 +58,7 @@ add_filter('admin_navigation_main', 'bagit_adminNavigationMain');
  *
  * @return void
  */
-function bagit_install()
+function bagitInstall()
 {
 
     $db = get_db();
@@ -87,7 +87,7 @@ function bagit_install()
  *
  * @return void
  */
-function bagit_uninstall()
+function bagitUninstall()
 {
 
     $db = get_db();
@@ -103,7 +103,7 @@ function bagit_uninstall()
  *
  * @return void
  */
-function bagit_defineAcl($acl)
+function bagitDefineAcl($acl)
 {
 
     if (version_compare(OMEKA_VERSION, '2.0-dev', '<')) {
@@ -125,7 +125,7 @@ function bagit_defineAcl($acl)
  *
  * @return void
  */
-function bagit_defineRoutes($router)
+function bagitDefineRoutes($router)
 {
 
     $router->addConfig(new Zend_Config_Ini(BAGIT_PLUGIN_DIRECTORY .
@@ -141,7 +141,7 @@ function bagit_defineRoutes($router)
  *
  * @return void
  */
-function bagit_adminThemeHeader($request)
+function bagitAdminThemeHeader($request)
 {
 
     if ($request->getModuleName() == 'bag-it') {
@@ -159,11 +159,11 @@ function bagit_adminThemeHeader($request)
  * @return array $nav The array of links, modified to include the
  * link to the BagIt administrative interface.
  */
-function bagit_adminNavigationMain($nav)
+function bagitAdminNavigationMain($nav)
 {
 
     if (has_permission('Bagit_Collections', 'browse')) {
-        $nav['BagIt'] = uri('bag-it');
+        $nav['BagIt'] = uri('bag-it/collections');
     }
 
     return $nav;

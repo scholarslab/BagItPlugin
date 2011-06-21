@@ -54,7 +54,7 @@ function bagithelpers_getFileKb($size) {
 }
 
 /**
- * A homebrew colum sorter, implemented so as to keep more control 
+ * A homebrew colum sorter, implemented so as to keep more control
  * over how the record loop is handled in the view.
  *
  * @param object $request The incoming request dispatched by the 
