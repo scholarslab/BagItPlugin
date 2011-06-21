@@ -56,9 +56,28 @@ class BagitFileCollectionAssociationTable extends Omeka_Db_Table
     public function checkForFileInCollection($file_id, $collection_id)
     {
 
-        return (count($this->fetchObjects(
-            $this->getSelect()->where('file_id = ' . $file_id . ' AND collection_id = ' . $collection_id)
-        )) == 1) ? true : false;
+        $select = $this->getSelect()
+            ->where('file_id = ' . $file_id . ' AND collection_id = ' . $collection_id);
+
+        return (count($this->fetchObjects($select)) == 1) ? true : false;
+
+    }
+
+    /**
+     * Returns the number of files associated with a given collection.
+     *
+     * @param int $id The id of the collection.
+     *
+     * @return int The number of files.
+     */
+    public function getAssociationByIds($file_id, $collection_id)
+    {
+
+        $select = $this->getSelect()
+            ->where('file_id = ?', $file_id)
+            ->where('collection_id = ?', $collection_id);
+
+        return $this->fetchObject($select);
 
     }
 
