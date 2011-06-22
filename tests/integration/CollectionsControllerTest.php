@@ -42,11 +42,6 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
     public function tearDown()
     {
 
-        $this->helper->_clearDirectory(BASE_DIR . '/plugins/Dropbox/files');
-        $this->helper->_clearDirectory(BASE_DIR . '/plugins/BagIt/bagtmp');
-        $this->helper->_clearDirectory(BASE_DIR . '/plugins/BagIt/bags');
-        $this->helper->_clearDirectory(BASE_DIR . '/archive/files');
-
         $this->helper->_clearDbTable('files');
         $this->helper->_clearDbTable('items');
         $this->helper->_clearDbTable('bagit_file_collections');
