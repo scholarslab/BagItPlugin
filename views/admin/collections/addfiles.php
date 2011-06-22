@@ -47,6 +47,7 @@
 
             <?php echo submit(array('name' => 'update_collection'), 'Update Bag'); ?>
             <?php echo submit(array('name' => 'add_all_files'), 'Add All Files'); ?>
+            <?php echo submit(array('name' => 'remove_all_files', 'class' => 'bagit-delete'), 'Remove All Files'); ?>
 
               <div class="pagination">
 

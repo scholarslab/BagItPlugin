@@ -157,6 +157,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                 $this->_addRemoveFilesFromCollection($collection, $this->_request->file);
             } else if (isset($post['add_all_files'])) {
                 $collection->addAllFiles();
+            } else if (isset($post['remove_all_files'])) {
+                $collection->removeAllFiles();
             }
         }
 

@@ -131,4 +131,22 @@ class BagitFileCollection extends Omeka_record
 
     }
 
+    /**
+     * Adds all files to the collection.
+     *
+     * @return array $files The files.
+     */
+    public function removeAllFiles()
+    {
+
+        $associationsTable = $this->getTable('BagitFileCollectionAssociation');
+        $select = $associationsTable->getSelect()->where('collection_id = ' . $this->id);
+        $associations = $associationsTable->fetchObjects($select);
+
+        foreach ($associations as $association) {
+            $association->delete();
+        }
+
+    }
+
 }
