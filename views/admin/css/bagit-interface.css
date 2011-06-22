@@ -124,3 +124,7 @@ p.bagit-small {
     clear: none;
     margin-left: 10px;
 }
+
+.bagit-left-submit {
+    float: left !important;
+}

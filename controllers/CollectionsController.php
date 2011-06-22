@@ -159,6 +159,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                 $collection->addAllFiles();
             } else if (isset($post['remove_all_files'])) {
                 $collection->removeAllFiles();
+            } else if (isset($post['continue_to_export'])) {
+                $this->_redirect('bag-it/collections/' . $collection->id . '/exportprep');
             }
         }
 

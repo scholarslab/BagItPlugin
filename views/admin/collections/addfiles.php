@@ -45,9 +45,10 @@
                 </tbody>
             </table>
 
-            <?php echo submit(array('name' => 'update_collection'), 'Update Bag'); ?>
-            <?php echo submit(array('name' => 'add_all_files'), 'Add All Files'); ?>
-            <?php echo submit(array('name' => 'remove_all_files', 'class' => 'bagit-delete'), 'Remove All Files'); ?>
+            <?php echo submit(array('name' => 'continue_to_export', 'class' => 'bagit-create-bag'), 'Continue to Export'); ?>
+            <?php echo submit(array('name' => 'update_collection', 'class' => 'bagit-left-submit'), 'Update Bag'); ?>
+            <?php echo submit(array('name' => 'add_all_files', 'class' => 'bagit-left-submit'), 'Add All Files'); ?>
+            <?php echo submit(array('name' => 'remove_all_files', 'class' => 'bagit-delete bagit-left-submit'), 'Remove All Files'); ?>
 
               <div class="pagination">
 
