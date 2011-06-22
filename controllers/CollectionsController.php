@@ -176,6 +176,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $this->view->total_results = $this->getTable('File')->count();
         $this->view->results_per_page = get_option('per_page_admin');
 
+        print_r($this->_request->getPost());
+
     }
 
 
@@ -356,8 +358,10 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $form->setAction('import')
             ->setMethod('post');
 
+        $max_filesize = ini_get('upload_max_filesize');;
+
         $uploader = new Zend_Form_Element_File('bag');
-        $uploader->setLabel('Select the Bag file:')
+        $uploader->setLabel('Select file (' . $max_filesize . ' max):')
             ->setDestination($tmp)
             ->addValidator('count', false, 1)
             ->setRequired(true);
