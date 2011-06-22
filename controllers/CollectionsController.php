@@ -176,8 +176,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $this->view->total_results = $this->getTable('File')->count();
         $this->view->results_per_page = get_option('per_page_admin');
 
-        print_r($this->_request->getPost());
-
     }
 
 
