@@ -9,7 +9,7 @@
 
     <p>Check the files that you want to add to the "<?php echo $collection->name; ?>" collection. On each page, be sure to click the "Update Bag" button before switching to a different page or going back to the list of collections.</p>
 
-        <form method="post" action="" accept-charset="utf-8">
+        <form method="post" accept-charset="utf-8" id="bagit-addfiles-form">
             <fieldset>
 
             <table>
@@ -45,7 +45,8 @@
                 </tbody>
             </table>
 
-            <?php echo submit(array('name' => 'bagit_submit'), 'Update Bag'); ?>
+            <?php echo submit(array('name' => 'update_collection'), 'Update Bag'); ?>
+            <?php echo submit(array('name' => 'add_all_files'), 'Add All Files'); ?>
 
               <div class="pagination">
 

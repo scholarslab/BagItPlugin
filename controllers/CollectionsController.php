@@ -150,7 +150,14 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         // Check for form submission, iterate over files and add/remove.
         if ($this->_request->isPost()) {
-            $this->_addRemoveFilesFromCollection($collection, $this->_request->file);
+
+            $post = $this->_request->getPost();
+
+            if (isset($post['update_collection'])) {
+                $this->_addRemoveFilesFromCollection($collection, $this->_request->file);
+            } else if (isset($post['add_all_files'])) {
+                $collection->addAllFiles();
+            }
         }
 
         // Get paging information for the pagination function in the view,
@@ -301,9 +308,10 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     }
 
     /**
-     * Build the upload form.
+     * Process add/remove files.
      *
-     * @param object $collection The collection to be altered
+     * @param object $collection The collection to be altered.
+     * @param array $files The files to be added or removed.
      *
      * @return void.
      */

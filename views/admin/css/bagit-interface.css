@@ -119,3 +119,8 @@ p.bagit-small {
 .bagit-export-form #name_override {
     font-size: 1.2em;
 }
+
+#bagit-addfiles-form input {
+    clear: none;
+    margin-left: 10px;
+}

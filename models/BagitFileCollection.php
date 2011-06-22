@@ -104,4 +104,31 @@ class BagitFileCollection extends Omeka_record
 
     }
 
+    /**
+     * Adds all files to the collection.
+     *
+     * @return array $files The files.
+     */
+    public function addAllFiles()
+    {
+
+        $fileTable = $this->getTable('File');
+        $files = $fileTable->fetchObjects($fileTable->getSelect());
+
+        foreach ($files as $file) {
+
+            $test_for_assoc = $this->getTable('BagitFileCollectionAssociation')
+                    ->getAssociationByIds($file->id, $this->id);
+
+            if (count($test_for_assoc) == 0) {
+                $assoc = new BagitFileCollectionAssociation;
+                $assoc->file_id = $file->id;
+                $assoc->collection_id = $this->id;
+                $assoc->save();
+            }
+
+        }
+
+    }
+
 }
