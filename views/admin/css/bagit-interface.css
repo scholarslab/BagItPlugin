@@ -89,8 +89,9 @@ form.bagit-inline-form {
 }
 
 .pagination {
-    margin: 1em;
+    margin: 1em 1em 0 1em;
     float: left;
+    width: 100%;
 }
 
 p.bagit-small {

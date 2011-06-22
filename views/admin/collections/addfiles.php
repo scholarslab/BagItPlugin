@@ -45,21 +45,19 @@
                 </tbody>
             </table>
 
+            <div class="pagination">
+                <?php echo pagination_links(array('scrolling_style' => 'All', 
+                'page_range' => '5',
+                'partial_file' => 'common' . DIRECTORY_SEPARATOR . 'pagination_control.php',
+                'page' => $current_page,
+                'per_page' => $results_per_page,
+                'total_results' => $total_results)); ?>
+            </div>
+
             <?php echo submit(array('name' => 'continue_to_export', 'class' => 'bagit-create-bag'), 'Continue to Export'); ?>
             <?php echo submit(array('name' => 'update_collection', 'class' => 'bagit-left-submit'), 'Update Bag'); ?>
             <?php echo submit(array('name' => 'add_all_files', 'class' => 'bagit-left-submit'), 'Add All Files'); ?>
             <?php echo submit(array('name' => 'remove_all_files', 'class' => 'bagit-delete bagit-left-submit'), 'Remove All Files'); ?>
-
-              <div class="pagination">
-
-                  <?php echo pagination_links(array('scrolling_style' => 'All', 
-                  'page_range' => '5',
-                  'partial_file' => 'common' . DIRECTORY_SEPARATOR . 'pagination_control.php',
-                  'page' => $current_page,
-                  'per_page' => $results_per_page,
-                  'total_results' => $total_results)); ?>
-
-              </div>
 
             </fieldset>
 
