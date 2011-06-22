@@ -1,6 +1,7 @@
 # BagIt Omeka Plugin
 
-This plugin implements the [BagIt 0.96 specification] for storing collecitons
+This plugin implements the [BagIt 0.96 specification] for creating and
+transmitting collections
 of files. The plugin adds an administrative interface that allows users
 to (a) generate and export Bags containing files on the site and (b)
 import already existing bags and make their content available through
