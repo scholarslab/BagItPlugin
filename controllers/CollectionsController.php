@@ -203,7 +203,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             $collection->delete();
 
             $this->flashError('Collection "' . $collection->name . '" deleted.');
-            return $this->_forward('browse', 'collections', 'bag-it');
+            $this->_redirect('bag-it/collections');
+            exit();
 
         }
 
