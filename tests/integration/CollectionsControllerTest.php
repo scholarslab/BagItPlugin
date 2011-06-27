@@ -121,7 +121,6 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
         );
 
         $this->dispatch('bag-it/collections/1/delete');
-        $this->assertQueryContentContains('p', 'There are no collections. Create one!');
         $this->assertEquals(0, $this->db->getTable('BagitFileCollection')->count());
 
     }
