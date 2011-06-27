@@ -43,6 +43,7 @@ class BagIt_NoDropboxTest extends Omeka_Test_AppTestCase
 
         $this->dispatch('bag-it/collections/import');
         $this->assertAction('browse');
+        $this->assertQueryContentContains('div.error', 'The Dropbox plugin must be installed and activated to import bags.');
 
     }
 
