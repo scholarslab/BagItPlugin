@@ -44,7 +44,7 @@ different name for the exported bag during the export workflow.
    This takes you to a listing of all of the files on the site. Select
 files that you want to add to the bag and click the "Update Bag" to save
 the changes. If you select files and then navigate to another page in
-the listings without clicking the update button, the selections will not be saved.
+the listings without clicking the update button, the selections will not be saved. Use the "Remove All Files" buttons to completely empty the bag of all files and the "Add All Files" to add all of the files on the site to the bag.
 
 4. To delete a File Collection, click the red "Delete" button and
    confirm that you want to delete the collection.

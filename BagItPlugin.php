@@ -187,7 +187,7 @@ class BagItPlugin
     {
 
         if (has_permission('Bagit_Collections', 'browse')) {
-            $nav['BagIt'] = uri('bag-it');
+            $nav['BagIt'] = uri('bag-it/collections');
         }
 
         return $nav;
