@@ -187,4 +187,35 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
 
     }
 
+    public function testAddAndRemoveAllFiles()
+    {
+
+        $this->helper->_createItem('Testing Item');
+        $this->helper->_createFiles();
+        $this->helper->_createFileCollection('Test Collection');
+
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'add_all_files' => 'Add All Files'
+                )
+            );
+
+        $this->dispatch('bag-it/collections/1/add');
+        $this->assertEquals(13, count($this->db->getTable('BagitFileCollectionAssociation')
+            ->findBySql('collection_id = ?', array(1))));
+
+        $this->resetRequest()->resetResponse();
+
+        $this->request->setMethod('POST')
+            ->setPost(array(
+                'remove_all_files' => 'Remove All Files'
+                )
+            );
+
+        $this->dispatch('bag-it/collections/1/add');
+        $this->assertEquals(0, count($this->db->getTable('BagitFileCollectionAssociation')
+            ->findBySql('collection_id = ?', array(1))));
+
+    }
+
 }
