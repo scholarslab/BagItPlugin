@@ -26,6 +26,8 @@
 
 <?php
 
+require_once '../BagItPlugin.php';
+
 class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 {
 
@@ -64,17 +66,7 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
         $plugin_broker->setCurrentPluginDirName($plugin_name);
 
-        // {{{ hooks
-        add_plugin_hook('install', 'bagitInstall');
-        add_plugin_hook('uninstall', 'bagitUninstall');
-        add_plugin_hook('define_acl', 'bagitDefineAcl');
-        add_plugin_hook('define_routes', 'bagitDefineRoutes');
-        add_plugin_hook('admin_theme_header', 'bagitAdminThemeHeader');
-        // }}}
-
-        // {{{ filters
-        add_filter('admin_navigation_main', 'bagitAdminNavigationMain');
-        // }}}
+        new BagItPlugin;
 
     }
 
@@ -146,7 +138,6 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
             if (($file != '.') && ($file != '..') && ($file != '.DS_Store')) {
 
-                // copy(BAGIT_TESTS_DIRECTORY . '/' . $src . '/' . $file, BASE_DIR . '/archive/files/' . $file);
                 $db = get_db();
                 $sql = 'INSERT INTO omeka_files 
                     (item_id, size, has_derivative_image, archive_filename, original_filename) 
