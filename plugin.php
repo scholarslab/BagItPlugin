@@ -42,16 +42,4 @@ require_once BAGIT_PLUGIN_DIRECTORY . '/helpers/BagItFunctions.php';
 require_once BAGIT_PLUGIN_DIRECTORY . '/lib/BagItPHP/lib/bagit.php';
 // }}}
 
-// {{{ hooks
-add_plugin_hook('install', 'bagitInstall');
-add_plugin_hook('uninstall', 'bagitUninstall');
-add_plugin_hook('define_acl', 'bagitDefineAcl');
-add_plugin_hook('define_routes', 'bagitDefineRoutes');
-add_plugin_hook('admin_theme_header', 'bagitAdminThemeHeader');
-// }}}
-
-// {{{ filters
-add_filter('admin_navigation_main', 'bagitAdminNavigationMain');
-// }}}
-
 new BagItPlugin;
