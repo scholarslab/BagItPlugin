@@ -52,6 +52,7 @@ class BagItPlugin
     public function __construct()
     {
 
+        $this->_db = get_db();
         self::addHooksAndFilters();
 
     }
@@ -84,7 +85,7 @@ class BagItPlugin
     public function install()
     {
 
-        $db = get_db();
+        $db = $this->_db;
 
         $db->query("
             CREATE TABLE IF NOT EXISTS `$db->BagitFileCollection` (
@@ -113,7 +114,7 @@ class BagItPlugin
     public function uninstall()
     {
 
-        $db = get_db();
+        $db = $this->_db;
 
         $db->query("DROP TABLE IF EXISTS `$db->BagitFileCollection`");
         $db->query("DROP TABLE IF EXISTS `$db->BagitFileCollectionAssociation`");
