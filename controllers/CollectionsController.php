@@ -231,8 +231,10 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $collection = $this->getTable('BagitFileCollection')->find($id);
         $name = $collection->name;
 
-        if (bagithelpers_doBagIt($id, $name)) {
-            $this->view->bag_name = $name . '.tgz';
+        $success = bagithelpers_doBagIt($id, $name);
+
+        if ($success != false) {
+            $this->view->bag_name = $success . '.tgz';
         } else {
             $this->flashError('There was an error. The Bag was not created.');
             $this->_forward('exportprep', 'collections', 'bag-it');

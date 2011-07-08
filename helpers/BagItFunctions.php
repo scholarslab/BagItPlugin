@@ -110,6 +110,8 @@ function bagithelpers_doBagIt($collection_id, $collection_name)
 {
 
     $db = get_db();
+    $key = sha1(microtime(true).mt_rand(10000, 90000));
+    $collection_name = $collection_name . '-' . $key;
 
     // Instantiate the bag, get the collection.
     $bag = new BagIt(BAGIT_BAG_DIRECTORY . '/' . $collection_name);
@@ -131,7 +133,7 @@ function bagithelpers_doBagIt($collection_id, $collection_name)
     // Tar it up.
     $bag->package(BAGIT_BAG_DIRECTORY . '/' . $collection_name);
 
-    return $bag->isValid() ? true : false;
+    return $bag->isValid() ? $collection_name : false;
 
 }
 
