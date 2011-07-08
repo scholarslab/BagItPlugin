@@ -110,8 +110,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
         // If the "Create Bag" button was clicked, redirect to the export flow.
         if ($this->_request->browsecollection_submit == 'Create Bag') {
-            $this->_redirect('bag-it/collections/' . $id . '/exportprep');
-            exit();
+            $this->_forward('export', 'collections', 'bag-it');
         }
 
         // If the list of associations was updated, check to see if files were
@@ -159,8 +158,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
                 $collection->addAllFiles();
             } else if (isset($post['remove_all_files'])) {
                 $collection->removeAllFiles();
-            } else if (isset($post['continue_to_export'])) {
-                $this->_redirect('bag-it/collections/' . $collection->id . '/exportprep');
+            } else if (isset($post['export'])) {
+                $this->_forward('export', 'collections', 'bag-it');
             }
         }
 
@@ -216,24 +215,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     }
 
     /**
-     * Prepare the export.
-     *
-     * @return void
-     */
-    public function exportprepAction()
-    {
-
-        $id = $this->_request->id;
-        $collection = $this->getTable('BagitFileCollection')->find($id);
-        $form = $this->_doExportForm($collection);
-
-        $this->view->form = $form;
-        $this->view->collection = $collection;
-
-    }
-
-    /**
-     * Process the final submission.
+     * Create the bag.
      *
      * @return void
      */
@@ -245,25 +227,15 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             exit();
         }
 
-        $form = $this->_request->getPost();
-        $name = $form['name_override'];
-        $id = $form['collection_id'];
+        $id = $this->_request->id;
+        $collection = $this->getTable('BagitFileCollection')->find($id);
+        $name = $collection->name;
 
-        if (!isset($name) || trim($name) == '') {
-
-            $this->flashError('Enter a name for the bag.');
-            $this->_redirect('bag-it/collections/' . $id . '/exportprep');
-            exit();
-
+        if (bagithelpers_doBagIt($id, $name)) {
+            $this->view->bag_name = $name . '.tgz';
         } else {
-
-            if (bagithelpers_doBagIt($id, $name)) {
-                $this->view->bag_name = $name . '.tgz';
-            } else {
-                $this->flashError('There was an error. The Bag was not created.');
-                $this->_forward('exportprep', 'collections', 'bag-it');
-            }
-
+            $this->flashError('There was an error. The Bag was not created.');
+            $this->_forward('exportprep', 'collections', 'bag-it');
         }
 
     }
