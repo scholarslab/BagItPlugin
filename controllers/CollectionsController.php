@@ -278,8 +278,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         // Check to see if Dropbox is installed.
         if (!bagithelpers_checkForDropbox()) {
             $this->flashError('The Dropbox plugin must be installed and activated to import bags.');
-            $this->_forward('browse', 'collections', 'bag-it');
-        }
+            $this->view->dropbox = false;
+        } else { $this->view->dropbox = true; }
 
         if ($this->_request->isPost()) {
 
