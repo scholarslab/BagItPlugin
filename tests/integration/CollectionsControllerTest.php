@@ -42,10 +42,10 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
     public function tearDown()
     {
 
-        $this->helper->_clearDbTable('files');
-        $this->helper->_clearDbTable('items');
-        $this->helper->_clearDbTable('bagit_file_collections');
-        $this->helper->_clearDbTable('bagit_file_collection_associations');
+        // $this->helper->_clearDbTable('files');
+        // $this->helper->_clearDbTable('items');
+        // $this->helper->_clearDbTable('bagit_file_collections');
+        // $this->helper->_clearDbTable('bagit_file_collection_associations');
 
     }
 

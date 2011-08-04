@@ -100,17 +100,6 @@ class BagIt_AdminRoutingTest extends Omeka_Test_AppTestCase
 
     }
 
-    public function testExportPrepRoute()
-    {
-
-        $this->helper->_createFileCollections(1);
-        $this->dispatch('bag-it/collections/1/exportprep');
-        $this->assertModule('bag-it');
-        $this->assertController('collections');
-        $this->assertAction('exportprep');
-
-    }
-
     public function testAddFilesRoute() {
 
         $this->helper->_createFileCollections(1);
