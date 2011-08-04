@@ -41,15 +41,6 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
         $this->user = $this->db->getTable('User')->find(1);
         $this->_authenticateUser($this->user);
 
-        if ($dropbox) {
-            // First set up Dropbox...
-            $dropbox_plugin_broker = get_plugin_broker();
-            $this->_addDropboxPluginHooksAndFilters($dropbox_plugin_broker, 'Dropbox');
-
-            $dropbox_plugin_helper = new Omeka_Test_Helper_Plugin;
-            $dropbox_plugin_helper->setUp('Dropbox');
-        }
-
         // Then set up BagIt.
         $bagit_plugin_broker = get_plugin_broker();
         $this->_addBagItPluginHooksAndFilters($bagit_plugin_broker, 'BagIt');
@@ -67,23 +58,6 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
         $plugin_broker->setCurrentPluginDirName($plugin_name);
 
         new BagItPlugin;
-
-    }
-
-    public function _addDropboxPluginHooksAndFilters($plugin_broker, $plugin_name)
-    {
-
-        $plugin_broker->setCurrentPluginDirName($plugin_name);
-
-        // {{{ hooks
-        add_plugin_hook('after_save_form_item', 'dropbox_save_files');
-        add_plugin_hook('admin_append_to_items_form_files', 'dropbox_list');
-        add_plugin_hook('define_acl', 'dropbox_define_acl');
-        // }}}
-
-        // {{{ filters
-        add_filter('admin_navigation_main', 'dropbox_admin_nav');
-        // }}}
 
     }
 
