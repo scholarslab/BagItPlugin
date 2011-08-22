@@ -33,10 +33,10 @@
                             <td><?php echo bagithelpers_getFileKb($file->size); ?> KB</td>
                             <td class="bagit-checkbox-td">
                               <?php if (!$collection->checkForFileMembership($file->id)): ?>
-                                <?php echo $this->formCheckBox('file[' . $file->id . ']', 'add') ?>
+                                <input type="checkbox" name="file[<?php echo $file->id; ?>]" id="file-<?php echo $file->id; ?>" value="add">
                                 <p class="bagit-small">[+]</p>
                               <?php else: ?>
-                              <?php echo $this->formCheckBox('file[' . $file->id . ']', 'remove') ?>
+                                <input type="checkbox" name="file[<?php echo $file->id; ?>]" id="file-<?php echo $file->id; ?>" value="remove">
                                 <p class="bagit-small">[-] Check to Remove</p>
                               <?php endif; ?>
                             </td>
