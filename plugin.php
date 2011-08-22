@@ -29,11 +29,27 @@
 <?php
 
 // {{{ constants
-define('BAGIT_PLUGIN_DIRECTORY', dirname(__FILE__));
-define('BAGIT_BAG_DIRECTORY', dirname(__FILE__) . '/bags');
-define('OMEKA_FILES_RELATIVE_DIRECTORY', 'archive/files');
-define('BAGIT_TMP_DIRECTORY', BAGIT_PLUGIN_DIRECTORY . '/bagtmp');
-define('BAGIT_TESTS_DIRECTORY', BAGIT_PLUGIN_DIRECTORY . '/tests');
+
+if (!defined('BAGIT_PLUGIN_DIRECTORY')) {
+    define('BAGIT_PLUGIN_DIRECTORY', dirname(__FILE__));
+}
+
+if (!defined('BAGIT_BAG_DIRECTORY')) {
+    define('BAGIT_BAG_DIRECTORY', dirname(__FILE__) . '/bags');
+}
+
+if (!defined('OMEKA_FILES_RELATIVE_DIRECTORY')) {
+    define('OMEKA_FILES_RELATIVE_DIRECTORY', 'archive/files');
+}
+
+if (!defined('BAGIT_TMP_DIRECTORY')) {
+    define('BAGIT_TMP_DIRECTORY', BAGIT_PLUGIN_DIRECTORY . '/bagtmp');
+}
+
+if (!defined('BAGIT_TESTS_DIRECTORY')) {
+    define('BAGIT_TESTS_DIRECTORY', BAGIT_PLUGIN_DIRECTORY . '/tests');
+}
+
 // }}}
 
 // {{{ requires

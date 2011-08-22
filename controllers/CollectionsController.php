@@ -222,11 +222,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     public function exportAction()
     {
 
-        if (!$this->_request->isPost()) {
-            $this->_redirect('bag-it/collections');
-            exit();
-        }
-
         $id = $this->_request->id;
         $collection = $this->getTable('BagitFileCollection')->find($id);
         $name = $collection->name;
