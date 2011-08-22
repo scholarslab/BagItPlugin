@@ -32,7 +32,7 @@
                             <td><?php echo $file->type_os; ?></td>
                             <td><?php echo bagithelpers_getFileKb($file->size); ?> KB</td>
                             <td class="bagit-checkbox-td">
-                                <?php echo $this->formCheckBox('file[' . $file->id . ']', 'remove') ?>
+                                <input type="checkbox" name="file[<?php echo $file->id; ?>]" id="file-<?php echo $file->id; ?>" value="remove">
                                 <p class="bagit-small">[-] Check to Remove</p>
                             </td>
                         </tr>
