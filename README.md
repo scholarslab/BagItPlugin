@@ -1,5 +1,8 @@
 # BagIt Omeka Plugin
 
+[![Build
+Status](https://secure.travis-ci.org/scholarslab/BagItPlugin.png)](http://travis-ci.org/scholarslab/BagItPlugin)
+
 This plugin implements the [BagIt 0.96 specification] for creating and
 transmitting collections
 of files. The plugin adds an administrative interface that allows users
