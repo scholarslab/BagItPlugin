@@ -26,7 +26,7 @@
 
 <?php
 
-//require_once '../BagItPlugin.php';
+require_once '../BagItPlugin.php';
 
 class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 {
