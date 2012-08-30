@@ -26,7 +26,7 @@
 
 <?php
 
-require_once '../BagItPlugin.php';
+//require_once '../BagItPlugin.php';
 
 class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 {
@@ -43,7 +43,7 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
         // Then set up BagIt.
         $bagit_plugin_broker = get_plugin_broker();
-        $this->_addBagItPluginHooksAndFilters($bagit_plugin_broker, 'BagIt');
+        $this->_addBagItPluginHooksAndFilters($bagit_plugin_broker, 'BagItPlugin');
 
         $bagit_plugin_helper = new Omeka_Test_Helper_Plugin;
         $bagit_plugin_helper->setUp('BagIt');

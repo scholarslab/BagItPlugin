@@ -1,5 +1,9 @@
 #! /usr/bin/env bash
 
+pyrus install pear/PEAR
+pyrus install pear/Archive_Tar
+phpenv rehash
+
 if [ -z $OMEKA_BRANCH ]; then
   OMEKA_BRANCH=stable-1.5
 fi
@@ -28,5 +32,6 @@ sed -i 's/paths.maildir = ""/paths.maildir = "\/tmp"/' $OMEKA_DIR/application/te
 sed -i 's/paths.imagemagick = ""/paths.imagemagick = "\/usr\/bin\/"/' $OMEKA_DIR/application/tests/config.ini
 sed -i 's/256M/512M/' $OMEKA_DIR/application/tests/bootstrap.php
 
+cd $OMEKA_DIR/plugins && ln -s $PLUGIN_DIR/BagIt
 # symlink the plugin 
 cd $OMEKA_DIR/plugins && ln -s $PLUGIN_DIR
