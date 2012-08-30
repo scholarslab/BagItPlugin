@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
-pyrus install pear/PEAR
-pyrus install pear/Archive_Tar
+pear install pear/PEAR
+pear install pear/Archive_Tar
 phpenv rehash
 
 if [ -z $OMEKA_BRANCH ]; then
