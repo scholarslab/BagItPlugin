@@ -39,7 +39,7 @@ function moveConfigFiles {
 
 function setUpOmeka {
   # set up testing config
-  sed -i 's/db.host = ""/db.host = "localhost"/' $OMEKA_DIR/application/<D-d>tests/config.ini
+  sed -i 's/db.host = ""/db.host = "localhost"/' $OMEKA_DIR/application/tests/config.ini
   sed -i 's/db.username = ""/db.username = "root"/' $OMEKA_DIR/application/tests/config.ini
   sed -i 's/db.dbname = ""/db.dbname = "omeka_test"/' $OMEKA_DIR/application/tests/config.ini 
   sed -i 's/email.to = ""/email.to = "test@example.com"/' $OMEKA_DIR/application/tests/config.ini
