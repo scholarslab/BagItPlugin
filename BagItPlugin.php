@@ -51,10 +51,8 @@ class BagItPlugin
      */
     public function __construct()
     {
-
         $this->_db = get_db();
         self::addHooksAndFilters();
-
     }
 
     /**
@@ -152,10 +150,8 @@ class BagItPlugin
      */
     public function defineRoutes($router)
     {
-
         $router->addConfig(new Zend_Config_Ini(BAGIT_PLUGIN_DIRECTORY .
             DIRECTORY_SEPARATOR . 'routes.ini', 'routes'));
-
     }
 
     /**
