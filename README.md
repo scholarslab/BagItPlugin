@@ -13,6 +13,12 @@ the [Dropbox] interface.
 [BagIt 0.96 specification]: https://wiki.ucop.edu/display/Curation/BagIt 
 [Dropbox]: http://omeka.org/codex/Plugins/Dropbox
 
+## Requirements
+
+The BagIt plugin requires the [Archive_Tar] php module.
+
+[Archive_Tar]: http://pear.php.net/package/Archive_Tar
+
 ## Installation
 
 1. Upload the BagIt plugin directory to the plugins directory of your
