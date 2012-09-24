@@ -2,11 +2,11 @@
   bootstrap="bootstrap.php"
   convertErrorsToExceptions="true"
   convertWarningsToExceptions="true"
-  colors="true">
+  colors="true"
+  verbose="true">
 
   <testsuite name="BagIt Tests">
     <directory>integration</directory>
     <directory>unit</directory>
   </testsuite>
-
 </phpunit>
