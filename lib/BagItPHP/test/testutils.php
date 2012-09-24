@@ -54,7 +54,7 @@ class BagItUtilsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException PHPUnit_Framework_Error_Warning
      */
     public function testEndsWithError()
     {
@@ -212,9 +212,9 @@ class BagItUtilsTest extends PHPUnit_Framework_TestCase
         saveUrl('http://www.google.com', "$tmpdir/google.html");
 
         $this->assertFileExists("$tmpdir/google.html");
-        $this->assertStringStartsWith(
-            '<!doctype html><html><head>',
-            file_get_contents("$tmpdir/google.html")
+        $this->assertContains(
+            'html',
+            strtolower(file_get_contents("$tmpdir/google.html"))
         );
     }
 
@@ -484,7 +484,7 @@ class BagItUtilsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException ErrorException
      */
     public function testBagIt_uncompressBagError()
     {

@@ -172,24 +172,26 @@ class BagIt
     /**
      * Define a new BagIt instance.
      *
-     * @param string  $bag      Either a non-existing folder name (will create
+     * @param string  $bag         Either a non-existing folder name (will create
      * a new bag here); an existing folder name (this will treat it as a bag
      * and create any missing files or folders needed); or an existing
      * compressed file (this will un-compress it to a temporary directory and
      * treat it as a bag).
-     * @param boolean $validate This will validate all files in the bag,
+     * @param boolean $validate    This will validate all files in the bag,
      * including running checksums on all of them. Default is false.
-     * @param boolean $extended This will ensure that optional 'bag-info.txt',
+     * @param boolean $extended    This will ensure that optional 'bag-info.txt',
      * 'fetch.txt', and 'tagmanifest-{sha1,md5}.txt' are created. Default is
      * true.
-     * @param boolean $fetch    If true, it will download all files in
+     * @param boolean $fetch       If true, it will download all files in
      * 'fetch.txt'. Default is false.
+     * @param array   $bagInfoData If given, this sets the bagInfoData
+     * property.
      */
     public function __construct(
-        $bag, $validate=false, $extended=true, $fetch=false
+        $bag, $validate=false, $extended=true, $fetch=false, $bagInfoData=null
     ) {
         $this->bag = $bag;
-        $this->extended = $extended;
+        $this->extended = $extended || (! is_null($bagInfoData));
         $this->bagVersion = array('major' => 0, 'minor' => 96);
         $this->tagFileEncoding = 'UTF-8';
         $this->bagDirectory = null;
@@ -198,7 +200,7 @@ class BagIt
         $this->tagManifest = null;
         $this->fetch = null;
         $this->bagInfoFile = null;
-        $this->bagInfoData = null;
+        $this->bagInfoData = $bagInfoData;
         $this->bagCompression = null;
         $this->bagErrors = array();
 
@@ -289,7 +291,7 @@ class BagIt
     {
         $hashAlgorithm = strtolower($hashAlgorithm);
         if ($hashAlgorithm != 'md5' && $hashAlgorithm != 'sha1') {
-            throw new Exception("Invalid hash algorithim: '$hashAlgorithm'.");
+            throw new InvalidArgumentException("Invalid hash algorithim: '$hashAlgorithm'.");
         }
 
         $this->manifest->setHashEncoding($hashAlgorithm);
@@ -385,6 +387,10 @@ class BagIt
             }
         }
 
+        if ($this->extended || count($this->bagInfoData) > 0) {
+            $this->_writeBagInfo();
+        }
+
         // Update the manifests.
         $this->manifest->update(rls($this->getDataDirectory()));
         if ($this->tagManifest !== null) {
@@ -455,6 +461,51 @@ class BagIt
             $method
         );
     }
+
+    /**
+     * This tests whether bagInfoData has a key.
+     *
+     * @param string $key The key to test for existence of.
+     *
+     * @return bool
+     * @author Eric Rochester <erochest@virginia.edu>
+     **/
+    public function hasBagInfoData($key)
+    {
+        $this->_ensureBagInfoData();
+        return array_key_exists(strtolower($key), $this->bagInfoData);
+    }
+
+    /**
+     * This inserts a value into bagInfoData.
+     *
+     * @param string $key   This is the key to insert into the data.
+     * @param string $value This is the value to associate with the key.
+     *
+     * @return void
+     * @author Eric Rochester <erochest@virginia.edu>
+     **/
+    public function setBagInfoData($key, $value)
+    {
+        $this->_ensureBagInfoData();
+        $this->bagInfoData[strtolower($key)] = $value;
+    }
+
+    /**
+     * This returns the value for a key from bagInfoData.
+     * 
+     * @param string $key This is the key to get the value associated with.
+     *
+     * @return string|null
+     * @author Eric Rochester <erochest@virginia.edu>
+     **/
+    public function getBagInfoData($key)
+    {
+        $this->_ensureBagInfoData();
+        $key = strtolower($key);
+        return array_key_exists($key, $this->bagInfoData) ? $this->bagInfoData[$key] : null;
+    }
+
     //}}}
 
     //{{{ Private Methods
@@ -579,7 +630,9 @@ class BagIt
 
             $this->bagInfoFile = $this->bagDirectory . '/bag-info.txt';
             touch($this->bagInfoFile);
-            $this->bagInfoData = array();
+            if (is_null($this->bagInfoData)) {
+                $this->bagInfoData = array();
+            }
         }
     }
 
@@ -602,6 +655,25 @@ class BagIt
     }
 
     /**
+     * This writes the bag-info.txt file with the contents of bagInfoData.
+     *
+     * @return void
+     * @author Eric Rochester <erochest@virginia.edu>
+     **/
+    private function _writeBagInfo()
+    {
+        $lines = array();
+
+        if (count($this->bagInfoData)) {
+            foreach ($this->bagInfoData as $label => $value) {
+                array_push($lines, "$label: $value\n");
+            }
+        }
+
+        writeFileText($this->bagInfoFile, $this->tagFileEncoding, join('', $lines));
+    }
+
+    /**
      * Tests if a bag is compressed
      *
      * @return True if this is a compressed bag.
@@ -621,6 +693,20 @@ class BagIt
             }
         }
         return false;
+    }
+
+    /**
+     * This makes sure that bagInfoData is not null.
+     *
+     * @return array
+     * @author Eric Rochester <erochest@virginia.edu>
+     **/
+    private function _ensureBagInfoData()
+    {
+        if (is_null($this->bagInfoData)) {
+            $this->bagInfoData = array();
+        }
+        return $this->bagInfoData;
     }
 
     //}}}

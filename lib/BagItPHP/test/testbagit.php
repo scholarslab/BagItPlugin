@@ -132,6 +132,29 @@ class BagItTest extends PHPUnit_Framework_TestCase
         $this->assertFileExists($this->bag->bagInfoFile);
     }
 
+    public function testBagInfoContructor()
+    {
+        $tmp2 = tmpdir();
+        try
+        {
+            $bag = new BagIt($tmp2, FALSE, FALSE, FALSE, array(
+                'source-organization' => 'University of Virginia',
+                'contact-name'        => 'Someone'
+            ));
+            $this->assertTrue($bag->extended);
+            $this->assertNotNull($bag->bagInfoData);
+            $this->assertTrue($bag->hasBagInfoData("source-organization"));
+            $this->assertTrue($bag->hasBagInfoData("contact-name"));
+            $this->assertFalse($bag->hasBagInfoData("bag-date"));
+        }
+        catch (Exception $e)
+        {
+            rrmdir($tmp2);
+            throw $e;
+        }
+        rrmdir($tmp2);
+    }
+
     public function testBagInfoData()
     {
         $this->assertEquals(0, count($this->bag->bagInfoData));
@@ -148,12 +171,13 @@ class BagItTest extends PHPUnit_Framework_TestCase
             );
             $bag = new BagIt($tmp2);
             $this->assertNotNull($bag->bagInfoData);
-            $this->assertArrayHasKey("source-organization", $bag->bagInfoData);
-            $this->assertArrayHasKey("contact-name", $bag->bagInfoData);
-            $this->assertArrayHasKey("bag-size", $bag->bagInfoData);
-            $this->assertArrayHasKey("Bag-size", $bag->bagInfoData);
-            $this->assertArrayHasKey("BAG-SIZE", $bag->bagInfoData);
-            $this->assertFalse(array_key_exists("bag-date", $bag->bagInfoData));
+            $this->assertCount(3, $bag->bagInfoData);
+            $this->assertTrue($bag->hasBagInfoData("source-organization"));
+            $this->assertTrue($bag->hasBagInfoData("contact-name"));
+            $this->assertTrue($bag->hasBagInfoData("bag-size"));
+            $this->assertTrue($bag->hasBagInfoData("Bag-size"));
+            $this->assertTrue($bag->hasBagInfoData("BAG-SIZE"));
+            $this->assertFalse($bag->hasBagInfoData("bag-date"));
         }
         catch (Exception $e)
         {
@@ -161,6 +185,172 @@ class BagItTest extends PHPUnit_Framework_TestCase
             throw $e;
         }
         rrmdir($tmp2);
+    }
+
+    public function testBagInfoWrite()
+    {
+        $this->assertEquals(0, count($this->bag->bagInfoData));
+
+        $tmp2 = tmpdir();
+        try
+        {
+            mkdir($tmp2);
+            mkdir("$tmp2/data");
+
+            file_put_contents(
+                "$tmp2/bag-info.txt",
+                "Source-organization: University of Virginia Alderman Library\n" .
+                "Contact-name: Eric Rochester\n" .
+                "Bag-size: very, very small\n"
+            );
+            $bag = new BagIt($tmp2);
+            $this->assertNotNull($bag->bagInfoData);
+
+            $bag->setBagInfoData('First', 'This is the first tag value.');
+            $bag->setBagInfoData('Second', 'This is the second tag value.');
+
+            $bag->update();
+            $bag->package("$tmp2.tgz");
+            rrmdir($tmp2);
+
+            $bag2 = new BagIt("$tmp2.tgz");
+            $tmp2 = $bag2->bagDirectory;
+
+            $this->assertTrue($bag2->hasBagInfoData('First'));
+            $this->assertEquals(
+                'This is the first tag value.',
+                $bag2->getBagInfoData('first')
+            );
+            $this->assertTrue($bag2->hasBagInfoData('Second'));
+            $this->assertEquals(
+                'This is the second tag value.',
+                $bag2->getBagInfoData('second')
+            );
+        }
+        catch (Exception $e)
+        {
+            if (file_exists($tmp2)) {
+                rrmdir($tmp2);
+            }
+            if (file_exists("$tmp2.tgz")) {
+                unlink("$tmp2.tgz");
+            }
+            throw $e;
+        }
+        rrmdir($tmp2);
+    }
+
+    public function testBagInfoNull()
+    {
+        $this->bag->bagInfoData = null;
+        $this->assertNull($this->bag->bagInfoData);
+        $this->bag->hasBagInfoData('hi');
+        $this->assertFalse(is_null($this->bag->bagInfoData));
+        $this->assertCount(0, $this->bag->bagInfoData);
+    }
+
+    public function testHasBagInfoData()
+    {
+        $tmp2 = tmpdir();
+        try
+        {
+            mkdir($tmp2);
+            mkdir("$tmp2/data");
+
+            file_put_contents(
+                "$tmp2/bag-info.txt",
+                "Source-organization: University of Virginia Alderman Library\n" .
+                "Contact-name: Eric Rochester\n" .
+                "Bag-size: very, very small\n"
+            );
+            $bag = new BagIt($tmp2);
+
+            $this->assertTrue($bag->hasBagInfoData('source-organization'));
+            $this->assertTrue($bag->hasBagInfoData('SOURCE-ORGANIZATION'));
+            $this->assertTrue($bag->hasBagInfoData('Source-Organization'));
+            $this->assertTrue($bag->hasBagInfoData('SoUrCe-oRgAnIzAtIoN'));
+
+            $this->assertTrue($bag->hasBagInfoData('contact-name'));
+            $this->assertTrue($bag->hasBagInfoData('CONTACT-NAME'));
+            $this->assertTrue($bag->hasBagInfoData('Contact-Name'));
+            $this->assertTrue($bag->hasBagInfoData('CoNtAcT-NaMe'));
+
+            $this->assertTrue($bag->hasBagInfoData('bag-size'));
+            $this->assertTrue($bag->hasBagInfoData('BAG-SIZE'));
+            $this->assertTrue($bag->hasBagInfoData('Bag-Size'));
+            $this->assertTrue($bag->hasBagInfoData('BaG-SiZe'));
+
+            $this->assertFalse($bag->hasBagInfoData('copyright-date'));
+            $this->assertFalse($bag->hasBagInfoData('other-metadata'));
+            $this->assertFalse($bag->hasBagInfoData('thrown-away-the-key'));
+        }
+        catch (Exception $e)
+        {
+            if (file_exists($tmp2)) {
+                rrmdir($tmp2);
+            }
+            throw $e;
+        }
+        rrmdir($tmp2);
+    }
+
+    public function testGetBagInfoData()
+    {
+        $tmp2 = tmpdir();
+        try
+        {
+            mkdir($tmp2);
+            mkdir("$tmp2/data");
+
+            file_put_contents(
+                "$tmp2/bag-info.txt",
+                "Source-organization: University of Virginia Alderman Library\n" .
+                "Contact-name: Eric Rochester\n" .
+                "Bag-size: very, very small\n"
+            );
+            $bag = new BagIt($tmp2);
+
+            $this->assertEquals('University of Virginia Alderman Library', $bag->getBagInfoData('source-organization'));
+            $this->assertEquals('University of Virginia Alderman Library', $bag->getBagInfoData('SOURCE-ORGANIZATION'));
+            $this->assertEquals('University of Virginia Alderman Library', $bag->getBagInfoData('Source-Organization'));
+            $this->assertEquals('University of Virginia Alderman Library', $bag->getBagInfoData('SoUrCe-oRgAnIzAtIoN'));
+
+            $this->assertEquals('Eric Rochester', $bag->getBagInfoData('contact-name'));
+            $this->assertEquals('Eric Rochester', $bag->getBagInfoData('CONTACT-NAME'));
+            $this->assertEquals('Eric Rochester', $bag->getBagInfoData('Contact-Name'));
+            $this->assertEquals('Eric Rochester', $bag->getBagInfoData('CoNtAcT-NaMe'));
+
+            $this->assertEquals('very, very small', $bag->getBagInfoData('bag-size'));
+            $this->assertEquals('very, very small', $bag->getBagInfoData('BAG-SIZE'));
+            $this->assertEquals('very, very small', $bag->getBagInfoData('Bag-Size'));
+            $this->assertEquals('very, very small', $bag->getBagInfoData('BaG-SiZe'));
+
+            $this->assertNull($bag->getBagInfoData('copyright-date'));
+            $this->assertNull($bag->getBagInfoData('other-metadata'));
+            $this->assertNull($bag->getBagInfoData('thrown-away-the-key'));
+        }
+        catch (Exception $e)
+        {
+            if (file_exists($tmp2)) {
+                rrmdir($tmp2);
+            }
+            throw $e;
+        }
+        rrmdir($tmp2);
+    }
+
+    public function testSetBagInfoData()
+    {
+        $this->assertCount(0, $this->bag->bagInfoData);
+        $this->bag->setBagInfoData('hi', 'some value');
+
+        $this->assertTrue($this->bag->hasBagInfoData('hi'));
+        $this->assertTrue($this->bag->hasBagInfoData('HI'));
+        $this->assertTrue($this->bag->hasBagInfoData('Hi'));
+        $this->assertTrue($this->bag->hasBagInfoData('hI'));
+
+        $this->assertEquals('some value', $this->bag->getBagInfoData('hi'));
+        $this->assertCount(1, $this->bag->bagInfoData);
     }
 
     public function testBagCompression()
@@ -435,7 +625,7 @@ class BagItTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException InvalidArgumentException
      */
     public function testSetHashEncodingERR()
     {
@@ -748,7 +938,7 @@ class BagItTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException PHPUnit_Framework_Error_Warning
      */
     public function testAddFileMissing()
     {

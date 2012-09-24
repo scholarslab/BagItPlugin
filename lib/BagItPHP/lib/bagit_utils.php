@@ -391,7 +391,7 @@ function BagIt_uncompressBag($compressedFile)
         $matches
     );
     if (!$success) {
-        throw new Exception("File not compressed: $compressedFile.");
+        throw new ErrorException("File not compressed: $compressedFile.");
     }
 
     $bagBase = $matches[1];
@@ -483,24 +483,19 @@ function BagIt_parseBagInfo($lines)
 {
     $bagInfo = array();
 
-    $prevKeys = array('');
+    $prevKey = null;
     foreach ($lines as $line) {
         if (strlen($line) == 0) {
             // Skip.
         } else if ($line[0] == ' ' || $line[0] == "\t") {
             // Continued line.
-            $val = $bagInfo[$prevKeys[0]] . ' ' . trim($line);
-            foreach ($prevKeys as $pk) {
-                $bagInfo[$pk] = $val;
-            }
+            $bagInfo[$prevKey] = $bagInfo[$prevKey] . ' ' . trim($line);
         } else {
             list($key, $val) = preg_split('/:\s*/', $line, 2);
             $val = trim($val);
 
-            $prevKeys = array($key, strtolower($key), strtoupper($key));
-            foreach ($prevKeys as $pk) {
-                $bagInfo[$pk] = $val;
-            }
+            $prevKey = strtolower($key);
+            $bagInfo[$prevKey] = $val;
         }
     }
 
