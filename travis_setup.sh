@@ -27,8 +27,8 @@ function checkOutBranch {
 
 
 function linkPlugins {
-  #cd $OMEKA_DIR/plugins && ln -s $PLUGIN_DIR/BagIt
-  cd $OMEKA_DIR/plugins && ln -s $PLUGIN_DIR
+  cd $OMEKA_DIR/plugins && ln -s $PLUGIN_DIR BagIt
+  # cd $OMEKA_DIR/plugins && ln -s $PLUGIN_DIR
 }
 
 function moveConfigFiles {
