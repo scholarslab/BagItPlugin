@@ -1,6 +1,8 @@
 
 # BagIt PHP
 
+[![Build Status](https://secure.travis-ci.org/scholarslab/BagItPHP.png?branch=develop)](http://travis-ci.org/scholarslab/BagItPHP)
+
 This is a PHP implementation of the [BagIt
 0.96 specification](https://wiki.ucop.edu/display/Curation/BagIt)
 
@@ -34,6 +36,38 @@ You'll need to have these installed to use this:
 
     // add a file; these are relative to the data directory
     $bag->addFile('../phpunit.xml', 'phpunit.xml');
+
+    // update the hashes
+    $bag->update();
+
+    // create a tarball
+    $bag->package('testbag');
+
+    // the bag package will be created at ./testbag.tgz
+
+## Example: Creating an extended bag, with fetch.txt and bag-info.txt entries
+    
+    require_once 'lib/bagit.php';
+    
+    define('BASE_DIR', 'testbag');
+
+    // define some metadata to add to bag-info.txt
+    $baginfo = array('First-Tag' => 'This is the first tag value',
+      'Second-Tag' => 'This is the second tag value'
+    );
+
+    // create a new bag at BASE_DIR
+    $bag = new BagIt(BASE_DIR, true, true, true, $baginfo);
+
+    // add a file; these are relative to the data directory
+    $bag->addFile('../phpunit.xml', 'phpunit.xml');
+
+    // add additional metadata to bag-info.txt
+    $bag->setBagInfoData('Third-Tag', 'This is the third tag value');
+
+    // add some entries to fetch.txt
+    $bag->fetch->add('http://example.com/bar.htm', 'bar.htm');
+    $bag->fetch->add('http://example.com/baz.htm', 'baz.htm');
 
     // update the hashes
     $bag->update();
@@ -89,12 +123,19 @@ The easiest way to contribute to the project is to to let us know about andy bug
 and include a test case. Read the build.xml file more more information
 on running tests, the underlying report types, and packing information.
 
-
 ## Note on Patches/Pull Requests
+
 * Fork the project
 * Make your feature addition/bug fix.
 * Add tests for it. This is important so we don't unintentionally break it in a future
   version 
 * Commit
 * Send us a pull request...bonus points for topic branches.
+
+## Kudos
+
+Thanks to everyone who's contributed to this:
+
+* [Wayne Graham](https://github.com/waynegraham/)
+* [Mark Jordan](https://github.com/mjordan)
 

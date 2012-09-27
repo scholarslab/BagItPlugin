@@ -22,48 +22,31 @@
  * PHP version 5
  *
  */
-?>
 
-<?php
-
-class BagIt_HelpersTest extends Omeka_Test_AppTestCase
+class BagIt_HelpersTest extends BagIt_Test_AppTestCase
 {
-
-    public function setUp()
-    {
-
-        parent::setUp();
-        $this->helper = new BagIt_Test_AppTestCase;
-        $this->helper->setUpPlugin();
-        $this->db = get_db();
-
-    }
 
     public function testBagithelpersTestForFiles()
     {
 
         $this->assertEquals(bagithelpers_testForFiles(), false);
-        $this->helper->_createItem('Testing Item');
-        $this->helper->_createFileCollections(1);
-        $this->helper->_createFiles();
+        $this->_createItem('Testing Item');
+        $this->_createFileCollections(1);
+        $this->_createFiles();
         $this->assertEquals(get_db()->getTable('File')->count(), 13);
 
     }
 
     public function testBagithelpersGetFileKb()
     {
-
         $this->assertEquals(bagithelpers_getFileKb(5000), 4.88);
-
     }
 
     public function testBagithelpersColumnSorting()
     {
-
         $this->assertEquals(bagithelpers_doColumnSortProcessing('name', ''), 'name DESC');
         $this->assertEquals(bagithelpers_doColumnSortProcessing('name', 'd'), 'name DESC');
         $this->assertEquals(bagithelpers_doColumnSortProcessing('name', 'a'), 'name ASC');
-
     }
 
 }

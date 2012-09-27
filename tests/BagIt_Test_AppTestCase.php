@@ -33,7 +33,7 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     private $_dbHelper;
 
-    public function setUpPlugin($dropbox = true)
+    public function setUp()
     {
 
         parent::setUp();
@@ -44,7 +44,6 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
         // Then set up BagIt.
         $bagit_plugin_broker = get_plugin_broker();
         $this->_addBagItPluginHooksAndFilters($bagit_plugin_broker, 'BagIt');
-
         $bagit_plugin_helper = new Omeka_Test_Helper_Plugin;
         $bagit_plugin_helper->setUp('BagIt');
 
@@ -54,11 +53,8 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
     public function _addBagItPluginHooksAndFilters($plugin_broker, $plugin_name)
     {
-
         $plugin_broker->setCurrentPluginDirName($plugin_name);
-
         new BagItPlugin;
-
     }
 
     public function _createFileCollection($name)

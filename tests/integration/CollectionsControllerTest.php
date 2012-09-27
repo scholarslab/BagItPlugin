@@ -26,28 +26,8 @@
 
 <?php
 
-class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
+class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
 {
-
-    public function setUp()
-    {
-
-        parent::setUp();
-        $this->helper = new BagIt_Test_AppTestCase;
-        $this->helper->setUpPlugin();
-        $this->db = get_db();
-
-    }
-
-    public function tearDown()
-    {
-
-        // $this->helper->_clearDbTable('files');
-        // $this->helper->_clearDbTable('items');
-        // $this->helper->_clearDbTable('bagit_file_collections');
-        // $this->helper->_clearDbTable('bagit_file_collection_associations');
-
-    }
 
     public function testDetectNoCollections()
     {
@@ -128,7 +108,7 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
     public function testDetectNoFilesToAdd()
     {
 
-        $this->helper->_createFileCollection('Test Collection');
+        $this->_createFileCollection('Test Collection');
         $this->dispatch('bag-it/collections/1/add');
         $this->assertQueryContentContains('p', 'There are no files on the site that can be added to a Bag.');
 
@@ -137,9 +117,9 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
     public function testAddAndRemoveFiles()
     {
 
-        $this->helper->_createItem('Testing Item');
-        $this->helper->_createFiles();
-        $this->helper->_createFileCollection('Test Collection');
+        $this->_createItem('Testing Item');
+        $this->_createFiles();
+        $this->_createFileCollection('Test Collection');
 
         $this->request->setMethod('POST')
             ->setPost(array(
@@ -190,9 +170,9 @@ class BagIt_CollectionsControllerTest extends Omeka_Test_AppTestCase
     public function testAddAndRemoveAllFiles()
     {
 
-        $this->helper->_createItem('Testing Item');
-        $this->helper->_createFiles();
-        $this->helper->_createFileCollection('Test Collection');
+        $this->_createItem('Testing Item');
+        $this->_createFiles();
+        $this->_createFileCollection('Test Collection');
 
         $this->request->setMethod('POST')
             ->setPost(array(
