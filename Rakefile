@@ -65,6 +65,7 @@ PackageTask.new('BagIt') do |p|
   p.need_zip    = true
 
   p.package_files.include('BagItPlugin.php')
+  p.package_files.include('bagtmp/.empty')
   p.package_files.include('controllers/*.php')
   p.package_files.include('helpers/*.php')
   p.package_files.include('lib/**/*.php')
