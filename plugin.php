@@ -35,7 +35,7 @@ if (!defined('BAGIT_BAG_DIRECTORY')) {
 }
 
 if (!defined('OMEKA_FILES_RELATIVE_DIRECTORY')) {
-    define('OMEKA_FILES_RELATIVE_DIRECTORY', 'archive/files');
+    define('OMEKA_FILES_RELATIVE_DIRECTORY', 'files/files');
 }
 
 if (!defined('BAGIT_TMP_DIRECTORY')) {
@@ -46,11 +46,5 @@ if (!defined('BAGIT_TESTS_DIRECTORY')) {
     define('BAGIT_TESTS_DIRECTORY', BAGIT_PLUGIN_DIRECTORY . '/tests');
 }
 // }}}
-
-// {{{ requires
-require_once BAGIT_PLUGIN_DIRECTORY . '/BagItPlugin.php';
-require_once BAGIT_PLUGIN_DIRECTORY . '/helpers/BagItFunctions.php';
-require_once BAGIT_PLUGIN_DIRECTORY . '/lib/BagItPHP/lib/bagit.php';
-// // }}}
 
 new BagItPlugin;

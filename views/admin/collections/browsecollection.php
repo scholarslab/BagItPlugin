@@ -62,4 +62,4 @@
 
 </div>
 
-<?php foot(); ?>
+<?php echo foot(); ?>
