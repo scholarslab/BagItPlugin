@@ -26,7 +26,7 @@
 
 <?php
 
-class BagitFileCollectionAssociationTable extends Omeka_Db_Table
+class Table_BagitFileCollectionAssociation extends Omeka_Db_Table
 {
 
     /**

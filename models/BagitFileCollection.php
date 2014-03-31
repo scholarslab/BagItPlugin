@@ -26,7 +26,7 @@
 
 <?php
 
-class BagitFileCollection extends Omeka_record
+class BagitFileCollection extends Omeka_Record_AbstractRecord
 {
 
     public $name;

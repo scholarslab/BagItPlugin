@@ -26,10 +26,16 @@
 
 <?php
 
-class BagItPlugin
+// {{{ requires
+require_once BAGIT_PLUGIN_DIRECTORY . '/BagItPlugin.php';
+require_once BAGIT_PLUGIN_DIRECTORY . '/helpers/BagItFunctions.php';
+require_once BAGIT_PLUGIN_DIRECTORY . '/lib/BagItPHP/lib/bagit.php';
+// }}}
+
+class BagItPlugin extends Omeka_Plugin_AbstractPlugin
 {
 
-    private static $_hooks = array(
+    private static $_hookList = array(
         'install',
         'uninstall',
         'define_acl',
@@ -37,11 +43,11 @@ class BagItPlugin
         'admin_theme_header'
     );
 
-    private static $_filters = array(
+    private static $_filterList = array(
         'admin_navigation_main'
     );
 
-    private $_db;
+    private $__db;
 
     /**
      * Delete option 'bagit_version' in the _options, drop tables.
@@ -51,7 +57,7 @@ class BagItPlugin
      */
     public function __construct()
     {
-        $this->_db = get_db();
+        $this->__db = get_db();
         self::addHooksAndFilters();
     }
 
@@ -63,12 +69,12 @@ class BagItPlugin
     public function addHooksAndFilters()
     {
 
-        foreach (self::$_hooks as $hookName) {
+        foreach (self::$_hookList as $hookName) {
             $functionName = Inflector::variablize($hookName);
             add_plugin_hook($hookName, array($this, $functionName));
         }
 
-        foreach (self::$_filters as $filterName) {
+        foreach (self::$_filterList as $filterName) {
             $functionName = Inflector::variablize($filterName);
             add_filter($filterName, array($this, $functionName));
         }
@@ -83,7 +89,7 @@ class BagItPlugin
     public function install()
     {
 
-        $db = $this->_db;
+        $db = $this->__db;
 
         $db->query("
             CREATE TABLE IF NOT EXISTS `$db->BagitFileCollection` (
@@ -112,7 +118,7 @@ class BagItPlugin
     public function uninstall()
     {
 
-        $db = $this->_db;
+        $db = $this->__db;
 
         $db->query("DROP TABLE IF EXISTS `$db->BagitFileCollection`");
         $db->query("DROP TABLE IF EXISTS `$db->BagitFileCollectionAssociation`");
@@ -128,14 +134,9 @@ class BagItPlugin
      */
     public function defineAcl($acl)
     {
+        $indexResource = new Zend_Acl_Resource('Bagit_Collections');
 
-        if (version_compare(OMEKA_VERSION, '2.0-dev', '<')) {
-            $indexResource = new Omeka_Acl_Resource('Bagit_Collections');
-        } else {
-            $indexResource = new Zend_Acl_Resource('Bagit_Collections');
-        }
-
-        $acl->add($indexResource);
+        $acl->addResource($indexResource);
         $acl->allow('super', 'Bagit_Collections');
         $acl->allow('admin', 'Bagit_Collections');
 
@@ -166,7 +167,7 @@ class BagItPlugin
     {
 
         if ($request->getModuleName() == 'bag-it') {
-            queue_css('bagit-interface');
+            queue_css_file('bagit-interface');
         }
 
     }

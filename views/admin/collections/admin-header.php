@@ -1,7 +1,7 @@
 <?php
 
     $header = array('bodyclass' => 'bagit primary', 'title' => html_escape('BagIt | ' . $subtitle), 'content_class' => 'horizontal-nav');
-    head($header);
+    echo head($header);
 
 ?>
 
