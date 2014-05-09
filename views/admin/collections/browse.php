@@ -13,7 +13,7 @@
             <table>
                 <thead>
                     <tr>
-                        <?php browse_headings(array(
+                        <?php browse_sort_links(array(
                             'Name' => 'name',
                             'Number of Files' => 'number_of_files',
                             'Last Updated' => 'updated',
@@ -24,7 +24,7 @@
                 <tbody>
                     <?php foreach ($collections as $collection): ?>
                         <tr>
-                            <td><a href="<?php echo uri('bag-it/collections/' . $collection->id); ?>"><?php echo $collection->name; ?></a></td>
+                            <td><a href="<?php echo url('bag-it/collections/' . $collection->id); ?>"><?php echo $collection->name; ?></a></td>
                             <td><?php echo $collection->getNumberOfAssociatedFiles(); ?></td>
                             <td><?php echo $collection->getFormattedDate(); ?></td>
                             <td width="30%"><?php echo $this->partial('collections/collection-actions.php', array('id' => $collection->id)); ?></td>
@@ -37,7 +37,7 @@
 
     <h2 class="bagit-create-new-collection-header">Create a new collection:</h2>
 
-    <form method="post" action="<?php echo uri(array('action' => 'addcollection', 'controller' => 'collections')) ?>" accept-charset="utf-8">
+    <form method="post" action="<?php echo url(array('action' => 'addcollection', 'controller' => 'collections')) ?>" accept-charset="utf-8">
 
         <div id="bagit-create-collection">
             <?php echo $this->formText('collection_name', '', array('size' => 30)); ?>

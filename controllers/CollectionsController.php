@@ -26,7 +26,7 @@
 
 <?php
 
-class BagIt_CollectionsController extends Omeka_Controller_Action
+class BagIt_CollectionsController extends Omeka_Controller_AbstractActionController
 {
 
     /**
@@ -53,7 +53,9 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $sort_field = $this->_request->getParam('sort_field');
         $sort_dir = $this->_request->getParam('sort_dir');
         $order = bagithelpers_doColumnSortProcessing($sort_field, $sort_dir);
-        $collections = $this->getTable('BagitFileCollection')->getCollectionsList($order);
+        $bfc = $this->_helper->db->getTable('BagitFileCollection');
+        err("*** " . get_class($bfc) . " ***");
+        $collections = $this->_helper->db->getTable('BagitFileCollection')->getCollectionsList($order);
 
         $this->view->collections = $collections;
 
@@ -80,7 +82,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
             $this->flashError('Enter a name for the collection.');
         }
 
-        else if ($this->getTable('BagitFileCollection')->confirmUniqueName($collection_name)) {
+        else if ($this->_helper->db->getTable('BagitFileCollection')->confirmUniqueName($collection_name)) {
             $collection = new BagitFileCollection;
             $collection->name = $collection_name;
             $collection->save();
@@ -106,7 +108,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $sort_dir = $this->_request->getParam('sort_dir');
 
         $id = $this->_request->id;
-        $collection = $this->getTable('BagitFileCollection')->find($id);
+        $collection = $this->_helper->db->getTable('BagitFileCollection')->find($id);
 
         // If the "Create Bag" button was clicked, redirect to the export flow.
         if ($this->_request->browsecollection_submit == 'Create Bag') {
@@ -145,7 +147,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $sort_dir = $this->_request->getParam('sort_dir');
 
         $id = $this->_request->id;
-        $collection = $this->getTable('BagitFileCollection')->find($id);
+        $collection = $this->_helper->db->getTable('BagitFileCollection')->find($id);
 
         // Check for form submission, iterate over files and add/remove.
         if ($this->_request->isPost()) {
@@ -172,7 +174,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $this->view->collection = $collection;
         $this->view->files = $files;
         $this->view->current_page = $page;
-        $this->view->total_results = $this->getTable('File')->count();
+        $this->view->total_results = $this->_helper->db->getTable('File')->count();
         $this->view->results_per_page = get_option('per_page_admin');
 
     }
@@ -187,12 +189,12 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     {
 
         $id = $this->_request->id;
-        $collection = $this->getTable('BagitFileCollection')->find($id);
+        $collection = $this->_helper->db->getTable('BagitFileCollection')->find($id);
 
         // If delete confirmed, do delete.
         if ($this->_request->getParam('confirm') == 'true') {
 
-            $file_associations = $this->getTable('BagitFileCollectionAssociation')
+            $file_associations = $this->_helper->db->getTable('BagitFileCollectionAssociation')
                 ->findBySql('collection_id = ?', array($id));
 
             foreach ($file_associations as $assoc) {
@@ -223,7 +225,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
     {
 
         $id = $this->_request->id;
-        $collection = $this->getTable('BagitFileCollection')->find($id);
+        $collection = $this->_helper->db->getTable('BagitFileCollection')->find($id);
         $name = $collection->name;
 
         $success = bagithelpers_doBagIt($id, $name);
@@ -301,7 +303,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
             } else if ($value == 'remove') {
 
-                $assoc = $this->getTable('BagitFileCollectionAssociation')
+                $assoc = $this->_helper->db->getTable('BagitFileCollectionAssociation')
                     ->getAssociationByIds($id, $collection->id);
                 $assoc->delete();
 

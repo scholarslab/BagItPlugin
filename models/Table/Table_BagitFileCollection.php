@@ -42,8 +42,9 @@ class Table_BagitFileCollection extends Omeka_Db_Table
         // To be Zend kosher, this would use 
         // Zend_Validate_Db_RecordExists. But how to make it work? 
         // Instead, query-and-count.
+        $a = $this->getTableAlias();
         $matches = $this->fetchObjects(
-            $this->getSelect()->where('b.name = "' . $name . '"')
+            $this->getSelect()->where("$a.name = \"$name\"")
         );
 
         return (count($matches) > 0) ? false : true;

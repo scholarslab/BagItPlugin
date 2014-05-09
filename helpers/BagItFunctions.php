@@ -181,3 +181,11 @@ function bagithelpers_checkForDropbox()
     return (isset($dropbox) && $dropbox->active == 1) ? true : false;
 
 }
+
+/**
+ * This was taken out, I think. I'm redefining it here instead of changing 
+ * everywhere it's called.
+ */
+function submit($opts, $label) {
+    return "<input type='submit' name='${opts['name']}' class='${opts['class']}' value='$label'/>";
+}

@@ -47,4 +47,8 @@ if (!defined('BAGIT_TESTS_DIRECTORY')) {
 }
 // }}}
 
-new BagItPlugin;
+require_once(BAGIT_PLUGIN_DIRECTORY . '/BagItPlugin.php');
+
+$bagit = new BagItPlugin();
+$bagit->setUp();
+

@@ -5,7 +5,7 @@
     <?php echo flash(); ?>
 
     <?php if (count($files) == 0): ?>
-        <p>No files are marked to be added to the bag. <a href="<?php uri(array('controller' => 'browse')); ?>">Go back to the file browser</a> to pick files.</p>
+        <p>No files are marked to be added to the bag. <a href="<?php url(array('controller' => 'browse')); ?>">Go back to the file browser</a> to pick files.</p>
 
     <?php else: ?>
 
