@@ -127,10 +127,12 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function hookDefineRoutes($args)
     {
-        err('hookDefineRoutes');
         $router = $args['router'];
+        err('hookDefineRoutes: ' . get_class($router));
         $router->addConfig(new Zend_Config_Ini(BAGIT_PLUGIN_DIRECTORY .
-            DIRECTORY_SEPARATOR . 'routes.ini'));
+            DIRECTORY_SEPARATOR . 'routes.ini', 'routes'));
+        err(print_r($router, true));
+        // var_dump($router);
     }
 
     /**

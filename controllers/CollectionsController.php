@@ -79,7 +79,9 @@ class BagIt_CollectionsController extends Omeka_Controller_AbstractActionControl
         $collection_name = $this->_request->collection_name;
 
         if (trim($collection_name) == '') {
-            $this->flashError('Enter a name for the collection.');
+            $this->_helper->flashMessenger(
+                'Enter a name for the collection.', 'error'
+            );
         }
 
         else if ($this->_helper->db->getTable('BagitFileCollection')->confirmUniqueName($collection_name)) {
@@ -89,7 +91,9 @@ class BagIt_CollectionsController extends Omeka_Controller_AbstractActionControl
         }
 
         else {
-            $this->flashError('A collection already exists with that name.');
+            $this->_helper->flashMessenger(
+                'A collection already exists with that name.', 'error'
+            );
         }
 
         $this->_forward('browse', 'collections', 'bag-it');
@@ -203,7 +207,9 @@ class BagIt_CollectionsController extends Omeka_Controller_AbstractActionControl
 
             $collection->delete();
 
-            $this->flashError('Collection "' . $collection->name . '" deleted.');
+            $this->_helper->flashMessenger(
+                'Collection "' . $collection->name . '" deleted.', 'error'
+            );
             $this->_redirect('bag-it/collections');
 
         }
@@ -233,7 +239,10 @@ class BagIt_CollectionsController extends Omeka_Controller_AbstractActionControl
         if ($success != false) {
             $this->view->bag_name = $success . '.tgz';
         } else {
-            $this->flashError('There was an error. The Bag was not created.');
+            $this->_helper->flashMessenger(
+                'There was an error. The Bag was not created.',
+                'error'
+            );
             $this->_forward('exportprep', 'collections', 'bag-it');
         }
 
@@ -248,7 +257,10 @@ class BagIt_CollectionsController extends Omeka_Controller_AbstractActionControl
 
         // Check to see if Dropbox is installed.
         if (!bagithelpers_checkForDropbox()) {
-            $this->flashError('The Dropbox plugin must be installed and activated to import bags.');
+            $this->_helper->flashMessenger(
+                'The Dropbox plugin must be installed and activated to import bags.',
+                'error'
+            );
             $this->view->dropbox = false;
         } else { $this->view->dropbox = true; }
 
@@ -266,13 +278,21 @@ class BagIt_CollectionsController extends Omeka_Controller_AbstractActionControl
                 $form->bag->receive();
 
                 if (bagithelpers_doReadBagIt($new_filename)) {
-                    $this->flashSuccess('Bag successfully unpacked. Use the Dropbox plugin to process the files.');
+                    $this->_helper->flashMessenger(
+                        'Bag successfully unpacked. Use the Dropbox plugin to process the files.',
+                        'success'
+                    );
                 } else {
-                    $this->flashError('Error unpacking the files.');
+                    $this->_helper->flashMessenger(
+                        'Error unpacking the files.', 'error'
+                    );
                 }
 
             } else {
-                $this->flashError('Validation failed or no file selected. Make sure the file is a .tgz.');
+                $this->_helper->flashMessenger(
+                    'Validation failed or no file selected. Make sure the file is a .tgz.',
+                    'error'
+                );
             }
 
         }
