@@ -62,7 +62,6 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function hookInstall()
     {
-        err('hookInstall');
 
         $db = $this->_db;
 
@@ -92,7 +91,6 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function hookUninstall()
     {
-        err('hookUninstall');
 
         $db = $this->_db;
 
@@ -110,7 +108,6 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function hookDefineAcl($args)
     {
-        err('hookDefineAcl');
         $acl = $args['acl'];
         if (! $acl->has('Bagit_Collections')) {
             $acl->addResource('Bagit_Collections');
@@ -128,11 +125,8 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
     public function hookDefineRoutes($args)
     {
         $router = $args['router'];
-        err('hookDefineRoutes: ' . get_class($router));
         $router->addConfig(new Zend_Config_Ini(BAGIT_PLUGIN_DIRECTORY .
             DIRECTORY_SEPARATOR . 'routes.ini', 'routes'));
-        err(print_r($router, true));
-        // var_dump($router);
     }
 
     /**
@@ -145,7 +139,6 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function hookAdminHead($args)
     {
-        err('hookAdminHead');
 
         $fc     = Zend_Registry::get('bootstrap')->getResource('frontcontroller');
         $req    = $fc->getRequest();
@@ -168,7 +161,6 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function filterAdminNavigationMain($tabs)
     {
-        err('filterAdminNavigationMain');
 
         $tabs[] = array(
             'label' => 'BagIt',

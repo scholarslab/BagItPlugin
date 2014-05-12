@@ -54,7 +54,6 @@ class BagIt_CollectionsController extends Omeka_Controller_AbstractActionControl
         $sort_dir = $this->_request->getParam('sort_dir');
         $order = bagithelpers_doColumnSortProcessing($sort_field, $sort_dir);
         $bfc = $this->_helper->db->getTable('BagitFileCollection');
-        err("*** " . get_class($bfc) . " ***");
         $collections = $this->_helper->db->getTable('BagitFileCollection')->getCollectionsList($order);
 
         $this->view->collections = $collections;
