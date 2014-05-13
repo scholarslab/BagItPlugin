@@ -60,9 +60,7 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
      *
      * @return void
      */
-    public function hookInstall()
-    {
-
+    public function hookInstall() {
         $db = $this->_db;
 
         $db->query("
@@ -81,7 +79,6 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
                 `collection_id` int(10) unsigned NOT NULL
             ) ENGINE = innodb DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
         ");
-
     }
 
     /**
@@ -89,14 +86,11 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
      *
      * @return void
      */
-    public function hookUninstall()
-    {
-
+    public function hookUninstall() {
         $db = $this->_db;
 
         $db->query("DROP TABLE IF EXISTS `$db->BagitFileCollection`");
         $db->query("DROP TABLE IF EXISTS `$db->BagitFileCollectionAssociation`");
-
     }
 
     /**
@@ -106,8 +100,7 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
      *
      * @return void
      */
-    public function hookDefineAcl($args)
-    {
+    public function hookDefineAcl($args) {
         $acl = $args['acl'];
         if (! $acl->has('Bagit_Collections')) {
             $acl->addResource('Bagit_Collections');
@@ -122,8 +115,7 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
      *
      * @return void
      */
-    public function hookDefineRoutes($args)
-    {
+    public function hookDefineRoutes($args) {
         $router = $args['router'];
         $router->addConfig(new Zend_Config_Ini(BAGIT_PLUGIN_DIRECTORY .
             DIRECTORY_SEPARATOR . 'routes.ini', 'routes'));
@@ -137,9 +129,7 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
      *
      * @return void
      */
-    public function hookAdminHead($args)
-    {
-
+    public function hookAdminHead($args) {
         $fc     = Zend_Registry::get('bootstrap')->getResource('frontcontroller');
         $req    = $fc->getRequest();
         $module = $req->getModuleName();
@@ -147,7 +137,6 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
         if ($module == 'bag-it') {
             queue_css_file('bagit-interface');
         }
-
     }
 
     /**
@@ -159,16 +148,12 @@ class BagItPlugin extends Omeka_Plugin_AbstractPlugin
      * @return array $nav The array of links, modified to include the
      * link to the BagIt administrative interface.
      */
-    public function filterAdminNavigationMain($tabs)
-    {
-
+    public function filterAdminNavigationMain($tabs) {
         $tabs[] = array(
             'label' => 'BagIt',
             'uri'   => url('bag-it/collections')
         );
 
         return $tabs;
-
     }
-
 }

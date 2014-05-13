@@ -16,4 +16,4 @@
 
 </div>
 
-<?php echo foot(); ?>
+<?php echo foot();
