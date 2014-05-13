@@ -110,10 +110,8 @@ function bagithelpers_doBagIt($collection_id, $collection_name) {
 
     // Retrieve the files and add them to the new bag.
     foreach ($files as $file) {
-        $bagfile = BASE_DIR
-            . '/' . OMEKA_FILES_RELATIVE_DIRECTORY
-            . '/' . $file->archive_filename;
-        $bag->fetch->add($bagfile, 'data/' . $file->original_filename);
+        $bagurl = file_display_url($file);
+        $bag->fetch->add($bagurl, 'data/' . $file->original_filename);
     }
 
     // Update the hashes.
