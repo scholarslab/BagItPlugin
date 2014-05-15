@@ -34,10 +34,8 @@ define('KB_PER_BYTE', 0.0009765625);
  * @return boolean True if files exist, false if there are no files.
  */
 function bagithelpers_testForFiles() {
-
     $file_count = get_db()->getTable('File')->count();
-    return ($file_count > 0) ? true : false;
-
+    return ($file_count > 0);
 }
 
 /**
@@ -48,9 +46,7 @@ function bagithelpers_testForFiles() {
  * @return float The size of the file, rounded to two decimal places.
  */
 function bagithelpers_getFileKb($size) {
-
     return round($size * KB_PER_BYTE, 2);
-
 }
 
 /**
@@ -62,15 +58,12 @@ function bagithelpers_getFileKb($size) {
  *
  * @return string $order The sorting parameter for the query.
  */
-function bagithelpers_doColumnSortProcessing($sort_field, $sort_dir)
-{
-
+function bagithelpers_doColumnSortProcessing($sort_field, $sort_dir) {
     if (isset($sort_dir)) {
         $sort_dir = ($sort_dir == 'a') ? 'ASC' : 'DESC';
     }
 
     return (isset($sort_field)) ? trim(implode(' ', array($sort_field, $sort_dir))) : '';
-
 }
 
 /**
@@ -81,9 +74,7 @@ function bagithelpers_doColumnSortProcessing($sort_field, $sort_dir)
  *
  * @return array $files The files.
  */
-function bagithelpers_getFilesForAdd($page, $order)
-{
-
+function bagithelpers_getFilesForAdd($page, $order) {
     $db = get_db();
     $fileTable = $db->getTable('File');
 
@@ -95,7 +86,6 @@ function bagithelpers_getFilesForAdd($page, $order)
             ->order($order);
 
     return $fileTable->fetchObjects($select);
-
 }
 
 /**
@@ -106,9 +96,7 @@ function bagithelpers_getFilesForAdd($page, $order)
  *
  * @return boolean $success True if the new bag validates.
  */
-function bagithelpers_doBagIt($collection_id, $collection_name)
-{
-
+function bagithelpers_doBagIt($collection_id, $collection_name) {
     $db = get_db();
     $key = sha1(microtime(true).mt_rand(10000, 90000));
     $collection_name = $collection_name . '-' . $key;
@@ -122,9 +110,8 @@ function bagithelpers_doBagIt($collection_id, $collection_name)
 
     // Retrieve the files and add them to the new bag.
     foreach ($files as $file) {
-        $bag->fetch->add(BASE_DIR . '/' . OMEKA_FILES_RELATIVE_DIRECTORY . '/' .
-            $file->archive_filename, 'data/' . $file->original_filename
-        );
+        $bagurl = file_display_url($file);
+        $bag->fetch->add($bagurl, 'data/' . $file->original_filename);
     }
 
     // Update the hashes.
@@ -134,7 +121,6 @@ function bagithelpers_doBagIt($collection_id, $collection_name)
     $bag->package(BAGIT_BAG_DIRECTORY . '/' . $collection_name);
 
     return $bag->isValid() ? $collection_name : false;
-
 }
 
 /**
@@ -144,9 +130,7 @@ function bagithelpers_doBagIt($collection_id, $collection_name)
  *
  * @return boolean $success True if the read succeeds.
  */
-function bagithelpers_doReadBagIt($filename)
-{
-
+function bagithelpers_doReadBagIt($filename) {
     $success = false;
 
     $bag = new BagIt(BAGIT_TMP_DIRECTORY . '/' . $filename);
@@ -155,18 +139,15 @@ function bagithelpers_doReadBagIt($filename)
     $bag->validate();
 
     if (count($bag->getBagErrors()) == 0) {
-
         // Copy each of the files.
         foreach ($bag->getBagContents() as $file) {
             copy($file, BASE_DIR . '/plugins/Dropbox/files/' . basename($file));
         }
 
         $success = true;
-
     }
 
     return $success;
-
 }
 
 /**
@@ -174,10 +155,15 @@ function bagithelpers_doReadBagIt($filename)
  *
  * @return boolean True if Dropbox is installed.
  */
-function bagithelpers_checkForDropbox()
-{
-
+function bagithelpers_checkForDropbox() {
     $dropbox = get_db()->getTable('Plugin')->findByDirectoryName('Dropbox');
     return (isset($dropbox) && $dropbox->active == 1) ? true : false;
+}
 
+/**
+ * This was taken out, I think. I'm redefining it here instead of changing 
+ * everywhere it's called.
+ */
+function submit($opts, $label) {
+    return "<input type='submit' name='${opts['name']}' class='${opts['class']}' value='$label'/>";
 }

@@ -26,7 +26,7 @@
 
 <?php
 
-class BagIt_CollectionsController extends Omeka_Controller_Action
+class BagIt_CollectionsController extends Omeka_Controller_AbstractActionController
 {
 
     /**
@@ -34,11 +34,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return void
      */
-    public function indexAction()
-    {
-
+    public function indexAction() {
         $this->_forward('browse', 'collections', 'bag-it');
-
     }
 
     /**
@@ -46,17 +43,15 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return void
      */
-    public function browseAction()
-    {
-
+    public function browseAction() {
         // Process the sorting parameters, get the collections.
         $sort_field = $this->_request->getParam('sort_field');
         $sort_dir = $this->_request->getParam('sort_dir');
         $order = bagithelpers_doColumnSortProcessing($sort_field, $sort_dir);
-        $collections = $this->getTable('BagitFileCollection')->getCollectionsList($order);
+        $bfc = $this->_helper->db->getTable('BagitFileCollection');
+        $collections = $this->_helper->db->getTable('BagitFileCollection')->getCollectionsList($order);
 
         $this->view->collections = $collections;
-
     }
 
     /**
@@ -64,9 +59,7 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return void
      */
-    public function addcollectionAction()
-    {
-
+    public function addcollectionAction() {
         $sort_field = $this->_request->getParam('sort_field');
         $sort_dir = $this->_request->getParam('sort_dir');
 
@@ -77,21 +70,22 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $collection_name = $this->_request->collection_name;
 
         if (trim($collection_name) == '') {
-            $this->flashError('Enter a name for the collection.');
-        }
+            $this->_helper->flashMessenger(
+                'Enter a name for the collection.', 'error'
+            );
 
-        else if ($this->getTable('BagitFileCollection')->confirmUniqueName($collection_name)) {
+        } else if ($this->_helper->db->getTable('BagitFileCollection')->confirmUniqueName($collection_name)) {
             $collection = new BagitFileCollection;
             $collection->name = $collection_name;
             $collection->save();
-        }
 
-        else {
-            $this->flashError('A collection already exists with that name.');
+        } else {
+            $this->_helper->flashMessenger(
+                'A collection already exists with that name.', 'error'
+            );
         }
 
         $this->_forward('browse', 'collections', 'bag-it');
-
     }
 
     /**
@@ -99,14 +93,12 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return void
      */
-    public function browsecollectionAction()
-    {
-
+    public function browsecollectionAction() {
         $sort_field = $this->_request->getParam('sort_field');
         $sort_dir = $this->_request->getParam('sort_dir');
 
         $id = $this->_request->id;
-        $collection = $this->getTable('BagitFileCollection')->find($id);
+        $collection = $this->_helper->db->getTable('BagitFileCollection')->find($id);
 
         // If the "Create Bag" button was clicked, redirect to the export flow.
         if ($this->_request->browsecollection_submit == 'Create Bag') {
@@ -130,7 +122,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $this->view->current_page = $page;
         $this->view->total_results = count($files);
         $this->view->results_per_page = get_option('per_page_admin');
-
     }
 
     /**
@@ -138,14 +129,12 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return void
      */
-    public function addfilesAction()
-    {
-
+    public function addfilesAction() {
         $sort_field = $this->_request->getParam('sort_field');
         $sort_dir = $this->_request->getParam('sort_dir');
 
         $id = $this->_request->id;
-        $collection = $this->getTable('BagitFileCollection')->find($id);
+        $collection = $this->_helper->db->getTable('BagitFileCollection')->find($id);
 
         // Check for form submission, iterate over files and add/remove.
         if ($this->_request->isPost()) {
@@ -172,9 +161,8 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $this->view->collection = $collection;
         $this->view->files = $files;
         $this->view->current_page = $page;
-        $this->view->total_results = $this->getTable('File')->count();
+        $this->view->total_results = $this->_helper->db->getTable('File')->count();
         $this->view->results_per_page = get_option('per_page_admin');
-
     }
 
 
@@ -183,16 +171,13 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return void
      */
-    public function deletecollectionAction()
-    {
-
+    public function deletecollectionAction() {
         $id = $this->_request->id;
-        $collection = $this->getTable('BagitFileCollection')->find($id);
+        $collection = $this->_helper->db->getTable('BagitFileCollection')->find($id);
 
         // If delete confirmed, do delete.
         if ($this->_request->getParam('confirm') == 'true') {
-
-            $file_associations = $this->getTable('BagitFileCollectionAssociation')
+            $file_associations = $this->_helper->db->getTable('BagitFileCollectionAssociation')
                 ->findBySql('collection_id = ?', array($id));
 
             foreach ($file_associations as $assoc) {
@@ -201,17 +186,14 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
 
             $collection->delete();
 
-            $this->flashError('Collection "' . $collection->name . '" deleted.');
+            $this->_helper->flashMessenger(
+                'Collection "' . $collection->name . '" deleted.', 'error'
+            );
             $this->_redirect('bag-it/collections');
 
-        }
-
-        else {
-
+        } else {
             $this->view->collection = $collection;
-
         }
-
     }
 
     /**
@@ -219,11 +201,9 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      *
      * @return void
      */
-    public function exportAction()
-    {
-
+    public function exportAction() {
         $id = $this->_request->id;
-        $collection = $this->getTable('BagitFileCollection')->find($id);
+        $collection = $this->_helper->db->getTable('BagitFileCollection')->find($id);
         $name = $collection->name;
 
         $success = bagithelpers_doBagIt($id, $name);
@@ -231,10 +211,12 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         if ($success != false) {
             $this->view->bag_name = $success . '.tgz';
         } else {
-            $this->flashError('There was an error. The Bag was not created.');
+            $this->_helper->flashMessenger(
+                'There was an error. The Bag was not created.',
+                'error'
+            );
             $this->_forward('exportprep', 'collections', 'bag-it');
         }
-
     }
 
     /**
@@ -243,41 +225,50 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      * @return void
      */
     public function importAction() {
-
         // Check to see if Dropbox is installed.
         if (!bagithelpers_checkForDropbox()) {
-            $this->flashError('The Dropbox plugin must be installed and activated to import bags.');
+            $this->_helper->flashMessenger(
+                'The Dropbox plugin must be installed and activated to import bags.',
+                'error'
+            );
             $this->view->dropbox = false;
-        } else { $this->view->dropbox = true; }
+
+        } else {
+            $this->view->dropbox = true;
+        }
 
         if ($this->_request->isPost()) {
-
             $form = $this->_doUploadForm();
             $posted_form = $this->_request->getPost();
 
             // Validate the file.
             if ($form->isValid($posted_form)) {
-
                 $original_filename = pathinfo($form->bag->getFileName());
                 $new_filename = $original_filename['basename'];
                 $form->bag->addFilter('Rename', $new_filename);
                 $form->bag->receive();
 
                 if (bagithelpers_doReadBagIt($new_filename)) {
-                    $this->flashSuccess('Bag successfully unpacked. Use the Dropbox plugin to process the files.');
+                    $this->_helper->flashMessenger(
+                        'Bag successfully unpacked. Use the Dropbox plugin to process the files.',
+                        'success'
+                    );
                 } else {
-                    $this->flashError('Error unpacking the files.');
+                    $this->_helper->flashMessenger(
+                        'Error unpacking the files.', 'error'
+                    );
                 }
 
             } else {
-                $this->flashError('Validation failed or no file selected. Make sure the file is a .tgz.');
+                $this->_helper->flashMessenger(
+                    'Validation failed or no file selected. Make sure the file is a .tgz.',
+                    'error'
+                );
             }
-
         }
 
         $form = $this->_doUploadForm();
         $this->view->form = $form;
-
     }
 
     /**
@@ -289,26 +280,19 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      * @return void.
      */
     protected function _addRemoveFilesFromCollection($collection, $files) {
-
         foreach ($files as $id => $value) {
-
             if ($value == 'add' && !$collection->checkForFileMembership($id)) {
-
                 $assoc = new BagitFileCollectionAssociation;
                 $assoc->collection_id = $collection->id;
                 $assoc->file_id = $id;
                 $assoc->save();
 
             } else if ($value == 'remove') {
-
-                $assoc = $this->getTable('BagitFileCollectionAssociation')
+                $assoc = $this->_helper->db->getTable('BagitFileCollectionAssociation')
                     ->getAssociationByIds($id, $collection->id);
                 $assoc->delete();
-
             }
-
         }
-
     }
 
     /**
@@ -320,7 +304,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      * @return object $form The upload form.
      */
     protected function _doUploadForm($tmp = BAGIT_TMP_DIRECTORY) {
-
         $form = new Zend_Form();
         $form->setAction('import')
             ->setMethod('post');
@@ -340,7 +323,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $form->addElement($submit);
 
         return $form;
-
       }
 
     /**
@@ -351,7 +333,6 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
      * @return object $form The upload form.
      */
     protected function _doExportForm($collection = null) {
-
         $form = new Zend_Form();
         $form->setAction('export')
             ->setMethod('post');
@@ -378,7 +359,5 @@ class BagIt_CollectionsController extends Omeka_Controller_Action
         $form->addElement($id);
 
         return $form;
-
       }
-
 }

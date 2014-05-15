@@ -1,6 +1,6 @@
 <h2><?php echo count($files); ?> file<?php if (count($files) > 1) { echo 's'; } ?> selected</h2>
 
-<form method="post" action="<?php echo uri(array('action' => 'create')); ?>" accept-charset="utf-8">
+<form method="post" action="<?php echo url(array('action' => 'create')); ?>" accept-charset="utf-8">
     <fieldset>
     <table>
         <thead>
@@ -14,8 +14,8 @@
         <tbody>
             <?php foreach ($files as $file): ?>
                 <tr>
-                    <td><a href="<?php echo public_uri('/archive/files/' . $file->archive_filename); ?>", target="_blank"><?php echo $file->original_filename; ?></a></td>
-                    <td><a href="<?php echo public_uri('/items/show/' . $file->item_id); ?>"><?php echo bagithelpers_getItemName($file->item_id); ?></a></td>
+                    <td><a href="<?php echo public_url('/archive/files/' . $file->archive_filename); ?>", target="_blank"><?php echo $file->original_filename; ?></a></td>
+                    <td><a href="<?php echo public_url('/items/show/' . $file->item_id); ?>"><?php echo bagithelpers_getItemName($file->item_id); ?></a></td>
                     <td><?php echo $file->type_os; ?></td>
                     <td><?php echo bagithelpers_getFileKb($file->id); ?> KB</td>
                     <?php echo $this->formHidden('file[' . $file->id . ']', 'add'); ?>

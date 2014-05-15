@@ -15,7 +15,7 @@
             <table>
                 <thead>
                     <tr>
-                        <?php browse_headings(array(
+                        <?php browse_sort_links(array(
                             'Name' => 'name',
                             'Parent' => 'parent_item',
                             'Type' => 'type',
@@ -27,8 +27,8 @@
                 <tbody>
                     <?php foreach ($files as $file): ?>
                         <tr>
-                            <td><a href="<?php echo public_uri('/archive/files/' . $file->archive_filename); ?>", target="_blank"><?php echo $file->original_filename; ?></a></td>
-                            <td><a href="<?php echo public_uri('/items/show/' . $file->item_id); ?>"><?php echo $file->parent_item; ?></a></td>
+                            <td><a href="<?php echo public_url('/archive/files/' . $file->archive_filename); ?>", target="_blank"><?php echo $file->original_filename; ?></a></td>
+                            <td><a href="<?php echo public_url('/items/show/' . $file->item_id); ?>"><?php echo $file->parent_item; ?></a></td>
                             <td><?php echo $file->type_os; ?></td>
                             <td><?php echo bagithelpers_getFileKb($file->size); ?> KB</td>
                             <td class="bagit-checkbox-td">
@@ -62,4 +62,4 @@
 
 </div>
 
-<?php foot(); ?>
+<?php echo foot();

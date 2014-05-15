@@ -26,11 +26,19 @@ The BagIt plugin requires the [Archive_Tar] php module.
 
 [Installing a Plugin]: http://omeka.org/codex/Installing_a_Plugin
 
-2. Go to the plugins management interface by clicking on the "Settings"
+2. Once it's uploaded and unzipped in the `plugins` directory, you may need to
+set the permissions on the `BagIt/bagtmp` directory to make it writable by
+everyone. (You can try installing and using the plugin without it, but if you
+get an error, come back here and try this.) Assuming Omeka is installed to
+`/var/www/omeka`, do this to change the permissions:
+
+   > chmod a+rw /var/www/omeka/plugins/BagIt/bagtmp
+
+3. Go to the plugins management interface by clicking on the "Settings"
    tab at the top right of the administrative interface and selecting
 the "Plugins" tab.
 
-3. Click the green "Install" button in the listing for the BagIt plugin.
+4. Click the green "Install" button in the listing for the BagIt plugin.
 
 ## Create Bags
 
