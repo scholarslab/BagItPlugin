@@ -2,3 +2,6 @@
 bags/*
 bagtmp/*
 pkg/*
+vendor/*
+composer.lock
+composer.phar
