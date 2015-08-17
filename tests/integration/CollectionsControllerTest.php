@@ -22,9 +22,6 @@
  * PHP version 5
  *
  */
-?>
-
-<?php
 
 class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
 {
@@ -63,7 +60,7 @@ class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
         );
 
         $this->dispatch('bag-it/collections/addcollection');
-        $this->assertQueryContentContains('div.error', 'Enter a name for the collection');
+        $this->assertQueryContentContains('li.error', 'Enter a name for the collection');
 
     }
 
@@ -77,7 +74,7 @@ class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
         );
 
         $this->dispatch('bag-it/collections/addcollection');
-        $this->assertQueryContentContains('div.error', 'Enter a name for the collection');
+        $this->assertQueryContentContains('li.error', 'Enter a name for the collection');
 
     }
 
@@ -92,7 +89,8 @@ class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
 
         $this->dispatch('bag-it/collections/addcollection');
         $this->assertQueryContentContains('a', 'Testing Collection');
-        $this->assertEquals(1, $this->db->getTable('BagitFileCollection')->count());
+        $collections = $this->db->getTable('BagitFileCollection')->findAll();
+        $this->assertCount(1, $collections);
 
         $this->request->setMethod('POST')
             ->setPost(array(
@@ -100,7 +98,7 @@ class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
             )
         );
 
-        $this->dispatch('bag-it/collections/1/delete');
+        $this->dispatch("bag-it/collections/{$collections[0]->id}/delete");
         $this->assertEquals(0, $this->db->getTable('BagitFileCollection')->count());
 
     }
@@ -108,8 +106,8 @@ class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
     public function testDetectNoFilesToAdd()
     {
 
-        $this->_createFileCollection('Test Collection');
-        $this->dispatch('bag-it/collections/1/add');
+        $collection = $this->_createFileCollection('Test Collection');
+        $this->dispatch("bag-it/collections/{$collection->id}/add");
         $this->assertQueryContentContains('p', 'There are no files on the site that can be added to a Bag.');
 
     }
@@ -119,7 +117,7 @@ class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
 
         $this->_createItem('Testing Item');
         $this->_createFiles();
-        $this->_createFileCollection('Test Collection');
+        $collection = $this->_createFileCollection('Test Collection');
 
         $this->request->setMethod('POST')
             ->setPost(array(
@@ -131,10 +129,10 @@ class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
             )
         );
 
-        $this->dispatch('bag-it/collections/1/add');
+        $this->dispatch("bag-it/collections/{$collection->id}/add");
         $this->assertQueryCount(3, 'input[value="remove"]');
 
-        $this->dispatch('bag-it/collections/1');
+        $this->dispatch("bag-it/collections/{$collection->id}");
         $this->assertQueryContentContains('h2', '"Test Collection" contains 3 files:');
 
         $this->request->setMethod('POST')
@@ -146,12 +144,12 @@ class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
             )
         );
 
-        $this->dispatch('bag-it/collections/1');
+        $this->dispatch("bag-it/collections/{$collection->id}");
         $this->assertQueryContentContains('h2', '"Test Collection" contains 1 files:');
 
         $this->resetRequest()->resetResponse();
 
-        $this->dispatch('bag-it/collections/1/add');
+        $this->dispatch("bag-it/collections/{$collection->id}/add");
         $this->assertQueryCount(1, 'input[value="remove"]');
 
         $this->request->setMethod('POST')
@@ -162,7 +160,7 @@ class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
             )
         );
 
-        $this->dispatch('bag-it/collections/1/add');
+        $this->dispatch("bag-it/collections/{$collection->id}/add");
         $this->assertQueryCount(0, 'input[value="remove"]');
 
     }
@@ -172,7 +170,7 @@ class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
 
         $this->_createItem('Testing Item');
         $this->_createFiles();
-        $this->_createFileCollection('Test Collection');
+        $collection = $this->_createFileCollection('Test Collection');
 
         $this->request->setMethod('POST')
             ->setPost(array(
@@ -180,9 +178,9 @@ class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
                 )
             );
 
-        $this->dispatch('bag-it/collections/1/add');
+        $this->dispatch("bag-it/collections/{$collection->id}/add");
         $this->assertEquals(13, count($this->db->getTable('BagitFileCollectionAssociation')
-            ->findBySql('collection_id = ?', array(1))));
+            ->findBySql('collection_id = ?', array($collection->id))));
 
         $this->resetRequest()->resetResponse();
 
@@ -192,9 +190,9 @@ class BagIt_CollectionsControllerTest extends BagIt_Test_AppTestCase
                 )
             );
 
-        $this->dispatch('bag-it/collections/1/add');
+        $this->dispatch("bag-it/collections/{$collection->id}/add");
         $this->assertEquals(0, count($this->db->getTable('BagitFileCollectionAssociation')
-            ->findBySql('collection_id = ?', array(1))));
+            ->findBySql('collection_id = ?', array($collection->id))));
 
     }
 
