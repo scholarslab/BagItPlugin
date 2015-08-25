@@ -26,63 +26,41 @@
 
 <?php
 
-class BagItPlugin
+// {{{ requires
+require_once BAGIT_PLUGIN_DIRECTORY . '/BagItPlugin.php';
+require_once BAGIT_PLUGIN_DIRECTORY . '/helpers/BagItFunctions.php';
+require_once BAGIT_PLUGIN_DIRECTORY . '/lib/BagItPHP/lib/bagit.php';
+require_once BAGIT_PLUGIN_DIRECTORY . '/models/BagitFileCollection.php';
+require_once BAGIT_PLUGIN_DIRECTORY . '/models/BagitFileCollectionAssociation.php';
+require_once BAGIT_PLUGIN_DIRECTORY . '/models/Table/Table_BagitFileCollection.php';
+require_once BAGIT_PLUGIN_DIRECTORY . '/models/Table/Table_BagitFileCollectionAssociation.php';
+// }}}
+
+function err($msg) {
+    error_log("$msg\n", 3, "/tmp/bagit.log");
+}
+
+class BagItPlugin extends Omeka_Plugin_AbstractPlugin
 {
 
-    private static $_hooks = array(
+    protected $_hooks = array(
         'install',
         'uninstall',
         'define_acl',
         'define_routes',
-        'admin_theme_header'
+        'admin_head'
     );
 
-    private static $_filters = array(
+    protected $_filters = array(
         'admin_navigation_main'
     );
-
-    private $_db;
-
-    /**
-     * Delete option 'bagit_version' in the _options, drop tables.
-     * table.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->_db = get_db();
-        self::addHooksAndFilters();
-    }
-
-    /**
-     * Iterate over hooks and filters, define callbacks.
-     *
-     * @return void
-     */
-    public function addHooksAndFilters()
-    {
-
-        foreach (self::$_hooks as $hookName) {
-            $functionName = Inflector::variablize($hookName);
-            add_plugin_hook($hookName, array($this, $functionName));
-        }
-
-        foreach (self::$_filters as $filterName) {
-            $functionName = Inflector::variablize($filterName);
-            add_filter($filterName, array($this, $functionName));
-        }
-
-    }
 
     /**
      * Create tables for file collections and file associations.
      *
      * @return void
      */
-    public function install()
-    {
-
+    public function hookInstall() {
         $db = $this->_db;
 
         $db->query("
@@ -101,7 +79,6 @@ class BagItPlugin
                 `collection_id` int(10) unsigned NOT NULL
             ) ENGINE = innodb DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
         ");
-
     }
 
     /**
@@ -109,14 +86,11 @@ class BagItPlugin
      *
      * @return void
      */
-    public function uninstall()
-    {
-
+    public function hookUninstall() {
         $db = $this->_db;
 
         $db->query("DROP TABLE IF EXISTS `$db->BagitFileCollection`");
         $db->query("DROP TABLE IF EXISTS `$db->BagitFileCollectionAssociation`");
-
     }
 
     /**
@@ -126,19 +100,12 @@ class BagItPlugin
      *
      * @return void
      */
-    public function defineAcl($acl)
-    {
-
-        if (version_compare(OMEKA_VERSION, '2.0-dev', '<')) {
-            $indexResource = new Omeka_Acl_Resource('Bagit_Collections');
-        } else {
-            $indexResource = new Zend_Acl_Resource('Bagit_Collections');
+    public function hookDefineAcl($args) {
+        $acl = $args['acl'];
+        if (! $acl->has('Bagit_Collections')) {
+            $acl->addResource('Bagit_Collections');
         }
-
-        $acl->add($indexResource);
-        $acl->allow('super', 'Bagit_Collections');
-        $acl->allow('admin', 'Bagit_Collections');
-
+        $acl->allow(array('super', 'admin'), 'Bagit_Collections');
     }
 
     /**
@@ -148,8 +115,8 @@ class BagItPlugin
      *
      * @return void
      */
-    public function defineRoutes($router)
-    {
+    public function hookDefineRoutes($args) {
+        $router = $args['router'];
         $router->addConfig(new Zend_Config_Ini(BAGIT_PLUGIN_DIRECTORY .
             DIRECTORY_SEPARATOR . 'routes.ini', 'routes'));
     }
@@ -162,13 +129,14 @@ class BagItPlugin
      *
      * @return void
      */
-    public function adminThemeHeader($request)
-    {
+    public function hookAdminHead($args) {
+        $fc     = Zend_Registry::get('bootstrap')->getResource('frontcontroller');
+        $req    = $fc->getRequest();
+        $module = $req->getModuleName();
 
-        if ($request->getModuleName() == 'bag-it') {
-            queue_css('bagit-interface');
+        if ($module == 'bag-it') {
+            queue_css_file('bagit-interface');
         }
-
     }
 
     /**
@@ -180,15 +148,12 @@ class BagItPlugin
      * @return array $nav The array of links, modified to include the
      * link to the BagIt administrative interface.
      */
-    public function adminNavigationMain($nav)
-    {
+    public function filterAdminNavigationMain($tabs) {
+        $tabs[] = array(
+            'label' => 'BagIt',
+            'uri'   => url('bag-it/collections')
+        );
 
-        if (has_permission('Bagit_Collections', 'browse')) {
-            $nav['BagIt'] = uri('bag-it/collections');
-        }
-
-        return $nav;
-
+        return $tabs;
     }
-
 }

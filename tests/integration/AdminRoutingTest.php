@@ -22,9 +22,6 @@
  * PHP version 5
  *
  */
-?>
-
-<?php
 
 class BagIt_AdminRoutingTest extends BagIt_Test_AppTestCase
 {
@@ -83,8 +80,8 @@ class BagIt_AdminRoutingTest extends BagIt_Test_AppTestCase
     public function testDeleteCollectionRoute()
     {
 
-        $this->_createFileCollections(1);
-        $this->dispatch('bag-it/collections/1/delete');
+        $collections = $this->_createFileCollections(1);
+        $this->dispatch("bag-it/collections/{$collections[0]->id}/delete");
         $this->assertModule('bag-it');
         $this->assertController('collections');
         $this->assertAction('deletecollection');
@@ -93,8 +90,8 @@ class BagIt_AdminRoutingTest extends BagIt_Test_AppTestCase
 
     public function testAddFilesRoute() {
 
-        $this->_createFileCollections(1);
-        $this->dispatch('bag-it/collections/1/add');
+        $collections = $this->_createFileCollections(1);
+        $this->dispatch("bag-it/collections/{$collections[0]->id}/add");
         $this->assertModule('bag-it');
         $this->assertController('collections');
         $this->assertAction('addfiles');

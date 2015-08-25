@@ -47,8 +47,6 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
         $bagit_plugin_helper = new Omeka_Test_Helper_Plugin;
         $bagit_plugin_helper->setUp('BagIt');
 
-        $this->_dbHelper = Omeka_Test_Helper_Db::factory($this->core);
-
     }
 
     public function _addBagItPluginHooksAndFilters($plugin_broker, $plugin_name)
@@ -90,7 +88,7 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
         $element_text = new ElementText;
         $element_text->record_id = $item->id;
-        $element_text->record_type_id = 2;
+        $element_text->record_type = "Item";
         $element_text->element_id = 50;
         $element_text->html = 0;
         $element_text->text = $name;
@@ -110,8 +108,8 @@ class BagIt_Test_AppTestCase extends Omeka_Test_AppTestCase
 
                 $db = get_db();
                 $sql = 'INSERT INTO omeka_files 
-                    (item_id, size, has_derivative_image, archive_filename, original_filename) 
-                    VALUES (1, 5000, 0, "' . $file . '", "TestFile' . $i . '.jpg")';
+                    (item_id, size, has_derivative_image, filename, original_filename, metadata) 
+                    VALUES (1, 5000, 0, "' . $file . '", "TestFile' . $i . '.jpg", "")';
                 $db->query($sql);
                 $i++;
 

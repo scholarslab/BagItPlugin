@@ -4,8 +4,8 @@
 
     <?php echo flash(); ?>
 
-    <h3 class="bagit-success">Success! <a href="<?php echo public_uri('/plugins/BagIt/bags/') . $bag_name; ?>">Click here to download the Bag</a>.</h3>
+    <h3 class="bagit-success">Success! <a href="<?php echo public_url('/plugins/BagIt/bags/') . $bag_name; ?>">Click here to download the Bag</a>.</h3>
 
 </div>
 
-<?php foot(); ?>
+<?php echo foot();
