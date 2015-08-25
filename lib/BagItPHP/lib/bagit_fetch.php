@@ -23,7 +23,7 @@
  * @author    Wayne Graham <wayne.graham@gmail.com>
  * @copyright 2011 The Board and Visitors of the University of Virginia
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache 2.0
- * @version   0.1
+ * @version   0.2.1
  * @link      https://github.com/erochest/BagItPHP
  *
  */
@@ -90,8 +90,6 @@ class BagItFetch
 
         if (file_exists($this->fileName)) {
             $this->read();
-        } else {
-            touch($this->fileName);
         }
     }
 
@@ -143,7 +141,13 @@ class BagItFetch
             array_push($lines, join(' ', $data) . "\n");
         }
 
-        writeFileText($this->fileName, $this->fileEncoding, join('', $lines));
+        if (count($lines) == 0) {
+            if (file_exists($this->fileName)) {
+                unlink($this->fileName);
+            }
+        } else {
+            writeFileText($this->fileName, $this->fileEncoding, join('', $lines));
+        }
     }
 
     /**
